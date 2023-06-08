@@ -24,9 +24,9 @@ def f(path, Bragg_i, q, p, f_max_s, nmodes, bin_size):
             "%s/reconstruction_p_%d/movie_p_%d_sum_%d_modes.jbl"
             % (results_path, p, p, nmodes)
         )
-        print "x_r_tot: ", x_r_tot.shape
+        print("x_r_tot: ", x_r_tot.shape)
         t_r = joblib.load("%s/reconstruction_p_%d/t_r_p_%d.jbl" % (results_path, p, p))
-        print "t_r: ", t_r.shape
+        print("t_r: ", t_r.shape)
         axes[i].set_title("$j_{\mathrm{max}}=$%d, n.modes=%d" % (f_max, nmodes))
         axes[i].plot(t_r, x_r_tot[Bragg_i, :], c="b")
 
@@ -35,16 +35,16 @@ def f(path, Bragg_i, q, p, f_max_s, nmodes, bin_size):
     M = joblib.load("%s/M_sel_sparse_light.jbl" % path)
     ts = joblib.load("%s/ts_sel_light.jbl" % path)
     ts = ts.flatten()
-    print dT.shape, M.shape, ts.shape
+    print(dT.shape, M.shape, ts.shape)
 
     ts_plot = []
     Is_plot = []
     dT_i = dT[Bragg_i, :].todense().tolist()[0]
     dT_i = numpy.asarray(dT_i)
-    print dT_i.shape
+    print(dT_i.shape)
     M_i = M[Bragg_i, :].todense().tolist()[0]
     M_i = numpy.asarray(M_i)
-    print M_i.shape
+    print(M_i.shape)
     for j in range(0, (dT_i.shape[0]) - bin_size):
         M_sum = M_i[j : j + bin_size].sum()
         if M_sum > 0:
@@ -82,9 +82,9 @@ def f_ps(path, Bragg_i, q, ps, f_max, nmodes, bin_size):
                 % (results_path, p, nmodes)
             )
 
-        print x_r_tot.shape
+        print(x_r_tot.shape)
         t_r = joblib.load("%s/reconstruction_p_%d/t_r_p_%d.jbl" % (results_path, p, p))
-        print t_r.shape
+        print(t_r.shape)
         axes[0].plot(t_r, x_r_tot[Bragg_i, :], c=cs[i], label="p=%d" % (p))
 
     axes[0].tick_params(axis="both", which="major", labelsize=18)
@@ -98,16 +98,16 @@ def f_ps(path, Bragg_i, q, ps, f_max, nmodes, bin_size):
     M = joblib.load("%s/M_sel_sparse_light.jbl" % path)
     ts = joblib.load("%s/ts_sel_light.jbl" % path)
     ts = ts.flatten()
-    print dT.shape, M.shape, ts.shape
+    print(dT.shape, M.shape, ts.shape)
 
     ts_plot = []
     Is_plot = []
     dT_i = dT[Bragg_i, :].todense().tolist()[0]
     dT_i = numpy.asarray(dT_i)
-    print dT_i.shape
+    print(dT_i.shape)
     M_i = M[Bragg_i, :].todense().tolist()[0]
     M_i = numpy.asarray(M_i)
-    print M_i.shape
+    print(M_i.shape)
     for j in range(0, (dT_i.shape[0]) - bin_size):
         M_sum = M_i[j : j + bin_size].sum()
         if M_sum > 0:

@@ -20,7 +20,7 @@ data_ave = data_ave[:-1, :-1, 0:t_points]
 
 movie_combined = numpy.zeros((16 - 1, 46 - 1, t_points))
 for mode in modes:
-    print mode
+    print(mode)
     movie = joblib.load(
         "../data_Giannakis_PNAS_2012/results_1/movie_2D_mode_%d_norm_rightEV.jbl"
         % (mode)
@@ -34,7 +34,7 @@ modes = [0, 9, 10]
 label = "0_9_10_minus_avgTfull"
 movie_combined = numpy.zeros((16 - 1, 46 - 1, t_points))
 for mode in modes:
-    print mode
+    print(mode)
     movie = joblib.load(
         "../data_Giannakis_PNAS_2012/results_2_full_Ts/movie_2D_mode_%d_norm_rightEV.jbl"
         % (mode)
@@ -48,7 +48,7 @@ diff_sq = numpy.multiply(diff, diff)
 diff_sq = diff_sq.flatten()
 diff_sq = [diff_sq[i] for i in range(diff_sq.shape[0]) if not numpy.isnan(diff_sq[i])]
 rmsd = numpy.sqrt(numpy.average(diff_sq))
-print rmsd
+print(rmsd)
 
 v = 0.2
 outdir = "../data_Giannakis_PNAS_2012/results_2_full_Ts/movie_mode_%s" % label

@@ -9,7 +9,7 @@ run_n = 1145
 dataFile = h5py.File(
     "%s/timetool/rho_nlsa_scan_%d/run_%0.6d.SPECENC.h5" % (path, scan_n, run_n), "r"
 )
-print dataFile.keys()
+print(list(dataFile.keys()))
 
 arr_time_SPECENC = dataFile["arrival_times"][:]
 
@@ -31,7 +31,7 @@ timestamp = arr_time_SPECENC + nom_delay_SPECENC
 dataFile = h5py.File(
     "%s/rho_nlsa_scan_%d/run_%0.6d.BSREAD.h5" % (path, scan_n, run_n), "r"
 )
-print dataFile.keys()
+print(list(dataFile.keys()))
 data = dataFile["/data/SLAAR11-LMOT-M451:ENC_1_BS/data"]
 data = numpy.asarray(data)
 
@@ -47,7 +47,7 @@ diff = abs(pulse_ids_SPECENC - pulse_ids_BSREAD)
 diff = diff.sum()
 
 if diff == 0:
-    print "OK"
+    print("OK")
 
 # data = delay line in mm
 # nominal delay time = 2(data - t0[mm])/c
@@ -59,8 +59,8 @@ if diff == 0:
 dataFile = h5py.File(
     "%s/rho_nlsa_scan_%d/run_%0.6d.JF06T08V01.h5" % (path, scan_n, run_n), "r"
 )
-print dataFile.keys()
-print dataFile["general"].keys()
+print(list(dataFile.keys()))
+print(list(dataFile["general"].keys()))
 
 data = dataFile["data/JF06T08V01/data"]
 data = numpy.asarray(data)
@@ -74,4 +74,4 @@ diff = abs(pulse_ids_SPECENC - pulse_ids_JF)
 diff = diff.sum()
 
 if diff == 0:
-    print "OK"
+    print("OK")

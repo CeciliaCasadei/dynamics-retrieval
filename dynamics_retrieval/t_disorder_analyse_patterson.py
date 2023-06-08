@@ -62,7 +62,7 @@ idx_t2 = numpy.argmin(diff)
 
 t1_uncorrected = arr[0,idx_t1,0]
 t2_uncorrected = arr[0,idx_t2,0]
-print(t1_uncorrected, t2_uncorrected)
+print((t1_uncorrected, t2_uncorrected))
 
 pyplot.tight_layout()
 pyplot.savefig("%s/%s_original_patt_x0_z0.png" % (outfolder, label), dpi=96 * 2)
@@ -99,10 +99,10 @@ if flag == 1:
         fraction_beta = fraction_set[1]
         fraction_gamma = fraction_set[2]
 
-        print(
+        print((
             "\nTesting domain fractions: %.2f %.2f %.2f"
             % (fraction_alpha, fraction_beta, fraction_gamma)
-        )
+        ))
         fn = "%s/ccp4s/%s_corrected_frac_%.2f_%.2f_%.2f_patt.ccp4" % (
             outfolder,
             label,
@@ -113,7 +113,7 @@ if flag == 1:
         ccp4 = gemmi.read_ccp4_map(fn)
         ccp4.setup()
         arr = numpy.array(ccp4.grid, copy=False)
-        print(arr[0, idx_t1, 0], arr[0, idx_t2, 0])
+        print((arr[0, idx_t1, 0], arr[0, idx_t2, 0]))
         if (
             abs(arr[0, idx_t1, 0]) < abs(t1_uncorrected) / 4
             and abs(arr[0, idx_t2, 0]) < abs(t2_uncorrected) / 2

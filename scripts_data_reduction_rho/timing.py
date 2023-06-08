@@ -68,8 +68,8 @@ def get_ts_distribution():
 
     for scan_n in range(1, 24):
         run_start, run_end = run_ns.run_ns(scan_n)
-        print "\n"
-        print "SCAN: ", scan_n, "RUNS: ", run_start, run_end
+        print("\n")
+        print("SCAN: ", scan_n, "RUNS: ", run_start, run_end)
         for run_n in range(run_start, run_end + 1):
             SPECENC_file = "%s/timetool/rho_nlsa_scan_%d/run_%0.6d.SPECENC.h5" % (
                 path,
@@ -110,17 +110,17 @@ def get_ts_distribution():
 
                     # THIS RUN IS SELECTED
                     n_selected_runs += 1
-                    print "RUN: ", run_n, ", ", pid_BSREAD.shape[
+                    print("RUN: ", run_n, ", ", pid_BSREAD.shape[
                         0
-                    ], " frames."  # 1000 frames (from 0 to 999) except last run of scan.
+                    ], " frames.")  # 1000 frames (from 0 to 999) except last run of scan.
                     l = ts_SPECENC.shape[0]
                     out = numpy.zeros((l, 5))
-                    out[:, 0] = range(l)
+                    out[:, 0] = list(range(l))
                     out[:, 1] = pid_BSREAD
                     out[:, 2] = ts_SPECENC
                     out[:, 3] = ts_rel_SPECENC
                     out[:, 4] = pI_BSREAD.flatten()
-                    print "Matrix shape (light and dark):", out.shape
+                    print("Matrix shape (light and dark):", out.shape)
 
                     # SELECT ONLY LIGHT
                     f = open(list_file_light, "r")
@@ -134,7 +134,7 @@ def get_ts_distribution():
                         idxs[i] = event_n
                         i += 1
                     out_light = out[idxs, :]
-                    print "Matrix shape (light):", out_light.shape
+                    print("Matrix shape (light):", out_light.shape)
 
                     joblib.dump(
                         out_light,
@@ -150,14 +150,14 @@ def get_ts_distribution():
     ts_rel_light = numpy.asarray([item for sublist in ts_rel_light for item in sublist])
     FEL_Is_light = numpy.asarray([item for sublist in FEL_Is_light for item in sublist])
 
-    print "\n"
-    print "n selected runs", n_selected_runs
-    print "n discarded runs", n_discarded_runs
+    print("\n")
+    print("n selected runs", n_selected_runs)
+    print("n discarded runs", n_discarded_runs)
 
-    print "\n"
-    print "NaNs in ts_light: ", numpy.any(numpy.isnan(ts_light))
-    print "NaNs in ts_rel_light: ", numpy.any(numpy.isnan(ts_rel_light))
-    print "NaNs in FEL_Is_light: ", numpy.any(numpy.isnan(FEL_Is_light))
+    print("\n")
+    print("NaNs in ts_light: ", numpy.any(numpy.isnan(ts_light)))
+    print("NaNs in ts_rel_light: ", numpy.any(numpy.isnan(ts_rel_light)))
+    print("NaNs in FEL_Is_light: ", numpy.any(numpy.isnan(FEL_Is_light)))
 
     # FIGURES
     plt.scatter(FEL_Is_light, ts_rel_light, c="b", s=5, alpha=0.3)
@@ -197,8 +197,8 @@ def export_unique_ID():
 
     for scan_n in range(1, 24):
         run_start, run_end = run_ns.run_ns(scan_n)
-        print "\n"
-        print "SCAN: ", scan_n, "RUNS: ", run_start, run_end
+        print("\n")
+        print("SCAN: ", scan_n, "RUNS: ", run_start, run_end)
         for run_n in range(run_start, run_end + 1):
             try:
                 data = joblib.load(
@@ -220,9 +220,9 @@ def export_unique_ID():
                     "%s/light_scan_%d_run_%0.6d_uniqueID.jbl"
                     % (path_out, scan_n, run_n),
                 )
-                print len(unique_IDs), data.shape
+                print(len(unique_IDs), data.shape)
             except:
-                print "Scan", scan_n, ", run ", run_n, " not existing"
+                print("Scan", scan_n, ", run ", run_n, " not existing")
 
 
 def merge_scan_data():
@@ -231,16 +231,16 @@ def merge_scan_data():
 
     for scan_n in range(1, 24):
         run_start, run_end = run_ns.run_ns(scan_n)
-        print "\n"
-        print "SCAN: ", scan_n, "RUNS: ", run_start, run_end
+        print("\n")
+        print("SCAN: ", scan_n, "RUNS: ", run_start, run_end)
         scan_ts = []
         scan_ts_rel = []
         scan_FEL_Is = []
         scan_uniqueIDs = []
-        print len(scan_ts), len(scan_ts_rel), len(scan_FEL_Is), len(scan_uniqueIDs)
+        print(len(scan_ts), len(scan_ts_rel), len(scan_FEL_Is), len(scan_uniqueIDs))
         for run_n in range(run_start, run_end + 1):
             try:
-                print "Run: ", run_n
+                print("Run: ", run_n)
                 data = joblib.load(
                     "%s/light_scan_%d_run_%0.6d_event_pid_ts_tsrel_felI.jbl"
                     % (path_out, scan_n, run_n)
@@ -254,7 +254,7 @@ def merge_scan_data():
                 scan_FEL_Is.append(data[:, 4])
                 scan_uniqueIDs.append(unique_IDs)
             except:
-                print "Scan", scan_n, ", run ", run_n, " not existing"
+                print("Scan", scan_n, ", run ", run_n, " not existing")
 
         scan_ts_flat = numpy.asarray([item for sublist in scan_ts for item in sublist])
         scan_ts_rel_flat = numpy.asarray(
@@ -277,7 +277,8 @@ def merge_scan_data():
         )
 
 
-def twoD_Gaussian_simple((x, y), amplitude, xo, yo, sigma_x, sigma_y):
+def twoD_Gaussian_simple(xxx_todo_changeme, amplitude, xo, yo, sigma_x, sigma_y):
+    (x, y) = xxx_todo_changeme
     g = amplitude * numpy.exp(
         -((x - xo) ** 2) / (2 * sigma_x ** 2) - ((y - yo) ** 2) / (2 * sigma_y ** 2)
     )
@@ -285,7 +286,8 @@ def twoD_Gaussian_simple((x, y), amplitude, xo, yo, sigma_x, sigma_y):
     return g.flatten()
 
 
-def twoD_Gaussian_rotated((x, y), amplitude, x0, y0, sigma_x, sigma_y, theta):
+def twoD_Gaussian_rotated(xxx_todo_changeme1, amplitude, x0, y0, sigma_x, sigma_y, theta):
+    (x, y) = xxx_todo_changeme1
     a = (numpy.cos(theta) ** 2) / (2 * sigma_x ** 2) + (numpy.sin(theta) ** 2) / (
         2 * sigma_y ** 2
     )
@@ -302,8 +304,7 @@ def twoD_Gaussian_rotated((x, y), amplitude, x0, y0, sigma_x, sigma_y, theta):
     return g.flatten()
 
 
-def twoD_Gaussian_rotated_bimodal(
-    (x, y),
+def twoD_Gaussian_rotated_bimodal(xxx_todo_changeme2,
     amplitude_1,
     x0_1,
     y0_1,
@@ -318,6 +319,7 @@ def twoD_Gaussian_rotated_bimodal(
     theta_2,
 ):
 
+    (x, y) = xxx_todo_changeme2
     a_1 = (numpy.cos(theta_1) ** 2) / (2 * sigma_x_1 ** 2) + (
         numpy.sin(theta_1) ** 2
     ) / (2 * sigma_y_1 ** 2)
@@ -351,8 +353,8 @@ def twoD_Gaussian_rotated_bimodal(
 def select():
     path_out = "./timing_data"
     for scan_n in range(1, 24):
-        print "\n"
-        print "SCAN: ", scan_n
+        print("\n")
+        print("SCAN: ", scan_n)
 
         scan_data = joblib.load(
             "%s/light_scan_%d_ts_tsrel_felI.jbl" % (path_out, scan_n)
@@ -362,7 +364,7 @@ def select():
             "%s/light_scan_%d_uniqueID.jbl" % (path_out, scan_n)
         )
 
-        print "NaNs in light data: ", numpy.any(numpy.isnan(scan_data))
+        print("NaNs in light data: ", numpy.any(numpy.isnan(scan_data)))
 
         FEL_Is_light = scan_data[:, 2]
         ts_rel_light = scan_data[:, 1]
@@ -559,9 +561,9 @@ def select():
             scan_unique_IDs_selected,
             "%s/light_scan_%d_uniqueID_selected.jbl" % (path_out, scan_n),
         )
-        print "NaNs in selected light data: ", numpy.any(
+        print("NaNs in selected light data: ", numpy.any(
             numpy.isnan(scan_data_selected)
-        )
+        ))
 
         # FIGURES
         plt.scatter(FEL_Is_light, ts_rel_light, c="b", s=5)
@@ -587,13 +589,13 @@ def check_t_distribution():
 
     for scan_n in range(1, 24):
 
-        print "\n"
-        print "SCAN: ", scan_n
+        print("\n")
+        print("SCAN: ", scan_n)
         scan_data_selected = joblib.load(
             "%s/light_scan_%d_ts_tsrel_felI_selected.jbl" % (path_out, scan_n)
         )
-        print "\n"
-        print "NaNs in scan_data_selected: ", numpy.any(numpy.isnan(scan_data_selected))
+        print("\n")
+        print("NaNs in scan_data_selected: ", numpy.any(numpy.isnan(scan_data_selected)))
 
         ts_light.append(scan_data_selected[:, 0])
         ts_rel_light.append(scan_data_selected[:, 1])
@@ -603,9 +605,9 @@ def check_t_distribution():
     ts_rel_light = numpy.asarray([item for sublist in ts_rel_light for item in sublist])
     FEL_Is_light = numpy.asarray([item for sublist in FEL_Is_light for item in sublist])
 
-    print ts_light.shape
-    print ts_rel_light.shape
-    print FEL_Is_light.shape
+    print(ts_light.shape)
+    print(ts_rel_light.shape)
+    print(FEL_Is_light.shape)
 
     # FIGURES
     plt.scatter(FEL_Is_light, ts_rel_light, c="b", s=5, alpha=0.3)
@@ -652,7 +654,7 @@ def export_unique_ID_ts():
 
     for scan_n in range(scan_start, scan_end + 1):
 
-        print "\nScan", scan_n
+        print("\nScan", scan_n)
 
         data_ts = joblib.load(
             "%s/light_scan_%d_ts_tsrel_felI_selected.jbl" % (path_out, scan_n)
@@ -665,7 +667,7 @@ def export_unique_ID_ts():
         )
 
         if abs(n_frames - len(data_IDs)) > 0:
-            print "Problem"
+            print("Problem")
         for i in range(n_frames):
             fn_write.write("%s  %.1f\n" % (data_IDs[i], ts[i]))
 

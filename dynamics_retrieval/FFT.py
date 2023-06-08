@@ -10,7 +10,7 @@ import numpy
 import matplotlib.pyplot as plt
 
 path = "/das/work/p17/p17491/Cecilia_Casadei/NLSA/synthetic_data_jitter/test18/LPSA_I_missing_obs_to_avg"
-print path
+print(path)
 
 x = joblib.load("%s/x.jbl" % path)
 ##
@@ -24,11 +24,11 @@ for i in i_s:
 
     x_i = x[i, :]
 
-    print x_i.shape
+    print(x_i.shape)
 
     ##
     x_i = numpy.ravel(x_i.T)
-    print x_i.shape
+    print(x_i.shape)
     ##
 
     X_i = numpy.fft.rfft(x_i)
@@ -45,7 +45,7 @@ for i in i_s:
     ref = numpy.abs(X_i[0]) ** 2
     spectrum = numpy.abs(X_i) ** 2 / ref
     plt.plot(fs, spectrum)
-    plt.xticks(range(0, 100, 4))
+    plt.xticks(list(range(0, 100, 4)))
     plt.locator_params(axis="x", nbins=8)
     plt.locator_params(axis="y", nbins=3)
     plt.gca().tick_params(axis="both", labelsize=22)

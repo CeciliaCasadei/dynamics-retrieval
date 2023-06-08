@@ -12,14 +12,14 @@ import matplotlib.pyplot
 def calculate_W_localspeeds(D, N, v, results_path, datatype, sigma_sq):
     s = D.shape[0]
     b = D.shape[1]
-    print s, b
+    print(s, b)
 
     W = numpy.empty((s, s), dtype=datatype)
     W[:] = numpy.nan
 
     for i in range(s):
         if i % 1000 == 0:
-            print i, "/", s
+            print(i, "/", s)
         v_i = v[i]
         for j in range(b):
             d_i_neighbor = D[i, j]
@@ -34,14 +34,14 @@ def calculate_W_localspeeds(D, N, v, results_path, datatype, sigma_sq):
 def calculate_W(D, N, results_path, datatype, sigma_sq):
     s = D.shape[0]
     b = D.shape[1]
-    print s, b, sigma_sq
+    print(s, b, sigma_sq)
 
     W = numpy.empty((s, s), dtype=datatype)
     W[:] = numpy.nan
 
     for i in range(s):
         if i % 1000 == 0:
-            print i, "/", s
+            print(i, "/", s)
         for j in range(b):
             d_i_neighbor = D[i, j]
             neighbor_idx = N[i, j]
@@ -57,7 +57,7 @@ def symmetrise_W(W, datatype):
 
     for i in range(s):
         if i % 1000 == 0:
-            print i, "/", s
+            print(i, "/", s)
         for j in range(s):
             if not numpy.isnan(W[i, j]):
                 W_sym[i, j] = W[i, j]
@@ -73,7 +73,7 @@ def symmetrise_W_optimised(W, datatype):
 
     for i in range(s):
         if i % 1000 == 0:
-            print i, "/", s
+            print(i, "/", s)
         row_i = W[i, :].flatten()
         col_i = W[:, i].flatten()
         m_row_i = numpy.ones((s,))
@@ -103,21 +103,21 @@ def check(settings):
         count = W_sym[i, :].count_nonzero()
         counts.append(count)
     matplotlib.pyplot.figure(figsize=(30, 10))
-    matplotlib.pyplot.plot(range(W_sym.shape[0]), counts)
+    matplotlib.pyplot.plot(list(range(W_sym.shape[0])), counts)
     matplotlib.pyplot.savefig("%s/W_sym_nns.png" % results_path)
     matplotlib.pyplot.close()
 
 
 def main(settings):
 
-    print "\n****** RUNNING tansition_matrix ****** "
+    print("\n****** RUNNING tansition_matrix ****** ")
 
     sigma_sq = settings.sigma_sq
-    print "Sigma_sq: ", sigma_sq
+    print("Sigma_sq: ", sigma_sq)
     epsilon = sigma_sq / 2
-    print "Epsilon: ", epsilon
+    print("Epsilon: ", epsilon)
     log10_epsilon = numpy.log10(epsilon)
-    print "Log10(epsilon): ", log10_epsilon
+    print("Log10(epsilon): ", log10_epsilon)
 
     results_path = settings.results_path
     datatype = settings.datatype
@@ -125,20 +125,20 @@ def main(settings):
     N = joblib.load("%s/N.jbl" % results_path)
     D = joblib.load("%s/D.jbl" % results_path)
 
-    print "Calculate W"
+    print("Calculate W")
     W = calculate_W(D, N, results_path, datatype, sigma_sq)
     joblib.dump(W, "%s/W.jbl" % results_path)
 
-    print "Symmetrise W (optimised)"
+    print("Symmetrise W (optimised)")
     W_sym = symmetrise_W_optimised(W, datatype)
 
-    print "W_sym: Set NaN values to zero"
+    print("W_sym: Set NaN values to zero")
     W_sym[numpy.isnan(W_sym)] = 0
 
-    print "W_sym", W_sym.shape, W_sym.dtype
+    print("W_sym", W_sym.shape, W_sym.dtype)
 
-    print "Check that W_sym is symmetric:"
+    print("Check that W_sym is symmetric:")
     diff = W_sym - W_sym.T
-    print numpy.amax(diff), numpy.amin(diff)
+    print(numpy.amax(diff), numpy.amin(diff))
 
     joblib.dump(W_sym, "%s/W_sym.jbl" % results_path)

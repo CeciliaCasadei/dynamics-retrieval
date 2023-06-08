@@ -27,7 +27,7 @@ t_points = 8381
 # Exclude last latitude point and last longitude point
 movie_combined = numpy.zeros((16 - 1, 46 - 1, t_points))
 for mode in modes:
-    print mode
+    print(mode)
     movie = joblib.load(
         "%s/movie_2D_mode_%d_extended_fwd_bwd.jbl" % (results_path, mode)
     )

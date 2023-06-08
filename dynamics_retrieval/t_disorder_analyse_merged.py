@@ -65,7 +65,7 @@ def get_I_avg_vs_k(fn):
 
 def fit(Is_avg, k_range):
 
-    xdata = range(k_range)
+    xdata = list(range(k_range))
     ydata = numpy.asarray(Is_avg)[0:k_range]
     popt, pcov = curve_fit(f, xdata, ydata)
 
@@ -80,7 +80,7 @@ def fit(Is_avg, k_range):
 
 
 def correct(f_w, f_r, A, B):
-    print "Writing corrected intensities in: ", f_w
+    print("Writing corrected intensities in: ", f_w)
     fo_w = open(f_w, "w")
     fo_r = open(f_r, "r")
 
@@ -122,9 +122,9 @@ def rewrite(
 
 
 def plot(I_avg, fign):
-    print "Plotting average intensities in: ", fign
+    print("Plotting average intensities in: ", fign)
     matplotlib.pyplot.figure(figsize=(20, 8))
-    matplotlib.pyplot.plot(range(len(Is_avg)), Is_avg, "-o")
+    matplotlib.pyplot.plot(list(range(len(Is_avg))), Is_avg, "-o")
     matplotlib.pyplot.xlabel(r"$k$", fontsize=34),
     matplotlib.pyplot.ylabel(
         r"$\left< I \right>_k$", fontsize=34, rotation=0, labelpad=30
@@ -160,7 +160,7 @@ if __name__ == "__main__":
     fo_w_fn_original = "%s/%s_original.txt" % (path, label)
     rewrite(fo_w_fn_original, filename)
 
-    print "\n*** Determine translated domain fraction. ***"
+    print("\n*** Determine translated domain fraction. ***")
     fn_r = "%s/%s_original.txt" % (path, label)
 
     ### METHOD 1: FIT ###
@@ -170,8 +170,8 @@ if __name__ == "__main__":
         out_path = "%s/method_fit" % path
         if not os.path.exists(out_path):
             os.mkdir(out_path)
-        print "\n*** Method 1: fit (%s) ***" % out_path
-        print "(does not guarantee A+B=1)"
+        print("\n*** Method 1: fit (%s) ***" % out_path)
+        print("(does not guarantee A+B=1)")
 
         # Fit
         k_max = 10  # For fitting purposes
@@ -180,10 +180,10 @@ if __name__ == "__main__":
         # A = get_A(fraction_fit)
         # B = get_B(fraction_fit)
 
-        print "Translated domain fraction: ", fraction_fit
-        print "A: ", A
-        print "B: ", B
-        print "A+B", A + B
+        print("Translated domain fraction: ", fraction_fit)
+        print("A: ", A)
+        print("B: ", B)
+        print("A+B", A + B)
 
         # Correct intensities
         fn_w = "%s/%s_corrected_fraction_%.3f.txt" % (out_path, label, fraction_fit)
@@ -202,12 +202,12 @@ if __name__ == "__main__":
         out_path = "%s/method_bf" % path
         if not os.path.exists(out_path):
             os.mkdir(out_path)
-        print "\n*** Method 2: brute force (%s) ***" % out_path
-        print "(A+B=1)"
+        print("\n*** Method 2: brute force (%s) ***" % out_path)
+        print("(A+B=1)")
 
         fractions = numpy.arange(0.01, 0.50, 0.01)
         for fraction in fractions:
-            print "\nTesting translated domain fraction: %.2f" % fraction
+            print("\nTesting translated domain fraction: %.2f" % fraction)
             A = get_A(fraction)
             B = get_B(fraction)
 
@@ -225,7 +225,7 @@ if __name__ == "__main__":
     # Plot summary figure
     flag = 0
     if flag == 1:
-        print "\n*** Summary figure ***"
+        print("\n*** Summary figure ***")
         out_path = "%s/method_bf" % path
 
         # Get average I vs k
@@ -243,7 +243,7 @@ if __name__ == "__main__":
         matplotlib.pyplot.gca().tick_params(axis="both", labelsize=28)
 
         matplotlib.pyplot.plot(
-            range(len(Is_uncorrected)),
+            list(range(len(Is_uncorrected))),
             Is_uncorrected,
             "-o",
             label="uncorrected",
@@ -262,7 +262,7 @@ if __name__ == "__main__":
             Is_avg = get_I_avg_vs_k(fn)
             # Plot
             matplotlib.pyplot.plot(
-                range(len(Is_avg)),
+                list(range(len(Is_avg))),
                 Is_avg,
                 "-o",
                 label=r"$\alpha=%.2f$" % fraction,
@@ -274,7 +274,7 @@ if __name__ == "__main__":
         matplotlib.pyplot.tight_layout()
         matplotlib.pyplot.savefig(fign)
         matplotlib.pyplot.close()
-        print "Summary figure in:", fign
+        print("Summary figure in:", fign)
 
     ### APPLY CORRECTION ###
     ### GUARANTEES A+B = 1
@@ -284,8 +284,8 @@ if __name__ == "__main__":
         out_path = "%s/final" % path
         if not os.path.exists(out_path):
             os.mkdir(out_path)
-        print "\n*** Apply results from fit (%s) ***" % out_path
-        print "(enforcing A+B=1)"
+        print("\n*** Apply results from fit (%s) ***" % out_path)
+        print("(enforcing A+B=1)")
 
         A = get_A(fraction_best)
         B = get_B(fraction_best)

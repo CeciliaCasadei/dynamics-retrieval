@@ -80,10 +80,10 @@ if flag == 1:
     U, S, VH = dynamics_retrieval.SVD.SVD_f(x)
     U, S, VH = dynamics_retrieval.SVD.sorting(U, S, VH)
 
-    print "Done"
-    print "U: ", U.shape
-    print "S: ", S.shape
-    print "VH: ", VH.shape
+    print("Done")
+    print("U: ", U.shape)
+    print("S: ", S.shape)
+    print("VH: ", VH.shape)
 
     joblib.dump(U, "%s/U.jbl" % results_path)
     joblib.dump(S, "%s/S.jbl" % results_path)
@@ -107,22 +107,22 @@ if flag == 1:
     U = joblib.load("%s/U.jbl" % results_path)
     S = joblib.load("%s/S.jbl" % results_path)
     VH = joblib.load("%s/VT_final.jbl" % results_path)
-    print U.shape, S.shape, VH.shape
+    print(U.shape, S.shape, VH.shape)
     x_r_tot = 0
     for mode in modes:
         u = U[:, mode]
         sv = S[mode]
         vT = VH[mode, :]
-        print u.shape, sv.shape, vT.shape
+        print(u.shape, sv.shape, vT.shape)
         x_r = sv * numpy.outer(u, vT)
-        print x_r.shape
-        matplotlib.pyplot.scatter(x_r[0, :], x_r[1, :], s=1, c=range(x_r.shape[1]))
+        print(x_r.shape)
+        matplotlib.pyplot.scatter(x_r[0, :], x_r[1, :], s=1, c=list(range(x_r.shape[1])))
         matplotlib.pyplot.savefig(
             "%s/x_r_mode_%d.png" % (results_path, mode), dpi=96 * 3
         )
         matplotlib.pyplot.close()
         x_r_tot += x_r
-    matplotlib.pyplot.scatter(x_r_tot[0, :], x_r_tot[1, :], s=1, c=range(x_r.shape[1]))
+    matplotlib.pyplot.scatter(x_r_tot[0, :], x_r_tot[1, :], s=1, c=list(range(x_r.shape[1])))
     matplotlib.pyplot.savefig("%s/x_r_tot.png" % (results_path), dpi=96 * 3)
     matplotlib.pyplot.close()
 
@@ -157,7 +157,7 @@ if flag == 1:
         )
         dynamics_retrieval.calculate_distances_utilities.calculate_d_sq_sparse(settings)
     else:
-        print "Undefined distance mode."
+        print("Undefined distance mode.")
 
 flag = 0
 if flag == 1:
@@ -233,7 +233,7 @@ if flag == 1:
     evecs = joblib.load("%s/evecs_sorted.jbl" % results_path)
     test = numpy.matmul(evecs.T, evecs)
     diff = abs(test - numpy.eye(settings.l))
-    print numpy.amax(diff)
+    print(numpy.amax(diff))
 
 flag = 0
 if flag == 1:
@@ -294,9 +294,9 @@ if flag == 1:
     x_r_tot = 0
     for mode in [0]:
         x_r = joblib.load("%s/movie_mode_%d_parallel.jbl" % (results_path, mode))
-        print x_r[0, :].shape
+        print(x_r[0, :].shape)
         matplotlib.pyplot.scatter(
-            x_r[0, :], x_r[1, :], s=1, c=numpy.asarray(range(S))[q : S - q + 1]
+            x_r[0, :], x_r[1, :], s=1, c=numpy.asarray(list(range(S)))[q : S - q + 1]
         )
         matplotlib.pyplot.savefig(
             "%s/x_r_mode_%d.png" % (results_path, mode), dpi=96 * 3
@@ -304,7 +304,7 @@ if flag == 1:
         matplotlib.pyplot.close()
         x_r_tot += x_r
     matplotlib.pyplot.scatter(
-        x_r_tot[0, :], x_r_tot[1, :], s=1, c=numpy.asarray(range(S))[q : S - q + 1]
+        x_r_tot[0, :], x_r_tot[1, :], s=1, c=numpy.asarray(list(range(S)))[q : S - q + 1]
     )
     matplotlib.pyplot.savefig("%s/x_r_tot.png" % (results_path), dpi=96 * 3)
     matplotlib.pyplot.close()
@@ -338,10 +338,10 @@ if flag == 1:
     U, S, VH = dynamics_retrieval.SVD.SVD_f(x)
     U, S, VH = dynamics_retrieval.SVD.sorting(U, S, VH)
 
-    print "Done"
-    print "U: ", U.shape
-    print "S: ", S.shape
-    print "VH: ", VH.shape
+    print("Done")
+    print("U: ", U.shape)
+    print("S: ", S.shape)
+    print("VH: ", VH.shape)
 
     joblib.dump(U, "%s/U.jbl" % results_path)
     joblib.dump(S, "%s/S.jbl" % results_path)
@@ -381,9 +381,9 @@ if flag == 1:
     x_r_tot = 0
     for mode in [0]:
         x_r = joblib.load("%s/movie_mode_%d_parallel.jbl" % (results_path, mode))
-        print x_r[0, :].shape
+        print(x_r[0, :].shape)
         matplotlib.pyplot.scatter(
-            x_r[0, :], x_r[1, :], s=1, c=numpy.asarray(range(S))[q - 1 : S - q + 1]
+            x_r[0, :], x_r[1, :], s=1, c=numpy.asarray(list(range(S)))[q - 1 : S - q + 1]
         )
         matplotlib.pyplot.savefig(
             "%s/x_r_mode_%d.png" % (results_path, mode), dpi=96 * 3
@@ -391,7 +391,7 @@ if flag == 1:
         matplotlib.pyplot.close()
         x_r_tot += x_r
     matplotlib.pyplot.scatter(
-        x_r_tot[0, :], x_r_tot[1, :], s=1, c=numpy.asarray(range(S))[q - 1 : S - q + 1]
+        x_r_tot[0, :], x_r_tot[1, :], s=1, c=numpy.asarray(list(range(S)))[q - 1 : S - q + 1]
     )
     matplotlib.pyplot.savefig("%s/x_r_tot.png" % (results_path), dpi=96 * 3)
     matplotlib.pyplot.close()

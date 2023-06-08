@@ -6,7 +6,7 @@ import numpy
 
 
 def f(settings):
-    print "\n****** RUNNING merge_D_sq ******"
+    print("\n****** RUNNING merge_D_sq ******")
     results_path = settings.results_path
     datatype = settings.datatype
     nproc = settings.n_workers
@@ -14,24 +14,24 @@ def f(settings):
 
     starttime = time.time()
 
-    print "Merge D_sq"
+    print("Merge D_sq")
     D_sq = numpy.zeros((n, n), dtype=datatype)
     for i in range(nproc):
-        print i
+        print(i)
         fn = "%s/D_sq_loop_idx_%d.jbl" % (results_path, i)
-        print fn
+        print(fn)
         temp = joblib.load(fn)
         D_sq += temp
-    print "Done."
+    print("Done.")
 
-    print "Saving."
+    print("Saving.")
     joblib.dump(D_sq, "%s/D_sq_parallel.jbl" % results_path)
-    print "Done."
-    print "It took: ", time.time() - starttime
+    print("Done.")
+    print("It took: ", time.time() - starttime)
 
 
 def f_lp_filter(settings):
-    print "\n****** RUNNING merge_D_sq ******"
+    print("\n****** RUNNING merge_D_sq ******")
     results_path = settings.results_path
     datatype = settings.datatype
     nproc = settings.n_workers_lp_filter_Dsq
@@ -40,24 +40,24 @@ def f_lp_filter(settings):
 
     starttime = time.time()
 
-    print "Merge D_sq"
+    print("Merge D_sq")
     D_sq = numpy.zeros((n, n), dtype=datatype)
     for i in range(nproc):
-        print i
+        print(i)
         fn = "%s/D_sq_lp_filtered_fmax_%d_chunck_%d.jbl" % (results_path, f_max, i)
-        print fn
+        print(fn)
         temp = joblib.load(fn)
         D_sq += temp
-    print "Done."
+    print("Done.")
 
-    print "Saving."
+    print("Saving.")
     joblib.dump(D_sq, "%s/D_sq_lp_filtered_fmax_%d.jbl" % (results_path, f_max))
-    print "Done."
-    print "It took: ", time.time() - starttime
+    print("Done.")
+    print("It took: ", time.time() - starttime)
 
 
 def f_N_D_sq_elements(settings):
-    print "\n****** RUNNING merge_N_D_sq_elements ******"
+    print("\n****** RUNNING merge_N_D_sq_elements ******")
     results_path = settings.results_path
     datatype = settings.datatype
     nproc = settings.n_workers
@@ -65,17 +65,17 @@ def f_N_D_sq_elements(settings):
 
     starttime = time.time()
 
-    print "Merge N_D_sq_elements"
+    print("Merge N_D_sq_elements")
     N_D_sq = numpy.zeros((n, n), dtype=datatype)
     for i in range(nproc):
-        print i
+        print(i)
         fn = "%s/N_D_sq_loop_idx_%d.jbl" % (results_path, i)
-        print fn
+        print(fn)
         temp = joblib.load(fn)
         N_D_sq += temp
-    print "Done."
+    print("Done.")
 
-    print "Saving."
+    print("Saving.")
     joblib.dump(N_D_sq, "%s/N_D_sq_parallel.jbl" % results_path)
-    print "Done."
-    print "It took: ", time.time() - starttime
+    print("Done.")
+    print("It took: ", time.time() - starttime)

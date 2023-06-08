@@ -16,7 +16,7 @@ def f_class1_class4():
 
     out_fn = open("csplit.dat", "w")
     for i in range(n_events):
-        print i
+        print(i)
         if "class1" in img_fn[i]:
             out_fn.write(
                 "%s //%s class1\n"
@@ -28,7 +28,7 @@ def f_class1_class4():
                 % (img_fn[i][16:].strip("\n"), event_file[i][9:].strip("\n"))
             )
         else:
-            print "issue"
+            print("issue")
     out_fn.close()
 
 
@@ -42,10 +42,10 @@ def f_partiality_model():
     f = h5py.File(file_mat, "r")
     timestamps = f["/t_uniform"]
     timestamps = numpy.asarray(timestamps).flatten()
-    print "timestamps: ", timestamps
+    print("timestamps: ", timestamps)
     test = timestamps[numpy.argwhere(timestamps > 0)].flatten()
     test = test[numpy.argwhere(test < 1000)]
-    print test.shape, "frames in [0, 1000]fs"
+    print(test.shape, "frames in [0, 1000]fs")
 
     myDict = {}
     myDict["uniqueIDs_dark"] = uniqueID_dark_lst
@@ -69,16 +69,16 @@ def f_partiality_model():
         # print label
         if "class1" in image_fn:
             if label + "\n" in uniqueID_light_lst:
-                print "light - IN"
+                print("light - IN")
                 label = label.split("/")[-1]
                 out_fn.write("%s //%s %s\n" % (image_fn, event_n, label))
         elif "class4" in image_fn:
             if label + "\n" in uniqueID_dark_lst:
-                print "dark - IN"
+                print("dark - IN")
                 label = label.split("/")[-1]
                 out_fn.write("%s //%s %s\n" % (image_fn, event_n, label))
         else:
-            print "issue"
+            print("issue")
     out_fn.close()
 
 

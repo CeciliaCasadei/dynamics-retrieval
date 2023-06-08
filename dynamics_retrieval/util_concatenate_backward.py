@@ -4,7 +4,7 @@ import numpy
 
 
 def f(settings):
-    print "\n****** RUNNING concatenate_backward. ******"
+    print("\n****** RUNNING concatenate_backward. ******")
     datatype = settings.datatype
     results_path = settings.results_path
     q = settings.q
@@ -25,7 +25,7 @@ def f(settings):
     X = numpy.zeros((n, s + 1), dtype=datatype)
     for j in range(s + 1):
         if j % 500 == 0:
-            print j, " / ", s + 1
+            print(j, " / ", s + 1)
         # column j of X
         for i in range(q):
             # rows to fill in
@@ -34,7 +34,7 @@ def f(settings):
 
             X[i_start_row:i_end_row, j] = x[:, j + q - i - 1]
 
-    print "Concatenated data shape: ", X.shape
+    print("Concatenated data shape: ", X.shape)
 
     f = "%s/X_backward_q_%d.jbl" % (results_path, q)
     joblib.dump(X, f)

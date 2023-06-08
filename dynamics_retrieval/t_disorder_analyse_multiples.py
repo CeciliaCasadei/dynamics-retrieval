@@ -110,7 +110,7 @@ def get_I_avg_vs_l(fn):
 
 
 def correct(f_w, f_r, f_alpha, f_beta):
-    print "Writing corrected intensities in: ", f_w
+    print("Writing corrected intensities in: ", f_w)
     fo_w = open(f_w, "w")
     fo_r = open(f_r, "r")
     f_gamma = 1 - f_alpha - f_beta
@@ -159,9 +159,9 @@ def rewrite(
 
 
 def plot(I_avg, fign, xlabel):
-    print "Plotting average intensities in: ", fign
+    print("Plotting average intensities in: ", fign)
     matplotlib.pyplot.figure(figsize=(20, 8))
-    matplotlib.pyplot.plot(range(len(I_avg)), I_avg, "-o")
+    matplotlib.pyplot.plot(list(range(len(I_avg))), I_avg, "-o")
     matplotlib.pyplot.xlabel(r"$%s$" % xlabel, fontsize=34),
     matplotlib.pyplot.ylabel(
         r"$\left< I \right>_%s$" % xlabel, fontsize=34, rotation=0, labelpad=30
@@ -211,8 +211,8 @@ if __name__ == "__main__":
         out_path = "%s/method_bf" % path
         if not os.path.exists(out_path):
             os.mkdir(out_path)
-        print "\n*** Method: brute force (%s) ***" % out_path
-        print "\n*** Determine translated domain fraction. ***"
+        print("\n*** Method: brute force (%s) ***" % out_path)
+        print("\n*** Determine translated domain fraction. ***")
         fn_r = "%s/%s_original.txt" % (path, label)
 
         tp_lst = []
@@ -229,18 +229,18 @@ if __name__ == "__main__":
                 tp_s = tuple(sorted(tp))
                 tp_lst.append(tp_s)  # list of sorted tuples
         tp_unique = set(tp_lst)
-        print len(tp_unique)
+        print(len(tp_unique))
 
         for fraction_set in [[0.01, 0.17, 0.82]]:  # tp_unique:
             fraction_alpha = fraction_set[0]
             fraction_beta = fraction_set[1]
             fraction_gamma = fraction_set[2]
 
-            print "\nTesting domain fractions: %.2f %.2f %.2f" % (
+            print("\nTesting domain fractions: %.2f %.2f %.2f" % (
                 fraction_alpha,
                 fraction_beta,
                 fraction_gamma,
-            )
+            ))
 
             # Correct intensities
             fn_w = "%s/%s_corrected_frac_%.2f_%.2f_%.2f.txt" % (
@@ -268,7 +268,7 @@ if __name__ == "__main__":
     # Plot summary figure
     flag = 0
     if flag == 1:
-        print "\n*** Summary figure ***"
+        print("\n*** Summary figure ***")
         out_path = "%s/method_bf" % path
 
         # Get average I vs k
@@ -286,7 +286,7 @@ if __name__ == "__main__":
         matplotlib.pyplot.gca().tick_params(axis="both", labelsize=28)
 
         matplotlib.pyplot.plot(
-            range(len(Is_uncorrected)), Is_uncorrected, "-o", label="uncorrected", c="b"
+            list(range(len(Is_uncorrected))), Is_uncorrected, "-o", label="uncorrected", c="b"
         )
 
         # Swissfel
@@ -297,7 +297,7 @@ if __name__ == "__main__":
         Is_avg = get_I_avg_vs_k(fn)
 
         matplotlib.pyplot.plot(
-            range(len(Is_avg)), Is_avg, "-o", label="corrected", c="m"
+            list(range(len(Is_avg))), Is_avg, "-o", label="corrected", c="m"
         )
 
         matplotlib.pyplot.legend(frameon=False, fontsize=34)
@@ -307,7 +307,7 @@ if __name__ == "__main__":
         matplotlib.pyplot.tight_layout()
         matplotlib.pyplot.savefig(fign)
         matplotlib.pyplot.close()
-        print "Summary figure in:", fign
+        print("Summary figure in:", fign)
 
         ##########
         # Get average I vs h
@@ -325,7 +325,7 @@ if __name__ == "__main__":
         matplotlib.pyplot.gca().tick_params(axis="both", labelsize=28)
 
         matplotlib.pyplot.plot(
-            range(len(Is_uncorrected)), Is_uncorrected, "-o", label="uncorrected", c="b"
+            list(range(len(Is_uncorrected))), Is_uncorrected, "-o", label="uncorrected", c="b"
         )
 
         # Swissfel
@@ -336,7 +336,7 @@ if __name__ == "__main__":
         Is_avg = get_I_avg_vs_h(fn)
 
         matplotlib.pyplot.plot(
-            range(len(Is_avg)), Is_avg, "-o", label="corrected", c="m"
+            list(range(len(Is_avg))), Is_avg, "-o", label="corrected", c="m"
         )
 
         matplotlib.pyplot.legend(frameon=False, fontsize=34)
@@ -344,7 +344,7 @@ if __name__ == "__main__":
         matplotlib.pyplot.tight_layout()
         matplotlib.pyplot.savefig(fign)
         matplotlib.pyplot.close()
-        print "Summary figure in:", fign
+        print("Summary figure in:", fign)
 
         ##########
         # Get average I vs h
@@ -362,7 +362,7 @@ if __name__ == "__main__":
         matplotlib.pyplot.gca().tick_params(axis="both", labelsize=28)
 
         matplotlib.pyplot.plot(
-            range(len(Is_uncorrected)), Is_uncorrected, "-o", label="uncorrected", c="b"
+            list(range(len(Is_uncorrected))), Is_uncorrected, "-o", label="uncorrected", c="b"
         )
 
         # Swissfel
@@ -373,7 +373,7 @@ if __name__ == "__main__":
         Is_avg = get_I_avg_vs_l(fn)
 
         matplotlib.pyplot.plot(
-            range(len(Is_avg)), Is_avg, "-o", label="corrected", c="m"
+            list(range(len(Is_avg))), Is_avg, "-o", label="corrected", c="m"
         )
 
         matplotlib.pyplot.legend(frameon=False, fontsize=34)
@@ -381,4 +381,4 @@ if __name__ == "__main__":
         matplotlib.pyplot.tight_layout()
         matplotlib.pyplot.savefig(fign)
         matplotlib.pyplot.close()
-        print "Summary figure in:", fign
+        print("Summary figure in:", fign)

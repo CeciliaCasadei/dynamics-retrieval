@@ -6,7 +6,7 @@ import settings
 
 
 def f():
-    print "\n****** RUNNING calculate_D_N_v_dense.******"
+    print("\n****** RUNNING calculate_D_N_v_dense.******")
 
     q = settings.q  # Concatenation number
     b = settings.b  # N. of nearest neighbors
@@ -32,7 +32,7 @@ def f():
 
     # Measure for each sample i distances to all neighbors j
     for i in range(1, s + 1):
-        print i
+        print(i)
         X_i = X[:, i]
         d_i = numpy.zeros((s), dtype=numpy.float64)
         for j in range(1, s + 1):

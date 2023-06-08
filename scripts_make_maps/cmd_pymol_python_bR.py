@@ -72,16 +72,16 @@ def myfunc_step(myArguments):
     try:
         optionPairs, leftOver = getopt.getopt(myArguments, "h", ["nmodes="])
     except getopt.GetoptError:
-        print "Usage: ..."
+        print("Usage: ...")
         sys.exit(2)
     for option, value in optionPairs:
         if option == "-h":
-            print "Usage: ..."
+            print("Usage: ...")
             sys.exit()
         elif option == "--nmodes":
             n_modes = int(value)
 
-    print "N MODES: ", n_modes
+    print("N MODES: ", n_modes)
     t_r_p_0 = joblib.load("./t_r_p_0.jbl")
     cmd.load("./6g7h.pdb")
     cmd.color("blue", selection=" (name C*)")
@@ -213,7 +213,7 @@ def myfunc_penta():
             % (n_modes, time),
             "nlsa_map",
         )
-        print "loaded", t
+        print("loaded", t)
         cmd.zoom("sel")
         cmd.set_view(
             "\
@@ -288,7 +288,7 @@ def myfunc_cartoon():
             % (n_modes, time),
             "nlsa_map",
         )
-        print "loaded", t
+        print("loaded", t)
         cmd.zoom("sel")
         cmd.isomesh("map_modes_0_x_p4", "nlsa_map", 4.0, "all", carve=5.0)
         cmd.color("cyan", "map_modes_0_x_p4")

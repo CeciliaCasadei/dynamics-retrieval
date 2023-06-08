@@ -85,12 +85,12 @@ if flag == 1:
     x_sp = joblib.load(
         "%s/dT_bst_sparse_LTD_light_mirrored.jbl" % settings.results_path
     )
-    print x_sp[1000, :]
+    print(x_sp[1000, :])
     x = x_sp[:, :].todense()
     if numpy.isnan(x).any():
         print ("x contain NaN values")
         N = numpy.count_nonzero(numpy.isnan(x))
-        print "N nans: ", N, "out of ", x.shape
+        print("N nans: ", N, "out of ", x.shape)
         x[numpy.isnan(x)] = 0
     else:
         print ("x does not contain NaN values")
@@ -98,9 +98,9 @@ if flag == 1:
     M = joblib.load("%s/M_sparse_light.jbl" % (settings.results_path))
     M = M[:, :].todense()
     mysum = M.sum(axis=1)
-    print "M sum: ", mysum.shape
+    print("M sum: ", mysum.shape)
     idxs = numpy.argwhere(mysum == 0)
-    print "N. zeros: ", idxs.shape[0]
+    print("N. zeros: ", idxs.shape[0])
 
     x_sparse = sparse.csr_matrix(x)
     joblib.dump(
@@ -200,12 +200,12 @@ if flag == 1:
     for q in qs:
         modulename = "settings_q_%d" % q
         settings = __import__(modulename)
-        print "q: ", settings.q
-        print "jmax: ", settings.f_max
+        print("q: ", settings.q)
+        print("jmax: ", settings.f_max)
         F = dynamics_retrieval.make_lp_filter.get_F_sv_t_range(settings)
         Q, R = dynamics_retrieval.make_lp_filter.on_qr(settings, F)
         d = dynamics_retrieval.make_lp_filter.check_on(Q)
-        print "Normalisation: ", numpy.amax(abs(d))
+        print("Normalisation: ", numpy.amax(abs(d)))
         joblib.dump(Q, "%s/F_on.jbl" % settings.results_path)
 
 flag = 0
@@ -215,8 +215,8 @@ if flag == 1:
     for q in qs:
         modulename = "settings_q_%d" % q
         settings = __import__(modulename)
-        print "q: ", settings.q
-        print "jmax: ", settings.f_max
+        print("q: ", settings.q)
+        print("jmax: ", settings.f_max)
         end_worker = (2 * settings.f_max + 1) - 1
         os.system(
             "sbatch -p day -t 1-00:00:00 --mem=100G --array=0-%d ../scripts_parallel_submission/run_parallel_aj.sh %s"
@@ -232,8 +232,8 @@ if flag == 1:
         # for q in qs:
         #     modulename = 'settings_q_%d'%q
         settings = __import__(modulename)
-        print "q: ", settings.q
-        print "jmax: ", settings.f_max
+        print("q: ", settings.q)
+        print("jmax: ", settings.f_max)
         dynamics_retrieval.merge_aj.main(settings)
 
 flag = 0
@@ -243,8 +243,8 @@ if flag == 1:
     for q in [17501]:
         modulename = "settings_q_%d" % q
         settings = __import__(modulename)
-        print "q: ", settings.q
-        print "jmax: ", settings.f_max
+        print("q: ", settings.q)
+        print("jmax: ", settings.f_max)
 
         end_worker = (2 * settings.f_max + 1) - 1
         os.system(
@@ -261,8 +261,8 @@ if flag == 1:
     for q in [17501]:
         modulename = "settings_q_%d" % q
         settings = __import__(modulename)
-        print "q: ", settings.q
-        print "jmax: ", settings.f_max
+        print("q: ", settings.q)
+        print("jmax: ", settings.f_max)
         dynamics_retrieval.calculate_ATA_merge.main(settings)
 
 flag = 0
@@ -274,8 +274,8 @@ if flag == 1:
     for q in [17501]:
         modulename = "settings_q_%d" % q
         settings = __import__(modulename)
-        print "q: ", settings.q
-        print "jmax: ", settings.f_max
+        print("q: ", settings.q)
+        print("jmax: ", settings.f_max)
         dynamics_retrieval.SVD.get_chronos(settings)
 
 flag = 0
@@ -288,8 +288,8 @@ if flag == 1:
     for q in [17501]:
         modulename = "settings_q_%d" % q
         settings = __import__(modulename)
-        print "q: ", settings.q
-        print "jmax: ", settings.f_max
+        print("q: ", settings.q)
+        print("jmax: ", settings.f_max)
         dynamics_retrieval.plot_SVs.main(settings)
         dynamics_retrieval.plot_chronos.main(settings)
 
@@ -303,8 +303,8 @@ if flag == 1:
     for q in qs:
         modulename = "settings_q_%d" % q
         settings = __import__(modulename)
-        print "q: ", settings.q
-        print "jmax: ", settings.f_max
+        print("q: ", settings.q)
+        print("jmax: ", settings.f_max)
         dynamics_retrieval.SVD.get_topos(settings)
 
 ######################
@@ -320,8 +320,8 @@ if flag == 1:
     for q in [17501]:
         modulename = "settings_q_%d" % q
         settings = __import__(modulename)
-        print "q: ", settings.q
-        print "jmax: ", settings.f_max
+        print("q: ", settings.q)
+        print("jmax: ", settings.f_max)
         dynamics_retrieval.make_Ai.make_Ai_f(settings, n_chuncks)
 
 flag = 0  # Make Ai's from A
@@ -333,8 +333,8 @@ if flag == 1:
         # for q in qs:
         #     modulename = 'settings_q_%d'%q
         settings = __import__(modulename)
-        print "q: ", settings.q
-        print "jmax: ", settings.f_max
+        print("q: ", settings.q)
+        print("jmax: ", settings.f_max)
         dynamics_retrieval.make_Ai.get_Ai_f(settings, n_chuncks)
 
 flag = 0  # Make Ui's (or uij's) from Ai's
@@ -346,8 +346,8 @@ if flag == 1:
     for q in [17501]:
         modulename = "settings_q_%d" % q
         settings = __import__(modulename)
-        print "q: ", settings.q
-        print "jmax: ", settings.f_max
+        print("q: ", settings.q)
+        print("jmax: ", settings.f_max)
         dynamics_retrieval.make_Ui.make_Ui_f(settings, n_chuncks)
 
 flag = 0  # Make uj's from uij's
@@ -359,8 +359,8 @@ if flag == 1:
     for q in [17501]:
         modulename = "settings_q_%d" % q
         settings = __import__(modulename)
-        print "q: ", settings.q
-        print "jmax: ", settings.f_max
+        print("q: ", settings.q)
+        print("jmax: ", settings.f_max)
         dynamics_retrieval.make_Ui.make_uj(settings, n_chuncks)
 
 flag = 0  # TO DO # Make U from Ui's
@@ -372,8 +372,8 @@ if flag == 1:
     for q in qs:
         modulename = "settings_q_%d" % q
         settings = __import__(modulename)
-        print "q: ", settings.q
-        print "jmax: ", settings.f_max
+        print("q: ", settings.q)
+        print("jmax: ", settings.f_max)
         dynamics_retrieval.make_Ui.make_U(settings, n_chuncks)
 ###################
 
@@ -389,8 +389,8 @@ if flag == 1:
     for q in [17501]:
         modulename = "settings_q_%d" % q
         settings = __import__(modulename)
-        print "q: ", settings.q
-        print "jmax: ", settings.f_max
+        print("q: ", settings.q)
+        print("jmax: ", settings.f_max)
         dynamics_retrieval.reconstruct_p.f(settings)
         dynamics_retrieval.reconstruct_p.f_ts(settings)
 
@@ -405,8 +405,8 @@ if flag == 1:
     for q in qs:
         modulename = "settings_q_%d" % q
         settings = __import__(modulename)
-        print "q: ", settings.q
-        print "jmax: ", settings.f_max
+        print("q: ", settings.q)
+        print("jmax: ", settings.f_max)
         dynamics_retrieval.local_linearity.get_L(settings)
 
 flag = 0
@@ -418,8 +418,8 @@ if flag == 1:
         # for q in qs:
         #     modulename = 'settings_q_%d'%q
         settings = __import__(modulename)
-        print "q: ", settings.q
-        print "jmax: ", settings.f_max
+        print("q: ", settings.q)
+        print("jmax: ", settings.f_max)
         nmodes = 1
         dynamics_retrieval.add_modes.f(settings, nmodes)
 
@@ -432,8 +432,8 @@ if flag == 1:
     for q in [17501]:
         modulename = "settings_q_%d" % q
         settings = __import__(modulename)
-        print "q: ", settings.q
-        print "jmax: ", settings.f_max
+        print("q: ", settings.q)
+        print("jmax: ", settings.f_max)
         nmodes = 1
         dynamics_retrieval.add_modes.f_static_plus_dynamics(settings, nmodes)
 

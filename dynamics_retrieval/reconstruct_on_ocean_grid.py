@@ -14,12 +14,12 @@ f.close()
 
 for mode in range(l):
 
-    print mode
+    print(mode)
     x = joblib.load("%s/movie_mode_%d_extended_fwd_bwd.jbl" % (results_path, mode))
 
     t_pts = x.shape[1]
 
-    print t_pts
+    print(t_pts)
 
     movie_2D = numpy.zeros((mask.shape[0], mask.shape[1], t_pts))
 

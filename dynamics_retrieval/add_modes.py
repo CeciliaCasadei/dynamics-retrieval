@@ -25,12 +25,12 @@ def extract(settings, x_r, nm):
         os.mkdir(fpath)
 
     for i in range(0, x_r.shape[1], 100):
-        print i
+        print(i)
         f_out = "%s/extracted_Is_p_%d_%d_modes_timestep_%0.6d.txt" % (fpath, p, nm, i)
 
         I = numpy.squeeze(x_r[:, i])
         # I = x_r[:, i]
-        print "I: ", I.shape
+        print("I: ", I.shape)
 
         I[numpy.isnan(I)] = 0
         I[I < 0] = 0
@@ -48,7 +48,7 @@ def f(settings, nmodes):
 
     x_r_tot = 0
     for mode in range(0, nmodes):
-        print "Mode: ", mode
+        print("Mode: ", mode)
         x_r = joblib.load("%s/movie_p_%d_mode_%d.jbl" % (results_path, p, mode))
         x_r_tot += x_r
 
@@ -67,31 +67,31 @@ def f_static_plus_dynamics(settings, nmodes):
 
     T = joblib.load("%s/T_sparse_LTD_%s.jbl" % (results_path, label))
     M = joblib.load("%s/M_sparse_%s.jbl" % (results_path, label))
-    print "T: is sparse: ", sparse.issparse(T), T.shape, T.dtype
-    print "M: is sparse: ", sparse.issparse(M), M.shape, M.dtype
+    print("T: is sparse: ", sparse.issparse(T), T.shape, T.dtype)
+    print("M: is sparse: ", sparse.issparse(M), M.shape, M.dtype)
 
     ns = numpy.sum(M, axis=1)
     avgs = numpy.sum(T, axis=1) / ns
-    print "avgs: ", avgs.shape
-    print avgs[100, 0]
+    print("avgs: ", avgs.shape)
+    print(avgs[100, 0])
 
     avgs_matrix = numpy.tile(avgs, (1, S - q + 1 - ncopies + 1))
-    print "avgs_matrix: ", avgs_matrix.shape
-    print avgs_matrix[100, 0:5]
+    print("avgs_matrix: ", avgs_matrix.shape)
+    print(avgs_matrix[100, 0:5])
 
     x_r_tot = 0
     for mode in range(0, nmodes):
-        print "Mode: ", mode
+        print("Mode: ", mode)
         x_r = joblib.load(
             "%s/reconstruction_p_%d/movie_p_%d_mode_%d.jbl" % (results_path, p, p, mode)
         )
         x_r_tot += x_r
-    print "x_r_tot: ", x_r_tot.shape
-    print x_r_tot[100, 9]
+    print("x_r_tot: ", x_r_tot.shape)
+    print(x_r_tot[100, 9])
 
     x_r_tot_plus_avg = x_r_tot + avgs_matrix
-    print "x_r_tot_plus_avg: ", x_r_tot_plus_avg.shape
-    print x_r_tot_plus_avg[100, 9]
+    print("x_r_tot_plus_avg: ", x_r_tot_plus_avg.shape)
+    print(x_r_tot_plus_avg[100, 9])
     joblib.dump(
         x_r_tot_plus_avg,
         "%s/reconstruction_p_%d/x_r_tot_plus_avg_p_%d_%d_modes.jbl"

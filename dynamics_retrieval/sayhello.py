@@ -1,2 +1,2 @@
 def f():
-	print 'Hello, testing package!'
+	print('Hello, testing package!')

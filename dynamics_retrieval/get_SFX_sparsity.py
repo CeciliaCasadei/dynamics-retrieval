@@ -14,15 +14,15 @@ m = 22727
 n_obs = joblib.load("%s/boost_factors_%s.jbl" % (results_path, label))
 sparsity_array = n_obs / S
 
-idxs = random.sample(range(0, m), 7000)
+idxs = random.sample(list(range(0, m)), 7000)
 idxs = sorted(idxs)
 
 sparsity_array_sampled = sparsity_array[idxs]
 
 thrs = 1 - sparsity_array_sampled
 
-print max(thrs)
-print numpy.average(sparsity_array)
-print numpy.average(sparsity_array_sampled)
+print(max(thrs))
+print(numpy.average(sparsity_array))
+print(numpy.average(sparsity_array_sampled))
 
 joblib.dump(thrs, "%s/synthetic_data_jitter/test12/sparsity_thrs.jbl" % folder)

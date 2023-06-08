@@ -26,14 +26,14 @@ def get_x_r_large_q_scan(q, nmodes):
     S = settings_scan.S
     m = settings_scan.m
 
-    print "p: ", p
-    print "q: ", q
-    print "S: ", S
-    print "m: ", m
+    print("p: ", p)
+    print("q: ", q)
+    print("S: ", S)
+    print("m: ", m)
 
     x_r_tot = 0
     for mode in range(0, nmodes):
-        print "Mode: ", mode
+        print("Mode: ", mode)
         x_r = joblib.load(
             "%s/reconstruction_p_%d/movie_p_%d_mode_%d.jbl" % (results_path, p, p, mode)
         )
@@ -45,7 +45,7 @@ def get_x_r_large_q_scan(q, nmodes):
         x_r_tot_large[:, (q - 1) / 2 : (q - 1) / 2 + (S - q + 1)] = x_r_tot
         return x_r_tot_large
     else:
-        print "Case p>0 to be implemented"
+        print("Case p>0 to be implemented")
 
 
 def get_CCs_q_scan(settings, qs, nmodes):
@@ -68,10 +68,10 @@ def get_CCs_q_scan(settings, qs, nmodes):
             x_r_tot_flat = x_r_tot_large[
                 :, (q_max - 1) / 2 : (q_max - 1) / 2 + (S - q_max + 1)
             ].flatten()
-            print start_flat.shape, x_r_tot_flat.shape
+            print(start_flat.shape, x_r_tot_flat.shape)
             CC = correlate.Correlate(start_flat, x_r_tot_flat)
             CCs.append(CC)
-            print CC
+            print(CC)
             start_large = x_r_tot_large
         joblib.dump(
             CCs,
@@ -80,7 +80,7 @@ def get_CCs_q_scan(settings, qs, nmodes):
         )
 
     else:
-        print "Case p>0 to be implemented"
+        print("Case p>0 to be implemented")
 
 
 def plot_CCs_q_scan(settings, qs, nmodes):
@@ -124,13 +124,13 @@ def plot_CCs_q_scan(settings, qs, nmodes):
 def get_x_r(fmax, nmodes):
     modulename = "settings_f_max_%d" % fmax
     settings_scan = __import__(modulename)
-    print "jmax: ", settings_scan.f_max
+    print("jmax: ", settings_scan.f_max)
     results_path = settings_scan.results_path
     p = settings_scan.p
-    print results_path
+    print(results_path)
     x_r_tot = 0
     for mode in range(0, min(nmodes, 2 * fmax + 1)):
-        print "Mode: ", mode
+        print("Mode: ", mode)
         x_r = joblib.load(
             "%s/reconstruction_p_%d/movie_p_%d_mode_%d.jbl" % (results_path, p, p, mode)
         )
@@ -144,17 +144,17 @@ def get_CCs_jmax_scan(settings, f_max_s, nmodes):
     p = settings.p
 
     start = get_x_r(f_max_s[0], nmodes)
-    print start.shape
+    print(start.shape)
 
     CCs = []
     for f_max in f_max_s[1:]:
         x_r_tot = get_x_r(f_max, nmodes)
-        print x_r_tot.shape
+        print(x_r_tot.shape)
         start_flat = start.flatten()
         x_r_tot_flat = x_r_tot.flatten()
         CC = correlate.Correlate(start_flat, x_r_tot_flat)
         CCs.append(CC)
-        print CC
+        print(CC)
         start = x_r_tot
     joblib.dump(
         CCs,

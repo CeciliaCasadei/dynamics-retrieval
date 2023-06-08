@@ -57,7 +57,7 @@ def model(settings, i, ts):
 
     # Pedestal
     pedestal = 3.0 + float(i) / 600
-    print "Pedestal:", pedestal
+    print("Pedestal:", pedestal)
     x_i = x_i + pedestal
 
     return x_i
@@ -77,7 +77,7 @@ def make_x(settings):
     T = settings.T_model
     jitter_factor = settings.jitter_factor
     results_path = settings.results_path
-    print "Jitter factor", jitter_factor
+    print("Jitter factor", jitter_factor)
 
     x = numpy.zeros((m, S))
     mask = numpy.zeros((m, S))
@@ -107,7 +107,7 @@ def make_x(settings):
         # Sparsity
         sparsities = numpy.random.rand(S)
         thr = thrs[i]  # 0.9998 #0.9990 #0.982
-        print i, "Sparsity thr:", thr
+        print(i, "Sparsity thr:", thr)
         sparsities[sparsities < thr] = 0
         sparsities[sparsities >= thr] = 1
         x_i = x_i * sparsities
@@ -229,13 +229,13 @@ if flag == 1:
     for q in qs:
         modulename = "settings_q_%d" % q
         settings = __import__(modulename)
-        print "q: ", settings.q
-        print "jmax: ", settings.f_max
+        print("q: ", settings.q)
+        print("jmax: ", settings.f_max)
 
         F = dynamics_retrieval.make_lp_filter.get_F_sv_t_range(settings)
         Q, R = dynamics_retrieval.make_lp_filter.on_qr(settings, F)
         d = dynamics_retrieval.make_lp_filter.check_on(Q)
-        print "Normalisation: ", numpy.amax(abs(d))
+        print("Normalisation: ", numpy.amax(abs(d)))
         joblib.dump(Q, "%s/F_on.jbl" % settings.results_path)
 
 flag = 0
@@ -245,8 +245,8 @@ if flag == 1:
     for f_max in f_max_s[-1:]:
         modulename = "settings_f_max_%d" % f_max
         settings = __import__(modulename)
-        print "q: ", settings.q
-        print "jmax: ", settings.f_max
+        print("q: ", settings.q)
+        print("jmax: ", settings.f_max)
 
         end_worker = settings.n_workers_A - 1
         os.system(
@@ -263,8 +263,8 @@ if flag == 1:
     for f_max in f_max_s[-1:]:
         modulename = "settings_f_max_%d" % f_max
         settings = __import__(modulename)
-        print "q: ", settings.q
-        print "jmax: ", settings.f_max
+        print("q: ", settings.q)
+        print("jmax: ", settings.f_max)
 
         dynamics_retrieval.util_merge_A.main(settings)
 
@@ -272,28 +272,28 @@ flag = 0
 if flag == 1:
     import dynamics_retrieval.SVD
 
-    print "\n****** RUNNING SVD ******"
+    print("\n****** RUNNING SVD ******")
     # for q in qs:
     #     modulename = 'settings_q_%d'%q
     for f_max in f_max_s:
         modulename = "settings_f_max_%d" % f_max
         settings = __import__(modulename)
-        print "jmax: ", settings.f_max
-        print "q: ", settings.q
+        print("jmax: ", settings.f_max)
+        print("q: ", settings.q)
 
         results_path = settings.results_path
 
         A = joblib.load("%s/A_parallel.jbl" % results_path)[
             :, 0 : 2 * settings.f_max + 1
         ]
-        print "Loaded"
+        print("Loaded")
         U, S, VH = dynamics_retrieval.SVD.SVD_f_manual(A)
         U, S, VH = dynamics_retrieval.SVD.sorting(U, S, VH)
 
-        print "Done"
-        print "U: ", U.shape
-        print "S: ", S.shape
-        print "VH: ", VH.shape
+        print("Done")
+        print("U: ", U.shape)
+        print("S: ", S.shape)
+        print("VH: ", VH.shape)
 
         joblib.dump(U[:, 0:20], "%s/U.jbl" % results_path)
         joblib.dump(S, "%s/S.jbl" % results_path)
@@ -303,7 +303,7 @@ if flag == 1:
         Phi = evecs[:, 0 : 2 * settings.f_max_considered + 1]
 
         VT_final = dynamics_retrieval.SVD.project_chronos(VH, Phi)
-        print "VT_final: ", VT_final.shape
+        print("VT_final: ", VT_final.shape)
         joblib.dump(VT_final, "%s/VT_final.jbl" % results_path)
 
 flag = 0
@@ -316,8 +316,8 @@ if flag == 1:
     for f_max in f_max_s:
         modulename = "settings_f_max_%d" % f_max
         settings = __import__(modulename)
-        print "jmax: ", settings.f_max
-        print "q: ", settings.q
+        print("jmax: ", settings.f_max)
+        print("q: ", settings.q)
 
         dynamics_retrieval.plot_SVs.main(settings)
         dynamics_retrieval.plot_chronos.main(settings)
@@ -332,8 +332,8 @@ if flag == 1:
     for f_max in f_max_s:
         modulename = "settings_f_max_%d" % f_max
         settings = __import__(modulename)
-        print "jmax: ", settings.f_max
-        print "q: ", settings.q
+        print("jmax: ", settings.f_max)
+        print("q: ", settings.q)
 
         dynamics_retrieval.reconstruct_p.f(settings)
         dynamics_retrieval.reconstruct_p.f_ts(settings)
@@ -348,8 +348,8 @@ if flag == 1:
     for f_max in f_max_s:
         modulename = "settings_f_max_%d" % f_max
         settings = __import__(modulename)
-        print "jmax: ", settings.f_max
-        print "q: ", settings.q
+        print("jmax: ", settings.f_max)
+        print("q: ", settings.q)
 
         dynamics_retrieval.local_linearity.get_L(settings)
 
@@ -369,9 +369,9 @@ if flag == 1:
         p = settings.p
         results_path = "%s/reconstruction_p_%d" % (settings.results_path, p)
 
-        print "jmax: ", settings.f_max
-        print "q: ", settings.q
-        print "p: ", settings.p
+        print("jmax: ", settings.f_max)
+        print("q: ", settings.q)
+        print("p: ", settings.p)
 
         t_r = joblib.load("%s/t_r_p_%d.jbl" % (results_path, p))
         benchmark = eval_model(settings, t_r)
@@ -391,7 +391,7 @@ if flag == 1:
         nmodes = 20
         x_r_tot = 0
         for mode in range(0, min(nmodes, 2 * settings.f_max + 1)):
-            print "Mode: ", mode
+            print("Mode: ", mode)
 
             x_r = joblib.load("%s/movie_p_%d_mode_%d.jbl" % (results_path, p, mode))
             x_r_tot += x_r
@@ -412,9 +412,9 @@ if flag == 1:
 
         joblib.dump(CCs, "%s/CCs_to_benchmark.jbl" % (results_path))
 
-        matplotlib.pyplot.scatter(range(1, len(CCs) + 1), CCs)
+        matplotlib.pyplot.scatter(list(range(1, len(CCs) + 1)), CCs)
         matplotlib.pyplot.axhline(y=1.0)
-        matplotlib.pyplot.xticks(range(1, len(CCs) + 1, 1))
+        matplotlib.pyplot.xticks(list(range(1, len(CCs) + 1, 1)))
         matplotlib.pyplot.savefig("%s/CCs_to_benchmark.png" % (results_path))
         matplotlib.pyplot.close()
 
@@ -439,21 +439,21 @@ if flag == 1:
 
     T = joblib.load("%s/x.jbl" % (settings.results_path))
     M = joblib.load("%s/mask.jbl" % (settings.results_path))
-    print "T, is sparse: ", sparse.issparse(T), T.shape, T.dtype
-    print "M, is sparse: ", sparse.issparse(M), M.shape, M.dtype
+    print("T, is sparse: ", sparse.issparse(T), T.shape, T.dtype)
+    print("M, is sparse: ", sparse.issparse(M), M.shape, M.dtype)
 
     if sparse.issparse(T) == False:
         T = sparse.csr_matrix(T)
-    print "T, is sparse:", sparse.issparse(T), T.dtype, T.shape
+    print("T, is sparse:", sparse.issparse(T), T.dtype, T.shape)
     if sparse.issparse(M) == False:
         M = sparse.csr_matrix(M)
-    print "M, is sparse:", sparse.issparse(M), M.dtype, M.shape
+    print("M, is sparse:", sparse.issparse(M), M.dtype, M.shape)
 
     ns = numpy.sum(M, axis=1)
-    print "ns: ", ns.shape, ns.dtype
+    print("ns: ", ns.shape, ns.dtype)
 
     avgs = numpy.sum(T, axis=1) / ns
-    print "avgs: ", avgs.shape, avgs.dtype
+    print("avgs: ", avgs.shape, avgs.dtype)
 
     avgs_matrix = numpy.repeat(avgs, settings.S, axis=1)
 
@@ -467,9 +467,9 @@ if flag == 1:
         p = settings.p
         results_path = "%s/reconstruction_p_%d" % (settings.results_path, p)
 
-        print "jmax: ", settings.f_max
-        print "q: ", settings.q
-        print "p: ", settings.p
+        print("jmax: ", settings.f_max)
+        print("q: ", settings.q)
+        print("p: ", settings.p)
 
         t_r = joblib.load("%s/t_r_p_%d.jbl" % (results_path, p))
         benchmark = eval_model(settings, t_r)
@@ -490,10 +490,10 @@ if flag == 1:
 
         ### Case with avg subtraction
         x_r_tot = avgs_matrix[:, start_idx:end_idx]
-        print "x_r_tot: ", x_r_tot.shape
+        print("x_r_tot: ", x_r_tot.shape)
 
         for mode in range(0, min(nmodes, 2 * settings.f_max + 1)):
-            print "Mode: ", mode
+            print("Mode: ", mode)
 
             x_r = joblib.load("%s/movie_p_%d_mode_%d.jbl" % (results_path, p, mode))
             x_r_tot += x_r
@@ -514,9 +514,9 @@ if flag == 1:
 
         joblib.dump(CCs, "%s/CCs_to_benchmark.jbl" % (results_path))
 
-        matplotlib.pyplot.scatter(range(1, len(CCs) + 1), CCs)
+        matplotlib.pyplot.scatter(list(range(1, len(CCs) + 1)), CCs)
         matplotlib.pyplot.axhline(y=1.0)
-        matplotlib.pyplot.xticks(range(1, len(CCs) + 1, 1))
+        matplotlib.pyplot.xticks(list(range(1, len(CCs) + 1, 1)))
         matplotlib.pyplot.savefig("%s/CCs_to_benchmark.png" % (results_path))
         matplotlib.pyplot.close()
 
@@ -576,8 +576,8 @@ if flag == 1:
     for f_max in f_max_s:
         modulename = "settings_f_max_%d" % f_max
         settings = __import__(modulename)
-        print "jmax: ", settings.f_max
-        print "q: ", settings.q
+        print("jmax: ", settings.f_max)
+        print("q: ", settings.q)
         end_worker = settings.n_workers_reconstruction - 1
         os.system(
             "sbatch -p day -t 1-00:00:00 --mem=350G --array=0-%d ../scripts_parallel_submission/run_parallel_reconstruction.sh %s"
@@ -601,8 +601,8 @@ if flag == 1:
     for f_max in f_max_s:
         modulename = "settings_f_max_%d" % f_max
         settings = __import__(modulename)
-        print "jmax: ", settings.f_max
-        print "q: ", settings.q
+        print("jmax: ", settings.f_max)
+        print("q: ", settings.q)
         for mode in settings.modes_to_reconstruct:
             dynamics_retrieval.util_merge_x_r.f(settings, mode)
 
@@ -628,7 +628,7 @@ if flag == 1:
     n_modes_to_use = 4
     x_r_tot = 0
     for mode in range(n_modes_to_use):
-        print "Mode:", mode
+        print("Mode:", mode)
         x_r = joblib.load(
             "%s/movie_mode_%d_parallel.jbl" % (settings.results_path, mode)
         )
@@ -651,13 +651,13 @@ if flag == 1:
         % (settings.results_path, settings.p, n_modes_to_use)
     )
     U, S, VH = dynamics_retrieval.SVD.SVD_f(x)
-    print "Sorting"
+    print("Sorting")
     U, S, VH = dynamics_retrieval.SVD.sorting(U, S, VH)
 
-    print "Done"
-    print "U: ", U.shape
-    print "S: ", S.shape
-    print "VH: ", VH.shape
+    print("Done")
+    print("U: ", U.shape)
+    print("S: ", S.shape)
+    print("VH: ", VH.shape)
 
     joblib.dump(U, "%s/U.jbl" % settings.results_path)
     joblib.dump(S, "%s/S.jbl" % settings.results_path)
@@ -698,7 +698,7 @@ if flag == 1:
     x_r_tot = 0
     CCs = []
     for mode in range(4):
-        print "Mode: ", mode
+        print("Mode: ", mode)
         u = U[:, mode]
         sv = S[mode]
         vT = VH[mode, :]
@@ -722,8 +722,8 @@ if flag == 1:
 
     joblib.dump(CCs, "%s/reconstruction_CC_vs_nmodes.jbl" % rpath)
 
-    matplotlib.pyplot.scatter(range(1, len(CCs) + 1), CCs, c="b")
-    matplotlib.pyplot.xticks(range(1, len(CCs) + 1, 2))
+    matplotlib.pyplot.scatter(list(range(1, len(CCs) + 1)), CCs, c="b")
+    matplotlib.pyplot.xticks(list(range(1, len(CCs) + 1, 2)))
     matplotlib.pyplot.savefig("%s/reconstruction_CC_vs_nmodes.png" % (rpath))
     matplotlib.pyplot.close()
 
@@ -743,7 +743,7 @@ if flag == 1:
     x_r_tot = 0
     Ls = []
     for mode in range(20):
-        print "Mode: ", mode
+        print("Mode: ", mode)
         u = U[:, mode]
         sv = S[mode]
         vT = VH[mode, :]
@@ -756,8 +756,8 @@ if flag == 1:
         Ls.append(L)
     joblib.dump(Ls, "%s/local_linearity_vs_nmodes.jbl" % rpath)
 
-    matplotlib.pyplot.scatter(range(1, len(Ls) + 1), numpy.log10(Ls), c="b")
-    matplotlib.pyplot.xticks(range(1, len(Ls) + 1, 2))
+    matplotlib.pyplot.scatter(list(range(1, len(Ls) + 1)), numpy.log10(Ls), c="b")
+    matplotlib.pyplot.xticks(list(range(1, len(Ls) + 1, 2)))
     matplotlib.pyplot.savefig("%s/local_linearity_vs_nmodes.png" % (rpath))
     matplotlib.pyplot.close()
 
@@ -776,10 +776,10 @@ if flag == 1:
     rpath = settings.results_path
 
     x = joblib.load("%s/x.jbl" % rpath)
-    print "x: ", x.shape
+    print("x: ", x.shape)
 
     ts_meas = joblib.load("%s/ts_meas.jbl" % rpath)
-    print "ts_meas: ", ts_meas.shape, ts_meas.dtype
+    print("ts_meas: ", ts_meas.shape, ts_meas.dtype)
 
     bin_sizes = []
     CCs = []
@@ -790,7 +790,7 @@ if flag == 1:
         eval_model(settings, ts_meas).flatten(), x.flatten()
     )
     CCs.append(CC)
-    print "Starting CC: ", CC
+    print("Starting CC: ", CC)
 
     for n in range(100, 2100, 100):
         bin_size = 2 * n + 1
@@ -811,7 +811,7 @@ if flag == 1:
             eval_model(settings, ts_binned).flatten(), x_binned.flatten()
         )
         CCs.append(CC)
-        print "Bin size: ", bin_size, "CC: ", CC
+        print("Bin size: ", bin_size, "CC: ", CC)
 
         x_binned_large = numpy.zeros((settings.m, settings.S))
         x_binned_large[:] = numpy.nan
@@ -887,15 +887,15 @@ if flag == 1:
         )
         dynamics_retrieval.calculate_distances_utilities.calculate_d_sq_sparse(settings)
     else:
-        print "Undefined distance mode."
+        print("Undefined distance mode.")
 
 flag = 0
 if flag == 1:
     import settings_synthetic_data_jitter as settings
 
     d_sq = joblib.load("%s/d_sq.jbl" % (settings.results_path))
-    print numpy.amax(d_sq), numpy.amin(d_sq)
-    print numpy.amax(numpy.diag(d_sq)), numpy.amin(numpy.diag(d_sq))
+    print(numpy.amax(d_sq), numpy.amin(d_sq))
+    print(numpy.amax(numpy.diag(d_sq)), numpy.amin(numpy.diag(d_sq)))
 
 flag = 0
 if flag == 1:
@@ -1117,7 +1117,7 @@ if flag == 1:
     evecs = joblib.load("%s/evecs_sorted.jbl" % settings.results_path)
     test = numpy.matmul(evecs.T, evecs)
     diff = abs(test - numpy.eye(settings.l))
-    print numpy.amax(diff)
+    print(numpy.amax(diff))
 
 flag = 0
 if flag == 1:
@@ -1319,7 +1319,7 @@ if flag == 1:
         t_r = joblib.load("%s/t_r_p_%d.jbl" % (results_path, p))
 
         benchmark = eval_model(settings, t_r)
-        print "Benchmark: ", benchmark.shape
+        print("Benchmark: ", benchmark.shape)
         dynamics_retrieval.plot_syn_data.f(
             benchmark, "%s/benchmark_at_t_r.png" % results_path
         )
@@ -1328,16 +1328,16 @@ if flag == 1:
         x_r_tot = 0
         CCs = []
         for mode in range(min(settings.l, 20)):
-            print "Mode: ", mode
+            print("Mode: ", mode)
 
             x_r = joblib.load("%s/movie_mode_%d_parallel.jbl" % (results_path, mode))
-            print "x_r: ", x_r.shape
+            print("x_r: ", x_r.shape)
 
             x_r_tot += x_r
             x_r_tot_flat = x_r_tot.flatten()
 
             CC = dynamics_retrieval.correlate.Correlate(benchmark, x_r_tot_flat)
-            print "CC: ", CC
+            print("CC: ", CC)
             CCs.append(CC)
 
             dynamics_retrieval.plot_syn_data.f(
@@ -1360,7 +1360,7 @@ if flag == 1:
 
         joblib.dump(CCs, "%s/reconstruction_CC_vs_nmodes.jbl" % results_path)
 
-        matplotlib.pyplot.scatter(range(1, len(CCs) + 1), CCs, c="b")
-        matplotlib.pyplot.xticks(range(1, len(CCs) + 1, 2))
+        matplotlib.pyplot.scatter(list(range(1, len(CCs) + 1)), CCs, c="b")
+        matplotlib.pyplot.xticks(list(range(1, len(CCs) + 1, 2)))
         matplotlib.pyplot.savefig("%s/reconstruction_CC_vs_nmodes.png" % results_path)
         matplotlib.pyplot.close()

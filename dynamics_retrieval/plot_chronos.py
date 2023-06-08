@@ -26,17 +26,17 @@ def plot(settings):
     nmodes = VT_final.shape[0]
     s = VT_final.shape[1]
 
-    print "nmodes: ", nmodes
-    print "s: ", s
+    print("nmodes: ", nmodes)
+    print("s: ", s)
 
     out_folder = "%s/chronos" % (results_path)
     if not os.path.exists(out_folder):
         os.mkdir(out_folder)
 
     for i in range(0, min(20, nmodes)):
-        print i
+        print(i)
         chrono = VT_final[i, :]
-        f(range(s), chrono, "%s/chrono_%d.png" % (out_folder, i))
+        f(list(range(s)), chrono, "%s/chrono_%d.png" % (out_folder, i))
 
 
 def plot_ts(settings):
@@ -48,15 +48,15 @@ def plot_ts(settings):
     nmodes = VT_final.shape[0]
     s = VT_final.shape[1]
 
-    print "nmodes: ", nmodes
-    print "s: ", s
+    print("nmodes: ", nmodes)
+    print("s: ", s)
 
     out_folder = "%s/chronos" % (results_path)
     if not os.path.exists(out_folder):
         os.mkdir(out_folder)
 
     for i in range(0, min(20, nmodes)):
-        print i
+        print(i)
         chrono = VT_final[i, :]
 
         f(ts, chrono, "%s/chrono_ts_%d.png" % (out_folder, i))

@@ -18,10 +18,10 @@ def main(settings):
 
     A = numpy.zeros(shape=(m * q, 2 * f_max + 1), dtype=datatype)
     for i in range(0, 2 * f_max + 1):
-        print i
+        print(i)
         fn = "%s/aj/a_%d.jbl" % (results_path, i)
         aj = joblib.load(fn)
         A[:, i] = aj
 
-    print "A: ", A.shape, A.dtype
+    print("A: ", A.shape, A.dtype)
     joblib.dump(A, "%s/A_parallel.jbl" % results_path)

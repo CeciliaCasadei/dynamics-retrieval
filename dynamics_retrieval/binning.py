@@ -18,10 +18,10 @@ def binning_f(settings):
     results_path = settings.results_path
 
     x = joblib.load("%s/x.jbl" % results_path)
-    print "x: ", x.shape
+    print("x: ", x.shape)
 
     benchmark = joblib.load("../../synthetic_data_5/test1/x.jbl")
-    print benchmark.shape
+    print(benchmark.shape)
 
     bin_sizes = []
     CCs = []
@@ -30,7 +30,7 @@ def binning_f(settings):
     bin_sizes.append(bin_size)
     CC = dynamics_retrieval.correlate.Correlate(benchmark.flatten(), x.flatten())
     CCs.append(CC)
-    print CC
+    print(CC)
 
     for n in range(200, 2200, 200):
         bin_size = 2 * n + 1
@@ -45,7 +45,7 @@ def binning_f(settings):
             benchmark[:, n:-n].flatten(), x_binned.flatten()
         )
         CCs.append(CC)
-        print "Bin size: ", bin_size, "CC: ", CC
+        print("Bin size: ", bin_size, "CC: ", CC)
 
         x_large = numpy.zeros((settings.m, settings.S))
         x_large[:] = numpy.nan
