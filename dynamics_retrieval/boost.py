@@ -14,7 +14,7 @@ def main(settings):
 
     # Syn data
     T = joblib.load( '%s/dT.jbl'%(folder))
-    M = joblib.load( '%s/input_data_mask_sparsity_0.50.jbl'%(folder))
+    M = joblib.load( '%s/input_data_mask_sparsity_0.006.jbl'%(folder))
     
 
     print "T: is sparse: ", sparse.issparse(T), T.dtype, T.shape

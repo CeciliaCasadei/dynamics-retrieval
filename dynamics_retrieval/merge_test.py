@@ -171,7 +171,7 @@ def main_sliding_window():
     print "M: ", M.shape,
     print "ts: ", ts.shape
 
-    stepsize = 15000
+    stepsize = 20000
     binsize = 2*stepsize
     
     start = 0

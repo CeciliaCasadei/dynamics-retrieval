@@ -13,7 +13,7 @@ import matplotlib.pyplot
 import random
 
 def plot_real_space_tomogram():
-    path_name = '/das/work/p17/p17491/Cecilia_Casadei/NLSA/data_tomography/tomo_all_imgs'
+    path_name = '/das/work/p17/p17491/Cecilia_Casadei/NLSA/data_tomography_3/tomo_all_imgs'
     
     for i in range(1,801):
         fn = '%s/tomo_all_img_%0.3d.mat'%(path_name, i)
@@ -26,19 +26,19 @@ def plot_real_space_tomogram():
         tomogram_real   = matfile['tomo_all_img']
         print tomogram_real.shape
         
-        matplotlib.pyplot.imshow(tomogram_real, vmin=0, vmax=8)
+        matplotlib.pyplot.imshow(tomogram_real, vmin=0, vmax=1)
         matplotlib.pyplot.colorbar()
         matplotlib.pyplot.savefig('%s/tomo_real_time_%0.6d.png'%(path_name, i))
         matplotlib.pyplot.close()
         
 def get_syn_projections():
-    path_name = '/das/work/p17/p17491/Cecilia_Casadei/NLSA/data_tomography/projections_real_space'
+    path_name = '/das/work/p17/p17491/Cecilia_Casadei/NLSA/data_tomography_3/projections_real_space'
     
     n_proj_pxls = 200
     n_ts = 800
     n_projections = 180
     
-    pxl_n = n_proj_pxls*10+190
+    pxl_n = 1870
     trace = []
     for i in range(1,n_ts+1):
         fn = '%s/proj_real_t_%0.3d.mat'%(path_name, i)
@@ -67,11 +67,11 @@ def get_syn_projections():
     matplotlib.pyplot.close()
 
 def merge_projections():
-    path_name = '/das/work/p17/p17491/Cecilia_Casadei/NLSA/data_tomography/projections_real_space'
+    path_name = '/das/work/p17/p17491/Cecilia_Casadei/NLSA/data_tomography_3/projections_real_space'
     n_proj_pxls = 200
     n_projections = 180
     m = n_proj_pxls * n_projections
-    S = 500
+    S = 800
     x = numpy.zeros(shape=(m,S))
     
     for t in range(S):
@@ -83,15 +83,15 @@ def merge_projections():
                 "%s/benchmark.jbl"%(path_name))
 
 def make_sparse_data():
-    path_name = '/das/work/p17/p17491/Cecilia_Casadei/NLSA/data_tomography/projections_real_space'
+    path_name = '/das/work/p17/p17491/Cecilia_Casadei/NLSA/data_tomography_3/projections_real_space'
     bm = joblib.load("%s/benchmark.jbl"%(path_name))  
     
-    sparsity_level = 0.5 #0.9  # 90% present #0.1 # 10% present
+    sparsity_level = 1.0/180 # 10% present
     
     n_proj_pxls = 200
     n_projections = 180
     m = n_proj_pxls * n_projections
-    S = 500
+    S = 800
     
     n_proj_per_tstep = int(sparsity_level * n_projections)
     print 'N. measured projections per timestep: ', n_proj_per_tstep
@@ -106,12 +106,15 @@ def make_sparse_data():
             mask[idx*n_proj_pxls:(idx+1)*n_proj_pxls, i] = 1
             
     joblib.dump(x_input, 
-                "%s/input_data_sparsity_%0.2f.jbl"
+                "%s/input_data_sparsity_%0.3f.jbl"
                 %(path_name, sparsity_level))
     joblib.dump(mask, 
-                "%s/input_data_mask_sparsity_%0.2f.jbl"
+                "%s/input_data_mask_sparsity_%0.3f.jbl"
                 %(path_name, sparsity_level))
 
+flag = 0
+if flag == 1:
+    plot_real_space_tomogram()
 # MAKE DATA
 flag = 0
 if flag == 1:
@@ -168,11 +171,13 @@ if flag == 1:
         N = numpy.count_nonzero(numpy.isnan(x))
         print "N nans: ", N, "out of ", x.shape
         x[numpy.isnan(x)] = 0
+        x_sp = sparse.csr_matrix(x)
+        joblib.dump(x_sp, "%s/dT_bst_mirrored_nonans.jbl" % settings.results_path)
     else:
         print ("x does not contain NaN values")
         
         
-qs = [1, 11, 51, 81, 101, 121, 151]
+qs = [250]#[1, 11, 51, 81, 101, 121, 151]
 
 flag = 0
 if flag == 1:
@@ -188,7 +193,7 @@ if flag == 1:
             os.mkdir(q_path)
 
         # MAKE SETTINGS FILE
-        data_file = "%s/dT_bst_mirrored.jbl" % (
+        data_file = "%s/dT_bst_mirrored_nonans.jbl" % (
             q_path,
         )
         fn = (
@@ -334,6 +339,7 @@ if flag == 1:
         dynamics_retrieval.SVD.get_chronos(settings)
 
 
+
 flag = 0
 if flag == 1:
     import dynamics_retrieval.plot_chronos
@@ -379,7 +385,7 @@ if flag == 1:
         dynamics_retrieval.reconstruct_p.f(settings)
         dynamics_retrieval.reconstruct_p.f_ts(settings)      
         
-flag = 1
+flag = 0
 if flag == 1:
     import dynamics_retrieval.plot_syn_data
     import dynamics_retrieval.correlate
@@ -387,12 +393,16 @@ if flag == 1:
     import settings_dynamic_tomography as settings
     
     
-    T = joblib.load("%s/input_data_sparsity_0.50.jbl" % (settings.results_path))
-    M = joblib.load("%s/input_data_mask_sparsity_0.50.jbl" % (settings.results_path))
+    T = joblib.load("%s/input_data_sparsity_0.006.jbl" % (settings.results_path))
+    M = joblib.load("%s/input_data_mask_sparsity_0.006.jbl" % (settings.results_path))
     print "T, is sparse: ", sparse.issparse(T), T.shape, T.dtype
     print "M, is sparse: ", sparse.issparse(M), M.shape, M.dtype
+    
+    
 
     if sparse.issparse(T) == False:
+        if numpy.isnan(T).any():
+            print ("Nan values found")
         T = sparse.csr_matrix(T)
     print "T, is sparse:", sparse.issparse(T), T.dtype, T.shape
     if sparse.issparse(M) == False:
@@ -401,10 +411,20 @@ if flag == 1:
 
     ns = numpy.sum(M, axis=1)
     print "ns: ", ns.shape, ns.dtype
+    
+    pxl_ns = [1870, 2005, 2190, 5100, 7100, 7300, 10150, 19887, 23500, 35500, 31500]
+    for pxl_n in pxl_ns:
+        print 'n. obs pxl', pxl_n, ': ', ns[pxl_n, 0]
+    idxs = numpy.argwhere(ns == 0)
+    print 'idxs, zero obs!:', idxs.shape
 
     avgs = numpy.sum(T, axis=1) / ns
     print "avgs: ", avgs.shape, avgs.dtype
-
+    
+    ######
+    avgs[numpy.isnan(avgs)]=0
+    ######
+    
     avgs_matrix = numpy.repeat(avgs, settings.S, axis=1)
     print "avgs: ", avgs_matrix.shape, avgs_matrix.dtype
     print 'element 150: ', avgs_matrix[150,0]
@@ -412,7 +432,7 @@ if flag == 1:
     # f_max = 150
     # modulename = "settings_f_max_%d" % f_max
     
-    q = 1
+    q = 250
     modulename = 'settings_q_%d'%q
 
     settings = __import__(modulename)
@@ -437,6 +457,7 @@ if flag == 1:
     end_idx = start_idx + t_r.shape[0]
     print start_idx, end_idx
     bm = benchmark[:, start_idx:end_idx]
+    
     print 'Benchmark: ', bm.shape
 
     benchmark_flat = bm.flatten()
@@ -451,7 +472,6 @@ if flag == 1:
     CCs.append(CC)
     print 'CC: ', CC
         
-    pxl_ns = [1870, 2005, 2190, 10150, 19887]
     for pxl_n in pxl_ns:
         y = x_r_tot[pxl_n,:]
         y_T = y.T
@@ -476,12 +496,20 @@ if flag == 1:
         CCs.append(CC)
         print 'CC: ', CC
         
-        pxl_ns = [1870, 2005, 2190, 10150, 19887]
         for pxl_n in pxl_ns:
             y = x_r_tot[pxl_n,:]
             y_T = y.T
-            matplotlib.pyplot.plot(t_r, y_T, 'bo')
+            matplotlib.pyplot.plot(t_r, y_T, 'bo', markersize=1)
             matplotlib.pyplot.plot(range(start_idx,end_idx), bm[pxl_n,:], 'm')
+            obs = T[pxl_n,:].todense()
+            print obs.shape
+            
+            obs_lst = []
+            for i in range(obs.shape[1]):
+                obs_lst.append(obs[0,i])
+            print len(obs_lst)
+            
+            matplotlib.pyplot.scatter(range(settings.S), obs_lst, c='c')
             matplotlib.pyplot.savefig("%s/projections_alltheta_pxl_%d_vs_t_%d_modes.png"
                               %(results_path, pxl_n, mode+1))
             matplotlib.pyplot.close()
