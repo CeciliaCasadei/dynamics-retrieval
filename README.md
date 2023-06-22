@@ -14,6 +14,11 @@ References:
 
 ## Installation
 
+Start by cloning the code.
+
+    git clone https://github.com/CeciliaCasadei/dynamics-retrieval.git
+    cd dynamics-retrieval
+
 Using conda is recommended to install dependencies. A new conda environment can
 be created with
 
@@ -21,8 +26,6 @@ be created with
 
 After this, install the package:
 
-    git clone https://github.com/CeciliaCasadei/dynamics-retrieval.git
-    cd dynamics-retrieval
     pip install -e .[dev]
 
 Many workflows currently require editing the source code, so installing in developer

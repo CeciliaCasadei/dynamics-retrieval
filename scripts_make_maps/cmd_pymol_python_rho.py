@@ -184,10 +184,33 @@ def myfunc_bin(myArguments):
 
     map_folder = "."
     out_folder = "."
-    time_bin_labels = ["early", "late"]
+    # time_bin_labels = ["bin_0_30000_avg_-334.9fs_-223.3fs",
+    #                    "bin_15000_45000_avg_-273.0fs_-174.1fs",
+    #                    "bin_30000_60000_avg_-223.3fs_-124.6fs",
+    #                    "bin_45000_75000_avg_-174.1fs_-75.1fs",
+    #                    "bin_60000_90000_avg_-124.6fs_-25.8fs",
+    #                    "bin_75000_105000_avg_-75.1fs_23.9fs",
+    #                    "bin_90000_120000_avg_-25.8fs_73.1fs",
+    #                    "bin_105000_135000_avg_23.9fs_122.7fs",
+    #                    "bin_120000_150000_avg_73.1fs_172.1fs",
+    #                    "bin_135000_165000_avg_122.7fs_221.5fs",
+    #                    "bin_150000_180000_avg_172.1fs_270.7fs",
+    #                    "bin_165000_195000_avg_221.5fs_320.4fs",
+    #                    "bin_180000_210000_avg_270.7fs_371.0fs"
+    #                    ]
+    time_bin_labels = ["bin_0_40000_avg_-334.9fs_-190.6fs",
+                       "bin_20000_60000_avg_-256.3fs_-124.6fs",
+                       "bin_40000_80000_avg_-190.6fs_-58.6fs",
+                       "bin_60000_100000_avg_-124.6fs_6.9fs",
+                       "bin_80000_120000_avg_-58.6fs_73.1fs",
+                       "bin_100000_140000_avg_6.9fs_139.0fs",
+                       "bin_120000_160000_avg_73.1fs_205.2fs",
+                       "bin_140000_180000_avg_139.0fs_270.7fs",
+                       "bin_160000_200000_avg_205.2fs_337.4fs"
+                       ]
     for time_bin_label in time_bin_labels:
         cmd.load(
-            "%s/1.8_I_%s_avg_light--dark_swissfel_combined_dark_frac_0.01_0.19_0.80.ccp4"
+            "%s/1.8_I_%s_light--dark_swissfel_combined_dark_frac_0.01_0.19_0.80.ccp4"
             % (map_folder, time_bin_label),
             "mymap",
         )
@@ -227,10 +250,11 @@ def myfunc_bin(myArguments):
         cmd.set("mesh_width", 0.3)
         cmd.show("mesh", "map_plus")
         cmd.show("mesh", "map_minus")
+        
         cmd.ray(2048, 1024)
 
         cmd.png(
-            "%s/1.8_I_%s_avg_light--dark_I_dark_avg_chain%s_%.2fsig.png"
+            "%s/1.8_I_%s_light--dark_I_dark_avg_chain%s_%.2fsig.png"
             % (out_folder, time_bin_label, chainID, sig)
         )
 
@@ -243,6 +267,6 @@ cmd.extend("myfunc_step", myfunc_step)
 cmd.extend("myfunc_bin", myfunc_bin)
 cmd.extend("myfunc_sphere", myfunc_sphere)
 
-myfunc_step(sys.argv[1:])
+#myfunc_step(sys.argv[1:])
 # myfunc_sphere()
-# myfunc_bin(sys.argv[1:])
+myfunc_bin(sys.argv[1:])

@@ -3,14 +3,14 @@ import math
 
 import numpy
 
-test_n = 3
-root_f = "../../data_tomography/test%d" % test_n
+test_n = 2
+root_f = "../../data_tomography_3/test%d" % test_n
 
 datatype = numpy.float64
 
 # BUILD MODEL DATA
 m = 36000
-S = 500
+S = 800
 
 results_path = root_f
 # results_path = '%s/binning'%root_f
@@ -20,7 +20,7 @@ results_path = root_f
 
 # PARAS SCANS
 results_path = "%s" % root_f
-f_max_q_scan = 50
+f_max_q_scan = 200
 q_f_max_scan = 151
 
 # SELECTED VALUES

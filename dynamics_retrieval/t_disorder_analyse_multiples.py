@@ -231,7 +231,7 @@ if __name__ == "__main__":
         tp_unique = set(tp_lst)
         print(len(tp_unique))
 
-        for fraction_set in [[0.01, 0.17, 0.82]]:  # tp_unique:
+        for fraction_set in tp_unique:
             fraction_alpha = fraction_set[0]
             fraction_beta = fraction_set[1]
             fraction_gamma = fraction_set[2]
