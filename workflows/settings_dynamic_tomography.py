@@ -3,7 +3,7 @@ import math
 
 import numpy
 
-test_n = 2
+test_n = 3
 root_f = "../../data_tomography_3/test%d" % test_n
 
 datatype = numpy.float64
@@ -21,7 +21,7 @@ results_path = root_f
 # PARAS SCANS
 results_path = "%s" % root_f
 f_max_q_scan = 200
-q_f_max_scan = 151
+q_f_max_scan = 81
 
 # SELECTED VALUES
 # q = 4001
