@@ -1,0 +1,1 @@
+Example of data preparation for rhodopsin data collected at SwissFEL.
