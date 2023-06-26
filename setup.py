@@ -42,7 +42,7 @@ setup(
     install_requires=requirements,
     extras_require={
         "tests": test_requirements,
-        "dev": dev_requirements + test_requirements + doc_requirements,
+        "dev": dev_requirements + test_requirements,
     },
     long_description=readme + "\n\n" + history,
     long_description_content_type='text/markdown',
