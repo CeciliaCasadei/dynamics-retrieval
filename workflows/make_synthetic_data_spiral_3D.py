@@ -95,7 +95,6 @@ if flag == 1:
     mask[2, :] = sparsities
     x[2, :] = x_2
 
-    x = joblib.load("%s/x.jbl" % settings.results_path)
     fig = plt.figure()
     plt.rcParams["grid.color"] = "white"
     ax = fig.add_subplot(projection="3d")
@@ -122,8 +121,8 @@ if flag == 1:
 
     plt.savefig("%s/input_data.pdf" % settings.results_path, dpi=96 * 4)
 
-    # joblib.dump(x, '%s/x.jbl'%settings.results_path)
-    # joblib.dump(mask, '%s/mask.jbl'%settings.results_path)
+    joblib.dump(x, '%s/x.jbl'%settings.results_path)
+    joblib.dump(mask, '%s/mask.jbl'%settings.results_path)
 
 #############################
 ###     Plain SVD of x    ###

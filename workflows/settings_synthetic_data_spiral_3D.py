@@ -3,7 +3,7 @@ import math
 
 import numpy
 
-results_path = "../../synthetic_data_spiral_3D/test2"
+results_path = "out/synthetic_data_spiral_3D/test2"
 m = 3
 S = 800  # test1 400, from test2 800
 q = 100  # test1 40,  from test2 100
