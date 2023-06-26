@@ -11,8 +11,8 @@ from scipy import sparse
 
 
 def main(settings):
-    T_fn = "%s/input_data_sparsity_0.006.jbl" % (settings.results_path)         # TO LOAD
-    M_fn = "%s/input_data_mask_sparsity_0.006.jbl" % (settings.results_path)    # TO LOAD
+    T_fn = "%s/input_data_sparsity_systematic.jbl" % (settings.results_path)         # TO LOAD
+    M_fn = "%s/input_data_mask_sparsity_systematic.jbl" % (settings.results_path)    # TO LOAD
     dT_fn = "%s/dT.jbl" % (
         settings.results_path,
     )  # TO SAVE

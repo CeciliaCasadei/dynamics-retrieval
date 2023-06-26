@@ -112,6 +112,60 @@ def make_sparse_data():
                 "%s/input_data_mask_sparsity_%0.3f.jbl"
                 %(path_name, sparsity_level))
 
+def make_sparse_data_systematic():
+    path_name = '/das/work/p17/p17491/Cecilia_Casadei/NLSA/data_tomography_3/projections_real_space'
+    bm = joblib.load("%s/benchmark.jbl"%(path_name))  
+        
+    n_proj_pxls = 200
+    n_projections = 180
+    m = n_proj_pxls * n_projections
+    S = 800
+    
+    x_input = numpy.zeros(shape=(m,S))
+    mask = numpy.zeros(shape=(m,S))
+    
+    n_sweeps = 4
+    len_sweep = n_projections/n_sweeps #45
+    
+    for sweep in range(n_sweeps): #0, 1, 2, 3
+        ts_base = numpy.asarray(range(sweep*len_sweep, (sweep+1)*len_sweep))
+        projections = (ts_base*n_sweeps)%180 + sweep%n_sweeps
+        ts = numpy.empty((len_sweep, 6))
+        ts[:] = numpy.nan
+        
+        for i in range(6):   
+            ts[:,i] = ts_base + i*180
+        ts[ts>=S] = numpy.nan
+        
+        for j in range(projections.shape[0]):
+            projection = projections[j,]
+            projection_start = projection*n_proj_pxls
+            projection_end = projection_start+n_proj_pxls
+            
+            times = ts[j,:]
+            for time in times:
+                if not numpy.isnan(time):
+                    time = int(time)
+                    x_input[projection_start:projection_end,time] = bm[projection_start:projection_end,time]
+                    mask[projection_start:projection_end,time] = 1
+                    
+    test_sum = mask.sum(axis=0)  
+    idxs = numpy.argwhere(test_sum==n_proj_pxls)  
+    print(idxs.shape[0], 'timepoints have one projection.')
+    
+    test_sum = mask.sum(axis=1) 
+    idxs = numpy.argwhere(test_sum==4)  
+    print(idxs.shape[0]/n_proj_pxls, 'projections have 4 observations.')
+    idxs = numpy.argwhere(test_sum==5)  
+    print(idxs.shape[0]/n_proj_pxls, 'projections have 5 observations.')
+        
+    joblib.dump(x_input, 
+                "%s/input_data_sparsity_systematic.jbl"
+                %(path_name))
+    joblib.dump(mask, 
+                "%s/input_data_mask_sparsity_systematic.jbl"
+                %(path_name))
+
 flag = 0
 if flag == 1:
     plot_real_space_tomogram()
@@ -124,7 +178,7 @@ if flag == 1:
     merge_projections()
 flag = 0
 if flag == 1:
-    make_sparse_data()
+    make_sparse_data_systematic()
 
 flag = 0
 if flag == 1:
@@ -177,7 +231,7 @@ if flag == 1:
         print("x does not contain NaN values")
         
         
-qs = [250]#[1, 11, 51, 81, 101, 121, 151]
+qs = [1, 11, 51, 81, 101, 121, 151, 251]
 
 flag = 0
 if flag == 1:
@@ -193,7 +247,7 @@ if flag == 1:
             os.mkdir(q_path)
 
         # MAKE SETTINGS FILE
-        data_file = "%s/dT_bst_mirrored_nonans.jbl" % (
+        data_file = "%s/dT_bst_mirrored.jbl" % (
             q_path,
         )
         fn = (
@@ -211,7 +265,7 @@ if flag == 1:
         )
         
         
-f_max_s = [2, 4, 6, 10, 30, 70, 100, 120, 150]#50
+f_max_s = [8]#[2, 4, 6, 10, 30, 70, 100, 120, 150]#50
 
 flag = 0
 if flag == 1:
@@ -253,10 +307,10 @@ flag = 0
 if flag == 1:
     import dynamics_retrieval.make_lp_filter
 
-    # for f_max in f_max_s:
-    #     modulename = 'settings_f_max_%d'%f_max
-    for q in qs:
-        modulename = "settings_q_%d" % q
+    for f_max in f_max_s:
+        modulename = 'settings_f_max_%d'%f_max
+    # for q in qs:
+    #     modulename = "settings_q_%d" % q
         settings = __import__(modulename)
         print("q: ", settings.q)
         print("jmax: ", settings.f_max)
@@ -325,14 +379,14 @@ if flag == 1:
         print("jmax: ", settings.f_max)
         dynamics_retrieval.calculate_ATA_merge.main(settings)
         
-flag = 0
+flag = 1
 if flag == 1:
     import dynamics_retrieval.SVD
 
-    # for f_max in f_max_s:
-    #     modulename = 'settings_f_max_%d'%f_max
-    for q in qs:
-        modulename = "settings_q_%d" % q
+    for f_max in f_max_s:
+        modulename = 'settings_f_max_%d'%f_max
+    # for q in qs:
+    #     modulename = "settings_q_%d" % q
         settings = __import__(modulename)
         print("q: ", settings.q)
         print("jmax: ", settings.f_max)
@@ -345,10 +399,10 @@ if flag == 1:
     import dynamics_retrieval.plot_chronos
     import dynamics_retrieval.plot_SVs
 
-    # for f_max in f_max_s:
-    #     modulename = 'settings_f_max_%d'%f_max
-    for q in qs:
-        modulename = "settings_q_%d" % q
+    for f_max in f_max_s:
+        modulename = 'settings_f_max_%d'%f_max
+    # for q in qs:
+    #     modulename = "settings_q_%d" % q
         settings = __import__(modulename)
         print("q: ", settings.q)
         print("jmax: ", settings.f_max)
@@ -360,10 +414,10 @@ flag = 0
 if flag == 1:
     import dynamics_retrieval.SVD
 
-    # for f_max in f_max_s:
-    #     modulename = 'settings_f_max_%d'%f_max
-    for q in qs:
-        modulename = "settings_q_%d" % q
+    for f_max in f_max_s:
+        modulename = 'settings_f_max_%d'%f_max
+    # for q in qs:
+    #     modulename = "settings_q_%d" % q
         settings = __import__(modulename)
         print("q: ", settings.q)
         print("jmax: ", settings.f_max)
@@ -374,10 +428,10 @@ flag = 0
 if flag == 1:
     import dynamics_retrieval.reconstruct_p
 
-    for q in qs:
-        modulename = 'settings_q_%d'%q
-    # for f_max in f_max_s:
-    #     modulename = "settings_f_max_%d" % f_max
+    # for q in qs:
+    #     modulename = 'settings_q_%d'%q
+    for f_max in f_max_s:
+        modulename = "settings_f_max_%d" % f_max
         settings = __import__(modulename)
         print("jmax: ", settings.f_max)
         print("q: ", settings.q)
@@ -385,7 +439,7 @@ if flag == 1:
         dynamics_retrieval.reconstruct_p.f(settings)
         dynamics_retrieval.reconstruct_p.f_ts(settings)      
         
-flag = 0
+flag = 1
 if flag == 1:
     import dynamics_retrieval.plot_syn_data
     import dynamics_retrieval.correlate
@@ -393,8 +447,8 @@ if flag == 1:
     import settings_dynamic_tomography as settings
     
     
-    T = joblib.load("%s/input_data_sparsity_0.006.jbl" % (settings.results_path))
-    M = joblib.load("%s/input_data_mask_sparsity_0.006.jbl" % (settings.results_path))
+    T = joblib.load("%s/input_data_sparsity_systematic.jbl" % (settings.results_path))
+    M = joblib.load("%s/input_data_mask_sparsity_systematic.jbl" % (settings.results_path))
     print("T, is sparse: ", sparse.issparse(T), T.shape, T.dtype)
     print("M, is sparse: ", sparse.issparse(M), M.shape, M.dtype)
     
@@ -429,11 +483,11 @@ if flag == 1:
     print("avgs: ", avgs_matrix.shape, avgs_matrix.dtype)
     print('element 150: ', avgs_matrix[150,0])
     
-    # f_max = 150
-    # modulename = "settings_f_max_%d" % f_max
+    f_max = 8
+    modulename = "settings_f_max_%d" % f_max
     
-    q = 250
-    modulename = 'settings_q_%d'%q
+    #q = 81
+    #modulename = 'settings_q_%d'%q
 
     settings = __import__(modulename)
 
