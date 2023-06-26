@@ -29,16 +29,16 @@ if flag == 1:
 
     ax.scatter(x[0, :], x[1, :], x[2, :], c=t, edgecolors="none")
 
-    ax.w_xaxis.line.set_color("b")
-    ax.w_yaxis.line.set_color("b")
-    ax.w_zaxis.line.set_color("b")
+    ax.xaxis.line.set_color("b")
+    ax.yaxis.line.set_color("b")
+    ax.zaxis.line.set_color("b")
     ax.xaxis.set_ticklabels([])
     ax.yaxis.set_ticklabels([])
     ax.zaxis.set_ticklabels([])
 
-    ax.w_xaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
-    ax.w_yaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
-    ax.w_zaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+    ax.xaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+    ax.yaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+    ax.zaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
 
     for line in ax.xaxis.get_ticklines():
         line.set_visible(False)
@@ -101,16 +101,16 @@ if flag == 1:
 
     ax.scatter(x[0, :], x[1, :], x[2, :], c=t, edgecolors="none")
 
-    ax.w_xaxis.line.set_color("b")
-    ax.w_yaxis.line.set_color("b")
-    ax.w_zaxis.line.set_color("b")
+    ax.xaxis.line.set_color("b")
+    ax.yaxis.line.set_color("b")
+    ax.zaxis.line.set_color("b")
     ax.xaxis.set_ticklabels([])
     ax.yaxis.set_ticklabels([])
     ax.zaxis.set_ticklabels([])
 
-    ax.w_xaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
-    ax.w_yaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
-    ax.w_zaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+    ax.xaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+    ax.yaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+    ax.zaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
 
     for line in ax.xaxis.get_ticklines():
         line.set_visible(False)
@@ -183,16 +183,16 @@ if flag == 1:
             edgecolors="none",
         )
 
-        ax.w_xaxis.line.set_color("b")
-        ax.w_yaxis.line.set_color("b")
-        ax.w_zaxis.line.set_color("b")
+        ax.xaxis.line.set_color("b")
+        ax.yaxis.line.set_color("b")
+        ax.zaxis.line.set_color("b")
         ax.xaxis.set_ticklabels([])
         ax.yaxis.set_ticklabels([])
         ax.zaxis.set_ticklabels([])
 
-        ax.w_xaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
-        ax.w_yaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
-        ax.w_zaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+        ax.xaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+        ax.yaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+        ax.zaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
 
         for line in ax.xaxis.get_ticklines():
             line.set_visible(False)
@@ -218,16 +218,16 @@ if flag == 1:
             edgecolors="none",
         )
 
-        ax.w_xaxis.line.set_color("b")
-        ax.w_yaxis.line.set_color("b")
-        ax.w_zaxis.line.set_color("b")
+        ax.xaxis.line.set_color("b")
+        ax.yaxis.line.set_color("b")
+        ax.zaxis.line.set_color("b")
         ax.xaxis.set_ticklabels([])
         ax.yaxis.set_ticklabels([])
         ax.zaxis.set_ticklabels([])
 
-        ax.w_xaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
-        ax.w_yaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
-        ax.w_zaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+        ax.xaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+        ax.yaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+        ax.zaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
 
         for line in ax.xaxis.get_ticklines():
             line.set_visible(False)
@@ -503,16 +503,16 @@ if flag == 1:
             edgecolors="none",
         )
 
-        ax.w_xaxis.line.set_color("b")
-        ax.w_yaxis.line.set_color("b")
-        ax.w_zaxis.line.set_color("b")
+        ax.xaxis.line.set_color("b")
+        ax.yaxis.line.set_color("b")
+        ax.zaxis.line.set_color("b")
         ax.xaxis.set_ticklabels([])
         ax.yaxis.set_ticklabels([])
         ax.zaxis.set_ticklabels([])
 
-        ax.w_xaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
-        ax.w_yaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
-        ax.w_zaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+        ax.xaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+        ax.yaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+        ax.zaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
 
         for line in ax.xaxis.get_ticklines():
             line.set_visible(False)
@@ -537,16 +537,16 @@ if flag == 1:
             edgecolors="none",
         )
 
-        ax.w_xaxis.line.set_color("b")
-        ax.w_yaxis.line.set_color("b")
-        ax.w_zaxis.line.set_color("b")
+        ax.xaxis.line.set_color("b")
+        ax.yaxis.line.set_color("b")
+        ax.zaxis.line.set_color("b")
         ax.xaxis.set_ticklabels([])
         ax.yaxis.set_ticklabels([])
         ax.zaxis.set_ticklabels([])
 
-        ax.w_xaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
-        ax.w_yaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
-        ax.w_zaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+        ax.xaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+        ax.yaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+        ax.zaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
 
         for line in ax.xaxis.get_ticklines():
             line.set_visible(False)
