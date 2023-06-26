@@ -61,6 +61,8 @@ The general flow is as follows:
   - Calculate merging statistics, 
     to e.g. estimate the desired high-resolution cutoff.
 - `scripts_data_reduction_*`
+  - See details for [bR](scripts_data_reduction_bR/README.md),
+    [rhodopsin](scripts_data_reduction_rho/README.md)
   - Start with streams, scaling factors, and space group (eg asuP6_3.m)
   - Process
     - Extract reflection intensities for each frame from the stream
@@ -72,9 +74,9 @@ The general flow is as follows:
 - `workflows`
   - `run_TR-SFX_LPSA.py` runs scripts for dynamics retrieval
   - produces reconstructed reflection intensities for each timestep
-- `scripts_make_maps`
+- `scripts_make_maps` 
   - Converts output to mtz for use in phenix
-- `scripts_map_analysis`
+- [`scripts_map_analysis`](scripts_map_analysis/README.md)
   - Integrate difference density around a feature of interest
 
 
