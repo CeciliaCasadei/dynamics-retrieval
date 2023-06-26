@@ -8,6 +8,7 @@ import numpy
 
 
 def f(loop_idx, settings):
+    "Calculate part of matrix A = X@phi"
 
     print("node_idx: ", loop_idx)
 

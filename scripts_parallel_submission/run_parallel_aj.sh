@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# Compute LPSA matrix A = X@phi using parallel workers (calculating superframes in X implicitely)
 #SBATCH --ntasks-per-core=1
 
 module purge

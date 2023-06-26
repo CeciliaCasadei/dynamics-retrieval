@@ -67,7 +67,7 @@ The general flow is as follows:
     - Apply scale factors for each frame
     - Apply symmetry transformations
     - Add timing info for each frame
-    - Filter for desired timing distribution
+    - Filter for desired timing distribution (eg uniform timepoints)
   - Output data matrix (1 column per frame)
 - `workflows`
   - `run_TR-SFX_LPSA.py` runs scripts for dynamics retrieval
@@ -77,7 +77,41 @@ The general flow is as follows:
 - `scripts_map_analysis`
   - Integrate difference density around a feature of interest
 
+
+## Conventions
+
+The following naming conventions can be helpful in understanding the code. Variable
+names often reflect the mathematical notation used in the papers.
+
+- `x`, the main input with each frame as one column (*m* reflections ⨯ *S* timesteps)
+  - For SFX typical sizes would be *m=10^4*, *S=10^5*
+- `q`, the concatenation number. Number of frames in *x* that get concatenated together
+  to form supervectors in *X*. Should be odd.
+  - *q* needs to be optimized, but values on order of *10^4* worked for SFX
+- `X`, the superframe matrix (*qm* reflections ⨯ *S* timesteps). Not stored explicitely.
+- `F` or Φ, the matrix of harmonic functions
+- `jmax` or `f_max`: maximum harmonic frequency to keep
+- `p`, number of frames in the reconstructed *X* to average to make reconstructed *x*.
+  *p = 0* takes a single frame (for performance); *2p+1 = q* then all frames are
+  averaged.
+- 20, number of modes to save (hard coded in several functions)
+
+
+### Temporary files
+
+To allow workflows to be resumed, large objects are often saved to joblib (`.jbl`) files
+and then loaded during later steps. Files are expected to be saved to various fixed
+paths relative to a temporary directory, the `results_path`.
+
+Examples:
+- `input_data_sparsity_*.jbl`: *x* matrix (*s* frames ⨯ *m* reflections) giving
+  intensities for each (h,k,l)
+- `dT.jbl`
+- `input_data_mask_sparsity*.jbl`: masks measured values of *x*
+- `F_on.jbl`: Phi matrix with LPSA harmonic functions, orthonomalized
+
 ### Settings files
 
-Settings are currently passed via a python module consisting of global
-variables. Examples are in `workflows/settings*.py`.
+Settings are currently passed via a python module consisting of global variables.
+Examples are in `workflows/settings*.py`. Typical variables include the `results_path`,
+`S`, `q`, etc.
