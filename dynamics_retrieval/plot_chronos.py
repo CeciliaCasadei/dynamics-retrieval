@@ -7,6 +7,7 @@ import numpy
 
 
 def f(xs, ys, fn):
+    "Save scatterplot of xs vs yx to file fn"
     matplotlib.pyplot.figure(figsize=(30, 10))
     matplotlib.pyplot.plot(xs, ys, c="b", markeredgewidth=0)
     ax = matplotlib.pyplot.gca()
@@ -62,13 +63,13 @@ def plot_ts(settings):
         f(ts, chrono, "%s/chrono_ts_%d.png" % (out_folder, i))
         f(ts, -chrono, "%s/chrono_ts_%d_minussign.png" % (out_folder, i))
         f(
-            ts[0 : int(float(2*settings.S - settings.q + 1)/2)],# settings.S - settings.q - 1],
-            chrono[0 : int(float(2*settings.S - settings.q + 1)/2)], #settings.S - settings.q - 1],
+            ts[0 : (2*settings.S - settings.q + 1)//2],# settings.S - settings.q - 1],
+            chrono[0 : (2*settings.S - settings.q + 1)//2], #settings.S - settings.q - 1],
             "%s/chrono_ts_%d_firsthalf.png" % (out_folder, i),
         )
         f(
-            ts[0 : int(float(2*settings.S - settings.q + 1)/2)],
-            -chrono[0 : int(float(2*settings.S - settings.q + 1)/2)],
+            ts[0 : (2*settings.S - settings.q + 1)//2],
+            -chrono[0 : (2*settings.S - settings.q + 1)//2],
             "%s/chrono_ts_%d_firsthalf_minussign.png" % (out_folder, i),
         )
 
