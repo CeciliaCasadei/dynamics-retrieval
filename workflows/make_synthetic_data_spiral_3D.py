@@ -25,7 +25,7 @@ if flag == 1:
 
     fig = plt.figure()
     plt.rcParams["grid.color"] = "white"
-    ax = fig.gca(projection="3d")
+    ax = fig.add_subplot(projection="3d")
 
     ax.scatter(x[0, :], x[1, :], x[2, :], c=t, edgecolors="none")
 
@@ -98,7 +98,7 @@ if flag == 1:
     x = joblib.load("%s/x.jbl" % settings.results_path)
     fig = plt.figure()
     plt.rcParams["grid.color"] = "white"
-    ax = fig.gca(projection="3d")
+    ax = fig.add_subplot(projection="3d")
 
     ax.scatter(x[0, :], x[1, :], x[2, :], c=t, edgecolors="none")
 
@@ -174,7 +174,7 @@ if flag == 1:
 
         fig = plt.figure()
         plt.rcParams["grid.color"] = "white"
-        ax = fig.gca(projection="3d")
+        ax = fig.add_subplot(projection="3d")
 
         ax.scatter(
             x_r[0, :],
@@ -209,7 +209,7 @@ if flag == 1:
 
         fig = plt.figure()
         plt.rcParams["grid.color"] = "white"
-        ax = fig.gca(projection="3d")
+        ax = fig.add_subplot(projection="3d")
 
         ax.scatter(
             x_r_tot[0, :],
@@ -495,7 +495,7 @@ if flag == 1:
 
         fig = plt.figure()
         plt.rcParams["grid.color"] = "white"
-        ax = fig.gca(projection="3d")
+        ax = fig.add_subplot(projection="3d")
         ax.scatter(
             x_r[0, :],
             x_r[1, :],
@@ -529,7 +529,7 @@ if flag == 1:
 
         fig = plt.figure()
         plt.rcParams["grid.color"] = "white"
-        ax = fig.gca(projection="3d")
+        ax = fig.add_subplot(projection="3d")
         ax.scatter(
             x_r_tot[0, :],
             x_r_tot[1, :],
