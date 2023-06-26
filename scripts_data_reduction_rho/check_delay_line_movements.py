@@ -6,14 +6,14 @@ path = "/das/work/p17/p17491/Cecilia_Casadei/NLSA/data_rho/retrieved_specenc/sf/
 scan_ns = range(1, 24)
 positions_all = []
 for scan_n in scan_ns:
-    print scan_n
+    print(scan_n)
     fn = "%s/rho_nlsa_scan_%d/list.txt" % (path, scan_n)
     fopen = open(fn, 'r')
     positions = []
     for i in fopen:
-        print i
+        print(i)
         h5_fn = i.split()[-1]
-        print h5_fn
+        print(h5_fn)
         
         datafile = h5py.File("%s/rho_nlsa_scan_%d/%s" % (path, scan_n, h5_fn),
                              "r")
@@ -21,7 +21,7 @@ for scan_n in scan_ns:
         data = datafile['data']
         ch = data['SLAAR11-LMOT-M452:ENC_1_BS']
         
-        print ch.keys()
+        print(ch.keys())
         
         pos_mm = ch['data'][:].flatten()
         pos_mm = list(pos_mm)

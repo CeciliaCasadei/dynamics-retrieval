@@ -243,7 +243,7 @@ if flag == 1:
         x_underlying = x_underlying.flatten()
 
         CC = dynamics_retrieval.correlate.Correlate(x_underlying, x_r_tot_flat)
-        print (CC)
+        print(CC)
 
         plt.title("CC: %.4f" % CC)
 
@@ -429,7 +429,7 @@ if flag == 1:
     x_underlying = x_underlying.flatten()
 
     CC = dynamics_retrieval.correlate.Correlate(x_underlying, x_r_tot)
-    print (CC)
+    print(CC)
 
 #############################
 ###           SSA         ###
@@ -562,7 +562,7 @@ if flag == 1:
         x_underlying = x_underlying.flatten()
 
         CC = dynamics_retrieval.correlate.Correlate(x_underlying, x_r_tot_flat)
-        print (CC)
+        print(CC)
 
         plt.title("CC: %.4f" % CC)
 

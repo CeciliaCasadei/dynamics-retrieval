@@ -56,7 +56,7 @@ for i in range(t_points):  # (1176,2400):
     pl.title("Year: %d   Month: %d" % (n, i % 12))
     pl.savefig("%s/Modes_%s_index_%05d_extended_fwd_bwd.png" % (outdir, label, i))
 
-print ("Done!")
+print("Done!")
 
 # Look for 1st frame in PNAS movies
 # idxs_candidates = []

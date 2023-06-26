@@ -88,12 +88,12 @@ if flag == 1:
     print(x_sp[1000, :])
     x = x_sp[:, :].todense()
     if numpy.isnan(x).any():
-        print ("x contain NaN values")
+        print("x contain NaN values")
         N = numpy.count_nonzero(numpy.isnan(x))
         print("N nans: ", N, "out of ", x.shape)
         x[numpy.isnan(x)] = 0
     else:
-        print ("x does not contain NaN values")
+        print("x does not contain NaN values")
 
     M = joblib.load("%s/M_sparse_light.jbl" % (settings.results_path))
     M = M[:, :].todense()

@@ -170,7 +170,7 @@ if ifPlot == 1:
         pl.title("%d" % i)
         pl.savefig("%s/%05d.png" % (img_dir, i))
     pl.ioff()
-    print ("Done!")
+    print("Done!")
 
 # Build masks
 print("Build ocean/continent mask (1=ocean, 0=continent)")
@@ -218,7 +218,7 @@ if ifPlot == 1:
         pl.title("%d" % i)
         pl.savefig("%s/%05d.png" % (img_dir, i))
     pl.ioff()
-    print ("Done!")
+    print("Done!")
 
 # Build 2D data matrix (only ocean pixels)
 print("Build 2D data matrix x by flattening each 221x238 matrix to a vector")

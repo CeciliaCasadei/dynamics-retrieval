@@ -190,7 +190,7 @@ if ifPlot == 1:
         pl.title("%d" % i)
         pl.savefig("%s/%05d.png" % (img_dir, i))
     pl.ioff()
-    print ("Done!")
+    print("Done!")
 
 
 ## Look for 1st frame in PNAS movies
