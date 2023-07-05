@@ -3,14 +3,14 @@ import math
 
 import numpy
 
-test_n = 3
-root_f = "../../data_tomography_3/test%d" % test_n
+test_n = 1
+root_f = "../../data_tomography_4/test%d" % test_n
 
 datatype = numpy.float64
 
 # BUILD MODEL DATA
 m = 36000
-S = 800
+S = 1600
 
 results_path = root_f
 # results_path = '%s/binning'%root_f
