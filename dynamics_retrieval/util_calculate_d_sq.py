@@ -5,7 +5,7 @@ import scipy.sparse
 
 
 def f_sparse_m_T_m(settings, mask):
-
+    "Write mask.T @ mask to n_dsq_elements.jbl"
     try:
         mask = mask[:, :].todense()
         mask = numpy.asarray(mask, dtype=settings.datatype)
@@ -154,6 +154,7 @@ def regularise_d_sq(settings, label=""):
 
 
 def f_dense(settings, x, mask):
+    "Compute distances between all non-masked columns of x"
     print("\n****** RUNNING util_calculate_d_sq.f_dense (DENSE INPUT) ******")
     m = x.shape[0]
     S = x.shape[1]
@@ -169,7 +170,7 @@ def f_dense(settings, x, mask):
 
     d_sq = (
         numpy.matmul(x_sq.T, mask)
-        + numpy.matmul(mask.T, x_sq)
+        + numpy.matmul(mask.T, x_sq)  # TODO could avoid one matmul here
         - 2 * numpy.matmul(x.T, x)
     )
 

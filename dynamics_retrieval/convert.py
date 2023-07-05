@@ -7,7 +7,7 @@ from scipy import sparse
 
 
 def main(settings):
-
+    "Convert data from matlab to python"
     datatype = settings.datatype
     label = settings.label
     folder = settings.data_path

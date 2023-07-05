@@ -94,6 +94,10 @@ def plot_t_sv_range(settings, M, label):
 
 
 def get_F(settings):
+    """Compute LPSA Phi matrix with sequential integer timesteps
+    
+    Use get_F_sv_t_range to include measured timesteps.
+    """
     S = settings.S
     q = settings.q
     s = S - q
@@ -120,7 +124,7 @@ def get_F(settings):
 
 
 def get_F_sv_t_range(settings):
-
+    """Compute LPSA Phi matrix with measured timesteps"""
     fn = "%s/ts_mirrored.jbl" % settings.results_path  # ts_meas,.jbl
     ts_meas = joblib.load(fn)
 

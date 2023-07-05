@@ -115,6 +115,11 @@ def merge_N_D_sq_elements(settings):
 
 
 def sort_D_sq(settings):
+    """
+    input files: D_sq_normalised.jpl
+    output files: D.jbl, N.jbl
+    settings: results_path, b, S, q, datatype
+    """
     from . import util_sort_D_sq
 
     results_path = settings.results_path

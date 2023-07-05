@@ -17,6 +17,7 @@ if flag == 1:
 
     import dynamics_retrieval.convert
 
+    # Convert data from matlab to python
     dynamics_retrieval.convert.main(settings)
 
 flag = 0  # Rho data
@@ -74,6 +75,7 @@ if flag == 1:
 
     import dynamics_retrieval.mirror_dataset
 
+    # Mirror time axis to improve periodicity
     dynamics_retrieval.mirror_dataset.main(settings)
     dynamics_retrieval.mirror_dataset.make_virtual_ts(settings)
 
@@ -113,6 +115,7 @@ if flag == 1:
 ### LPSA PARA SEARCH : q-scan ###
 #################################
 
+# Create settings file for parameter scan over these q values
 qs = [12501, 17501]
 
 flag = 0
@@ -151,6 +154,7 @@ if flag == 1:
 ### LPSA PARA SEARCH : jmax-scan ###
 ####################################
 
+# Create settings file for parameter scan over these f_max values
 f_max_s = [10, 15]
 
 flag = 0
@@ -190,7 +194,9 @@ if flag == 1:
         )
 
 ############# START ##################
+# Run LPSA
 
+# Compute orthonomalized phi for each q
 flag = 0
 if flag == 1:
     import dynamics_retrieval.make_lp_filter
@@ -208,6 +214,7 @@ if flag == 1:
         print("Normalisation: ", numpy.amax(abs(d)))
         joblib.dump(Q, "%s/F_on.jbl" % settings.results_path)
 
+# Compute matrix A for each setting
 flag = 0
 if flag == 1:
     # for f_max in f_max_s:
@@ -223,6 +230,7 @@ if flag == 1:
             % (end_worker, settings.__name__)
         )
 
+# Merge results from parallel computations
 flag = 0
 if flag == 1:
     import dynamics_retrieval.merge_aj
@@ -236,6 +244,7 @@ if flag == 1:
         print("jmax: ", settings.f_max)
         dynamics_retrieval.merge_aj.main(settings)
 
+# Compute A.T @ A 
 flag = 0
 if flag == 1:
     # for f_max in [30]:#f_max_s:
@@ -252,6 +261,7 @@ if flag == 1:
             % (end_worker, settings.__name__)
         )
 
+# Merge results from parallel computations
 flag = 0
 if flag == 1:
     import dynamics_retrieval.calculate_ATA_merge
@@ -265,6 +275,7 @@ if flag == 1:
         print("jmax: ", settings.f_max)
         dynamics_retrieval.calculate_ATA_merge.main(settings)
 
+# Get chronograms and singular values from ATA matrix
 flag = 0
 if flag == 1:
     import dynamics_retrieval.SVD
@@ -278,6 +289,7 @@ if flag == 1:
         print("jmax: ", settings.f_max)
         dynamics_retrieval.SVD.get_chronos(settings)
 
+# Plot chronograms
 flag = 0
 if flag == 1:
     import dynamics_retrieval.plot_chronos
@@ -293,7 +305,7 @@ if flag == 1:
         dynamics_retrieval.plot_SVs.main(settings)
         dynamics_retrieval.plot_chronos.main(settings)
 
-
+# Get topograms from A and chronograms
 flag = 0
 if flag == 1:
     import dynamics_retrieval.SVD
@@ -309,7 +321,7 @@ if flag == 1:
 
 ######################
 # IF DATA ARE TOO BIG:
-n_chuncks = 4
+n_chunks = 4
 
 flag = 0  # Make Ai's from aj's
 if flag == 1:
@@ -322,7 +334,7 @@ if flag == 1:
         settings = __import__(modulename)
         print("q: ", settings.q)
         print("jmax: ", settings.f_max)
-        dynamics_retrieval.make_Ai.make_Ai_f(settings, n_chuncks)
+        dynamics_retrieval.make_Ai.make_Ai_f(settings, n_chunks)
 
 flag = 0  # Make Ai's from A
 if flag == 1:
@@ -335,7 +347,7 @@ if flag == 1:
         settings = __import__(modulename)
         print("q: ", settings.q)
         print("jmax: ", settings.f_max)
-        dynamics_retrieval.make_Ai.get_Ai_f(settings, n_chuncks)
+        dynamics_retrieval.make_Ai.get_Ai_f(settings, n_chunks)
 
 flag = 0  # Make Ui's (or uij's) from Ai's
 if flag == 1:
@@ -348,7 +360,7 @@ if flag == 1:
         settings = __import__(modulename)
         print("q: ", settings.q)
         print("jmax: ", settings.f_max)
-        dynamics_retrieval.make_Ui.make_Ui_f(settings, n_chuncks)
+        dynamics_retrieval.make_Ui.make_Ui_f(settings, n_chunks)
 
 flag = 0  # Make uj's from uij's
 if flag == 1:
@@ -361,7 +373,7 @@ if flag == 1:
         settings = __import__(modulename)
         print("q: ", settings.q)
         print("jmax: ", settings.f_max)
-        dynamics_retrieval.make_Ui.make_uj(settings, n_chuncks)
+        dynamics_retrieval.make_Ui.make_uj(settings, n_chunks)
 
 flag = 0  # TO DO # Make U from Ui's
 if flag == 1:
@@ -374,7 +386,7 @@ if flag == 1:
         settings = __import__(modulename)
         print("q: ", settings.q)
         print("jmax: ", settings.f_max)
-        dynamics_retrieval.make_Ui.make_U(settings, n_chuncks)
+        dynamics_retrieval.make_Ui.make_U(settings, n_chunks)
 ###################
 
 # RECONSTRUCTION

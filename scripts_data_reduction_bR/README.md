@@ -1,3 +1,8 @@
+# Data Reduction for Bacteriorhodopsin
+
+Workflow for preparing bR data in matlab:
+
+```
 script_read_partialator_params.m
 
 grep -n 'Image filename' ___.stream > Image_filename_position.txt
@@ -30,3 +35,4 @@ script_select_obeserved_reflections.m
 script_boost_myData.m
 
 save_full.m
+```
