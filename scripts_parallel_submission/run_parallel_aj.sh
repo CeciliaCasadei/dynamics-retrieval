@@ -4,7 +4,7 @@
 
 module purge
 module load anaconda
-conda activate myenv_nlsa
+conda activate dynamics-retrieval 
 
 WORKER_ID=$SLURM_ARRAY_TASK_ID   # From 0 to ...
 

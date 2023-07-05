@@ -233,7 +233,7 @@ if flag == 1:
         print("x does not contain NaN values")
         
         
-qs = [1, 11, 51, 81, 101, 121, 151, 251]
+qs = [81, 251]
 
 flag = 0
 if flag == 1:
@@ -339,7 +339,7 @@ if flag == 1:
             % (end_worker, settings.__name__)
         )
         
-flag = 0
+flag = 1
 if flag == 1:
     import dynamics_retrieval.merge_aj
 
@@ -441,7 +441,7 @@ if flag == 1:
         dynamics_retrieval.reconstruct_p.f(settings)
         dynamics_retrieval.reconstruct_p.f_ts(settings)      
         
-flag = 1
+flag = 0
 if flag == 1:
     import dynamics_retrieval.plot_syn_data
     import dynamics_retrieval.correlate
