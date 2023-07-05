@@ -64,8 +64,9 @@ def f(settings):
 
             block_idx = block_idx_center + i
             print(i, block_idx)
-            i1 = block_idx * m
-            i2 = (block_idx + 1) * m
+            i1 = int(block_idx * m)
+            i2 = int((block_idx + 1) * m)
+            print(i1, i2)
             term = s_k * numpy.outer(u_k[i1:i2], v_k)
             print("term: ", term.shape)
             print("starting column:", i + p)

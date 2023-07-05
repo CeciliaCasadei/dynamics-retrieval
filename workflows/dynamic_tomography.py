@@ -339,7 +339,7 @@ if flag == 1:
             % (end_worker, settings.__name__)
         )
         
-flag = 1
+flag = 0
 if flag == 1:
     import dynamics_retrieval.merge_aj
 
@@ -426,7 +426,7 @@ if flag == 1:
         dynamics_retrieval.SVD.get_topos(settings)
 
         
-flag = 0
+flag = 1
 if flag == 1:
     import dynamics_retrieval.reconstruct_p
 
