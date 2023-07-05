@@ -20,7 +20,7 @@ results_path = root_f
 
 # PARAS SCANS
 results_path = "%s" % root_f
-f_max_q_scan = 200
+f_max_q_scan = 8
 q_f_max_scan = 81
 
 # SELECTED VALUES
