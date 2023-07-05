@@ -63,7 +63,7 @@ def get_ts_distribution():
 
     for scan_n in range(1, 24):
         run_start, run_end = run_ns.run_ns(scan_n)
-        print run_start, run_end
+        print(run_start, run_end)
         for run_n in range(run_start, run_end + 1):
             SPECENC_file = "%s/timetool/rho_nlsa_scan_%d/run_%0.6d.SPECENC.h5" % (
                 path,
@@ -81,9 +81,9 @@ def get_ts_distribution():
                 run_n,
             )
 
-            print SPECENC_file
-            print BSREAD_file
-            print JF_file
+            print(SPECENC_file)
+            print(BSREAD_file)
+            print(JF_file)
 
             pid_SPECENC, ts_SPECENC, ts_rel_SPECENC = extract_SPECENC_data(SPECENC_file)
             pid_BSREAD, pI_BSREAD = extract_BSREAD_data(BSREAD_file)
@@ -104,7 +104,7 @@ def get_ts_distribution():
                     n_selected_runs += 1
                     l = ts_SPECENC.shape[0]
                     out = numpy.zeros((l, 4))
-                    out[:, 0] = range(l)
+                    out[:, 0] = list(range(l))
                     out[:, 1] = pid_BSREAD
                     out[:, 2] = ts_SPECENC
                     out[:, 3] = ts_rel_SPECENC
@@ -146,8 +146,8 @@ def get_ts_distribution():
                     ts_rel_discarded.append(tstamp_rel_discarded)
                     ####
 
-    print "n selected runs", n_selected_runs
-    print "n discarded runs", n_discarded_runs
+    print("n selected runs", n_selected_runs)
+    print("n discarded runs", n_discarded_runs)
 
     plt.scatter(
         numpy.hstack(Is_selected), numpy.hstack(ts_rel_selected), c="b", s=5, alpha=0.3
@@ -165,13 +165,13 @@ def get_ts_distribution():
     plt.close()
 
     idxs = numpy.argwhere(numpy.hstack(Is_selected) < 1.0)
-    print idxs.shape[0], "selected Is smaller than 1.0 out of", numpy.hstack(
+    print(idxs.shape[0], "selected Is smaller than 1.0 out of", numpy.hstack(
         Is_selected
-    ).shape[0], "selected"
+    ).shape[0], "selected")
     idxs = numpy.argwhere(numpy.hstack(Is_discarded) < 1.0)
-    print idxs.shape[0], "discarded Is smaller than 1.0 out of", numpy.hstack(
+    print(idxs.shape[0], "discarded Is smaller than 1.0 out of", numpy.hstack(
         Is_discarded
-    ).shape[0], "discarded"
+    ).shape[0], "discarded")
 
     ts_selected = numpy.hstack(ts_selected)
     n_selected = ts_selected.shape[0]
@@ -181,7 +181,7 @@ def get_ts_distribution():
         if not numpy.isnan(ts_selected[i])
     ]
     n_nan = n_selected - len(ts_selected)
-    print "N. selected shots", n_selected, " of wich, nan timestamp:", n_nan
+    print("N. selected shots", n_selected, " of wich, nan timestamp:", n_nan)
 
     mybins = numpy.arange(-800, +800, 10)
     plt.figure()
@@ -199,7 +199,7 @@ def get_ts_distribution():
         if not numpy.isnan(ts_discarded[i])
     ]
     n_nan = n_discarded - len(ts_discarded)
-    print "N. discarded shots", n_discarded, " of wich, nan timestamp:", n_nan
+    print("N. discarded shots", n_discarded, " of wich, nan timestamp:", n_nan)
 
     mybins = numpy.arange(-1000, +1500, 30)
     plt.figure()
@@ -212,7 +212,7 @@ def get_ts_distribution():
     plt.close()
 
     Is_selected = numpy.hstack(Is_selected)
-    print "N. of selected shots", Is_selected.shape[0]
+    print("N. of selected shots", Is_selected.shape[0])
 
     plt.figure()
     plt.hist(Is_selected)
@@ -222,7 +222,7 @@ def get_ts_distribution():
     plt.close()
 
     Is_discarded = numpy.hstack(Is_discarded)
-    print "N. discarded shots:", Is_discarded.shape[0]
+    print("N. discarded shots:", Is_discarded.shape[0])
 
     plt.figure()
     plt.hist(Is_discarded)
@@ -231,7 +231,7 @@ def get_ts_distribution():
     plt.savefig("hist_Is_discarded_thresh_%.2f.png" % thr)
     plt.close()
 
-    print float(len(ts_selected)) / len(ts_discarded)
+    print(float(len(ts_selected)) / len(ts_discarded))
 
 
 def apply_thr():
@@ -239,7 +239,7 @@ def apply_thr():
     n = 0
     for scan_n in range(1, 24):
         run_start, run_end = run_ns.run_ns(scan_n)
-        print "\nScan", scan_n, "run range: ", run_start, run_end
+        print("\nScan", scan_n, "run range: ", run_start, run_end)
         for run_n in range(run_start, run_end + 1):
             try:
                 data = joblib.load(
@@ -260,10 +260,10 @@ def apply_thr():
                     myDict = {"data_thr": data_thr}
                     scipy.io.savemat("%s.mat" % fn, myDict)
             except:
-                print "Scan", scan_n, ", run ", run_n, " not existing"
+                print("Scan", scan_n, ", run ", run_n, " not existing")
                 n = n + 1
 
-    print "N. non existing runs: ", n
+    print("N. non existing runs: ", n)
 
 
 def match_unique_ID():
@@ -272,7 +272,7 @@ def match_unique_ID():
     n_tot = 0
     for scan_n in range(1, 24):
         run_start, run_end = run_ns.run_ns(scan_n)
-        print "\nScan", scan_n, "run range: ", run_start, run_end
+        print("\nScan", scan_n, "run range: ", run_start, run_end)
         for run_n in range(run_start, run_end + 1):
             path_string = (
                 "/sf/alvra/data/p18594/raw/rho_nlsa_scan_%d/run_%0.6d.JF06T08V01.h5_event_"
@@ -300,11 +300,11 @@ def match_unique_ID():
             #                myDict = {"unique_ID_timed": unique_ID_timed}
             #                scipy.io.savemat('%s.mat'%fn, myDict)
             except:
-                print "Scan", scan_n, ", run ", run_n, " not existing"
+                print("Scan", scan_n, ", run ", run_n, " not existing")
                 n = n + 1
 
-    print "N. non existing runs: ", n
-    print "Total n timed frames", n_tot
+    print("N. non existing runs: ", n)
+    print("Total n timed frames", n_tot)
 
 
 def export_unique_ID():
@@ -315,7 +315,7 @@ def export_unique_ID():
     fn_write = open(fn_out, "w")
     for scan_n in range(20, 23 + 1):
         run_start, run_end = run_ns.run_ns(scan_n)
-        print "\nScan", scan_n, "run range: ", run_start, run_end
+        print("\nScan", scan_n, "run range: ", run_start, run_end)
 
         for run_n in range(run_start, run_end + 1):
             try:
@@ -331,14 +331,14 @@ def export_unique_ID():
                     % (scan_n, run_n, thr)
                 )
                 if abs(n_frames - len(data_IDs)) > 0:
-                    print "Problem"
+                    print("Problem")
                 for i in range(n_frames):
                     fn_write.write("%s  %.1f\n" % (data_IDs[i], ts[i]))
             except:
-                print "Scan", scan_n, ", run ", run_n, " not existing"
+                print("Scan", scan_n, ", run ", run_n, " not existing")
                 n = n + 1
     fn_write.close()
-    print "N. non existing runs: ", n
+    print("N. non existing runs: ", n)
 
 
 if __name__ == "__main__":

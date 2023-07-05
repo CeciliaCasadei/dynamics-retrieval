@@ -15,7 +15,7 @@ import numpy
 def get_t_r_large(q):
     modulename = "settings_q_%d" % q
     settings_scan = __import__(modulename)
-    print "q: ", settings_scan.q
+    print("q: ", settings_scan.q)
     S = settings_scan.S
     results_path = settings_scan.results_path
 
@@ -24,13 +24,13 @@ def get_t_r_large(q):
 
     if p == 0:
         t_r_large = numpy.zeros((S,))
-        print t_r_large.shape
+        print(t_r_large.shape)
         t_r_large[
             (q - 1) / 2 : (q - 1) / 2 + (S - q + 1),
         ] = t_r
         return t_r_large
     else:
-        print "Case p>0 to be implemented"
+        print("Case p>0 to be implemented")
 
 
 def main(settings, qs):
@@ -51,10 +51,10 @@ def main(settings, qs):
         t_r = t_r_large[
             (q_max - 1) / 2 : (q_max - 1) / 2 + (S - q_max + 1),
         ]
-        print start.shape, t_r.shape
+        print(start.shape, t_r.shape)
         diff = abs(start - t_r)
         avg = numpy.average(diff)
-        print avg
+        print(avg)
         avgs.append(avg)
         start_large = t_r_large
     joblib.dump(
@@ -64,7 +64,7 @@ def main(settings, qs):
     )
     n_curves = len(avgs)
     colors = matplotlib.pylab.cm.Blues(numpy.linspace(0.15, 1, n_curves))
-    matplotlib.pyplot.xticks(range(1, len(avgs) + 1, 1))
+    matplotlib.pyplot.xticks(list(range(1, len(avgs) + 1, 1)))
     for i, avg in enumerate(avgs):
         matplotlib.pyplot.scatter(
             i + 1, avgs[i], c=colors[i], label="q=%d,q=%d" % (qs[i], qs[i + 1])

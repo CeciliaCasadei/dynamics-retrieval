@@ -10,13 +10,13 @@ import settings
 results_path = settings.results_path
 l = settings.l
 
-modes = range(l)
+modes = list(range(l))
 label = "all"
 
 # Exclude last latitude point and last longitude point
 movie_combined = numpy.zeros((16 - 1, 46 - 1, 4800))
 for mode in modes:
-    print mode
+    print(mode)
     f = open("%s/P_sym/movie_2D_mode_%d.pkl" % (results_path, mode), "rb")
     movie = pickle.load(f)
     f.close()
@@ -41,7 +41,7 @@ for i in range(1176, 2400):
     pl.title("Year: %d   Month: %d" % (n, i % 12))
     pl.savefig("%s/Modes_%s_index_%05d.png" % (outdir, label, i))
 
-print ("Done!")
+print("Done!")
 
 
 # Look for 1st frame in PNAS movies

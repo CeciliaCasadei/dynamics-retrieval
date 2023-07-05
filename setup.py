@@ -31,18 +31,18 @@ dev_requirements = ["black", "isort"]
 setup(
     author="Cecilia Casadei",
     author_email="ceciliamariacasadei@gmail.com",
-    python_requires=">=2.7,<3",
+    python_requires=">=3.9",
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
         "Intended Audience :: Developers",
         "Natural Language :: English",
-        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.9",
     ],
     description="Retrieve dynamics on various data set types.",
     install_requires=requirements,
     extras_require={
         "tests": test_requirements,
-        "dev": dev_requirements + test_requirements + doc_requirements,
+        "dev": dev_requirements + test_requirements,
     },
     long_description=readme + "\n\n" + history,
     long_description_content_type='text/markdown',
@@ -55,5 +55,5 @@ setup(
     tests_require=test_requirements,
     url="https://github.com/CeciliaCasadei/dynamics-retrieval",
     version="0.1.0",
-    zip_safe=False,
+    zip_safe=True,
 )

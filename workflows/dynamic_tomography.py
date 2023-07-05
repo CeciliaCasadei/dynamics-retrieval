@@ -17,14 +17,14 @@ def plot_real_space_tomogram():
     
     for i in range(1,1601):
         fn = '%s/tomo_all_img_%0.3d.mat'%(path_name, i)
-        print fn
+        print(fn)
     
         matfile = scipy.io.loadmat(fn)
     
-        print matfile.keys()
+        print(list(matfile.keys()))
     
         tomogram_real   = matfile['tomo_all_img']
-        print tomogram_real.shape
+        print(tomogram_real.shape)
         
         matplotlib.pyplot.imshow(tomogram_real, vmin=0, vmax=1)
         matplotlib.pyplot.colorbar()
@@ -42,25 +42,25 @@ def get_syn_projections():
     trace = []
     for i in range(1,n_ts+1):
         fn = '%s/proj_real_t_%0.3d.mat'%(path_name, i)
-        print fn
+        print(fn)
         
         matfile = scipy.io.loadmat(fn)
-        print matfile.keys()   
+        print(list(matfile.keys()))   
         proj_real   = matfile['proj_real']
-        print proj_real.shape[0], 'pxls', proj_real.shape[1], 'directions'     # 200 pxls x 180 theta values
+        print(proj_real.shape[0], 'pxls', proj_real.shape[1], 'directions')     # 200 pxls x 180 theta values
         proj_real_flat = proj_real.flatten('F') # column-major
-        print proj_real_flat.shape, n_proj_pxls*n_projections
+        print(proj_real_flat.shape, n_proj_pxls*n_projections)
         trace.append(proj_real_flat[pxl_n,])
         joblib.dump(proj_real_flat, 
                     "%s/combined_projections_t_%0.3d.jbl"%(path_name, i))
         
-    matplotlib.pyplot.scatter(range(1,n_ts+1), trace)
+    matplotlib.pyplot.scatter(list(range(1,n_ts+1)), trace)
     matplotlib.pyplot.savefig("%s/projections_alltheta_pxl_%d_vs_t.png"
                               %(path_name, pxl_n))
     matplotlib.pyplot.close()
     
     deg = 10
-    matplotlib.pyplot.scatter(range(0,n_proj_pxls), 
+    matplotlib.pyplot.scatter(list(range(0,n_proj_pxls)), 
                               proj_real_flat[n_proj_pxls*deg:n_proj_pxls*(deg+1),])
     matplotlib.pyplot.savefig("%s/projection_theta_%d_degrees_t_%0.3d.png"
                               %(path_name, deg, i))
@@ -75,7 +75,7 @@ def merge_projections():
     x = numpy.zeros(shape=(m,S))
     
     for t in range(S):
-        print t
+        print(t)
         x_column = joblib.load("%s/combined_projections_t_%0.3d.jbl"
                                %(path_name, t+1))
         x[:,t] = x_column
@@ -94,12 +94,12 @@ def make_sparse_data():
     S = 1600
     
     n_proj_per_tstep = int(sparsity_level * n_projections)
-    print 'N. measured projections per timestep: ', n_proj_per_tstep
+    print('N. measured projections per timestep: ', n_proj_per_tstep)
     
     x_input = numpy.zeros(shape=(m,S))
     mask = numpy.zeros(shape=(m,S))
     for i in range(S):
-        idxs = random.sample(range(0, n_projections), n_proj_per_tstep)
+        idxs = random.sample(list(range(0, n_projections)), n_proj_per_tstep)
         
         for idx in idxs:
             x_input[idx*n_proj_pxls:(idx+1)*n_proj_pxls, i] = bm[idx*n_proj_pxls:(idx+1)*n_proj_pxls, i]
@@ -151,13 +151,15 @@ def make_sparse_data_systematic():
                     
     test_sum = mask.sum(axis=0)  
     idxs = numpy.argwhere(test_sum==n_proj_pxls)  
-    print idxs.shape[0], 'timepoints have one projection.'
+    print(idxs.shape[0], 'timepoints have one projection.')
     
     test_sum = mask.sum(axis=1) 
+
     idxs = numpy.argwhere(test_sum==8)  
-    print idxs.shape[0]/n_proj_pxls, 'projections have 8 observations.'
+    print(idxs.shape[0]/n_proj_pxls, 'projections have 8 observations.')
     idxs = numpy.argwhere(test_sum==9)  
-    print idxs.shape[0]/n_proj_pxls, 'projections have 9 observations.'
+    print(idxs.shape[0]/n_proj_pxls, 'projections have 9 observations.')
+
         
     joblib.dump(x_input, 
                 "%s/input_data_sparsity_systematic.jbl"
@@ -204,7 +206,7 @@ if flag == 1:
 
     dynamics_retrieval.mirror_dataset.main(settings)
     
-    ts_mirrored = numpy.asarray(range(0, 2*settings.S))
+    ts_mirrored = numpy.asarray(list(range(0, 2*settings.S)))
     joblib.dump(
         ts_mirrored, "%s/ts_mirrored.jbl" % (settings.results_path)
     )
@@ -218,17 +220,17 @@ if flag == 1:
     x_sp = joblib.load(
         "%s/dT_bst_mirrored.jbl" % settings.results_path
     )
-    print x_sp[1000, :]
+    print(x_sp[1000, :])
     x = x_sp[:, :].todense()
     if numpy.isnan(x).any():
-        print ("x contain NaN values")
+        print("x contain NaN values")
         N = numpy.count_nonzero(numpy.isnan(x))
-        print "N nans: ", N, "out of ", x.shape
+        print("N nans: ", N, "out of ", x.shape)
         x[numpy.isnan(x)] = 0
         x_sp = sparse.csr_matrix(x)
         joblib.dump(x_sp, "%s/dT_bst_mirrored_nonans.jbl" % settings.results_path)
     else:
-        print ("x does not contain NaN values")
+        print("x does not contain NaN values")
         
         
 qs = [1, 11, 51, 81, 101, 121, 151, 251]
@@ -312,13 +314,13 @@ if flag == 1:
     for q in qs:
         modulename = "settings_q_%d" % q
         settings = __import__(modulename)
-        print "q: ", settings.q
-        print "jmax: ", settings.f_max
+        print("q: ", settings.q)
+        print("jmax: ", settings.f_max)
 
         F = dynamics_retrieval.make_lp_filter.get_F_sv_t_range(settings)
         Q, R = dynamics_retrieval.make_lp_filter.on_qr(settings, F)
         d = dynamics_retrieval.make_lp_filter.check_on(Q)
-        print "Normalisation: ", numpy.amax(abs(d))
+        print("Normalisation: ", numpy.amax(abs(d)))
         joblib.dump(Q, "%s/F_on.jbl" % settings.results_path)
 
 
@@ -329,8 +331,8 @@ if flag == 1:
     for q in qs:
         modulename = "settings_q_%d" % q
         settings = __import__(modulename)
-        print "q: ", settings.q
-        print "jmax: ", settings.f_max
+        print("q: ", settings.q)
+        print("jmax: ", settings.f_max)
         end_worker = (2 * settings.f_max + 1) - 1
         os.system(
             "sbatch -p hour --mem=100G --array=0-%d ../scripts_parallel_submission/run_parallel_aj.sh %s"
@@ -346,8 +348,8 @@ if flag == 1:
     for q in qs:
         modulename = "settings_q_%d" % q
         settings = __import__(modulename)
-        print "q: ", settings.q
-        print "jmax: ", settings.f_max
+        print("q: ", settings.q)
+        print("jmax: ", settings.f_max)
         dynamics_retrieval.merge_aj.main(settings)
         
 flag = 0
@@ -357,8 +359,8 @@ if flag == 1:
     for q in qs:
         modulename = "settings_q_%d" % q
         settings = __import__(modulename)
-        print "q: ", settings.q
-        print "jmax: ", settings.f_max
+        print("q: ", settings.q)
+        print("jmax: ", settings.f_max)
 
         end_worker = (2 * settings.f_max + 1) - 1
         os.system(
@@ -375,8 +377,8 @@ if flag == 1:
     for q in qs:
         modulename = "settings_q_%d" % q
         settings = __import__(modulename)
-        print "q: ", settings.q
-        print "jmax: ", settings.f_max
+        print("q: ", settings.q)
+        print("jmax: ", settings.f_max)
         dynamics_retrieval.calculate_ATA_merge.main(settings)
         
 flag = 0
@@ -388,8 +390,8 @@ if flag == 1:
     for q in qs:
         modulename = "settings_q_%d" % q
         settings = __import__(modulename)
-        print "q: ", settings.q
-        print "jmax: ", settings.f_max
+        print("q: ", settings.q)
+        print("jmax: ", settings.f_max)
         dynamics_retrieval.SVD.get_chronos(settings)
 
 
@@ -404,8 +406,8 @@ if flag == 1:
     for q in qs:
         modulename = "settings_q_%d" % q
         settings = __import__(modulename)
-        print "q: ", settings.q
-        print "jmax: ", settings.f_max
+        print("q: ", settings.q)
+        print("jmax: ", settings.f_max)
         dynamics_retrieval.plot_SVs.main(settings)
         dynamics_retrieval.plot_chronos.main(settings)
         
@@ -419,8 +421,8 @@ if flag == 1:
     for q in qs:
         modulename = "settings_q_%d" % q
         settings = __import__(modulename)
-        print "q: ", settings.q
-        print "jmax: ", settings.f_max
+        print("q: ", settings.q)
+        print("jmax: ", settings.f_max)
         dynamics_retrieval.SVD.get_topos(settings)
 
         
@@ -433,8 +435,8 @@ if flag == 1:
     # for f_max in f_max_s:
     #     modulename = "settings_f_max_%d" % f_max
         settings = __import__(modulename)
-        print "jmax: ", settings.f_max
-        print "q: ", settings.q
+        print("jmax: ", settings.f_max)
+        print("q: ", settings.q)
 
         dynamics_retrieval.reconstruct_p.f(settings)
         dynamics_retrieval.reconstruct_p.f_ts(settings)      
@@ -449,39 +451,39 @@ if flag == 1:
     
     T = joblib.load("%s/input_data_sparsity_systematic.jbl" % (settings.results_path))
     M = joblib.load("%s/input_data_mask_sparsity_systematic.jbl" % (settings.results_path))
-    print "T, is sparse: ", sparse.issparse(T), T.shape, T.dtype
-    print "M, is sparse: ", sparse.issparse(M), M.shape, M.dtype
+    print("T, is sparse: ", sparse.issparse(T), T.shape, T.dtype)
+    print("M, is sparse: ", sparse.issparse(M), M.shape, M.dtype)
     
     
 
     if sparse.issparse(T) == False:
         if numpy.isnan(T).any():
-            print ("Nan values found")
+            print("Nan values found")
         T = sparse.csr_matrix(T)
-    print "T, is sparse:", sparse.issparse(T), T.dtype, T.shape
+    print("T, is sparse:", sparse.issparse(T), T.dtype, T.shape)
     if sparse.issparse(M) == False:
         M = sparse.csr_matrix(M)
-    print "M, is sparse:", sparse.issparse(M), M.dtype, M.shape
+    print("M, is sparse:", sparse.issparse(M), M.dtype, M.shape)
 
     ns = numpy.sum(M, axis=1)
-    print "ns: ", ns.shape, ns.dtype
+    print("ns: ", ns.shape, ns.dtype)
     
     pxl_ns = [1870, 2005, 2190, 5100, 7100, 7300, 10150, 19887, 23500, 35500, 31500]
     for pxl_n in pxl_ns:
-        print 'n. obs pxl', pxl_n, ': ', ns[pxl_n, 0]
+        print('n. obs pxl', pxl_n, ': ', ns[pxl_n, 0])
     idxs = numpy.argwhere(ns == 0)
-    print 'idxs, zero obs!:', idxs.shape
+    print('idxs, zero obs!:', idxs.shape)
 
     avgs = numpy.sum(T, axis=1) / ns
-    print "avgs: ", avgs.shape, avgs.dtype
+    print("avgs: ", avgs.shape, avgs.dtype)
     
     ######
     avgs[numpy.isnan(avgs)]=0
     ######
     
     avgs_matrix = numpy.repeat(avgs, settings.S, axis=1)
-    print "avgs: ", avgs_matrix.shape, avgs_matrix.dtype
-    print 'element 150: ', avgs_matrix[150,0]
+    print("avgs: ", avgs_matrix.shape, avgs_matrix.dtype)
+    print('element 150: ', avgs_matrix[150,0])
     
     #f_max = 8
     #modulename = "settings_f_max_%d" % f_max
@@ -497,22 +499,21 @@ if flag == 1:
     p = settings.p
     results_path = "%s/reconstruction_p_%d" % (settings.results_path, p)
 
-    print "jmax: ", settings.f_max
-    print "q: ", settings.q
-    print "p: ", settings.p
-    print results_path
+    print("jmax: ", settings.f_max)
+    print("q: ", settings.q)
+    print("p: ", settings.p)
+    print(results_path)
 
     t_r = joblib.load("%s/t_r_p_%d.jbl" % (results_path, p))
-    print 'Reconstructed times: ', t_r.shape, t_r[0], t_r[-1]
+    print('Reconstructed times: ', t_r.shape, t_r[0], t_r[-1])
     benchmark = joblib.load("%s/benchmark.jbl" % (results_path))
-    print 'Benchmark: ', benchmark.shape
+    print('Benchmark: ', benchmark.shape)
 
     start_idx = int(t_r[0])
     end_idx = start_idx + t_r.shape[0]
-    print start_idx, end_idx
+    print(start_idx, end_idx)
     bm = benchmark[:, start_idx:end_idx]
-    
-    print 'Benchmark: ', bm.shape
+    print('Benchmark: ', bm.shape)
 
     benchmark_flat = bm.flatten()
 
@@ -524,44 +525,44 @@ if flag == 1:
     x_r_tot_flat = x_r_tot.flatten()
     CC = dynamics_retrieval.correlate.Correlate(benchmark_flat, x_r_tot_flat)
     CCs.append(CC)
-    print 'CC: ', CC
+    print('CC: ', CC)
         
     for pxl_n in pxl_ns:
         y = x_r_tot[pxl_n,:]
         y_T = y.T
         matplotlib.pyplot.plot(t_r, y_T, 'bo')
-        matplotlib.pyplot.plot(range(start_idx,end_idx), bm[pxl_n,:], 'm')
+        matplotlib.pyplot.plot(list(range(start_idx,end_idx)), bm[pxl_n,:], 'm')
         matplotlib.pyplot.savefig("%s/projections_alltheta_pxl_%d_vs_t_0_modes.png"
                           %(results_path, pxl_n))
         matplotlib.pyplot.close()
     
     for mode in range(0, min(nmodes, 2 * settings.f_max + 1)):
-        print "Mode: ", mode
+        print("Mode: ", mode)
 
         x_r = joblib.load("%s/movie_p_%d_mode_%d.jbl" % (results_path, p, mode))
-        print 'x_r:', x_r.shape
+        print('x_r:', x_r.shape)
         
-        print x_r_tot[150, 30], 'plus ', x_r[150, 30]
+        print(x_r_tot[150, 30], 'plus ', x_r[150, 30])
         x_r_tot += x_r
-        print 'result ', x_r_tot[150, 30]
+        print('result ', x_r_tot[150, 30])
         
         x_r_tot_flat = x_r_tot.flatten()
         CC = dynamics_retrieval.correlate.Correlate(benchmark_flat, x_r_tot_flat)
         CCs.append(CC)
-        print 'CC: ', CC
+        print('CC: ', CC)
         
         for pxl_n in pxl_ns:
             y = x_r_tot[pxl_n,:]
             y_T = y.T
             matplotlib.pyplot.plot(t_r, y_T, 'bo', markersize=1)
-            matplotlib.pyplot.plot(range(start_idx,end_idx), bm[pxl_n,:], 'm')
+            matplotlib.pyplot.plot(list(range(start_idx,end_idx)), bm[pxl_n,:], 'm')
             obs = T[pxl_n,:].todense()
-            print obs.shape
+            print(obs.shape)
             
             obs_lst = []
             for i in range(obs.shape[1]):
                 obs_lst.append(obs[0,i])
-            print len(obs_lst)
+            print(len(obs_lst))
             
             matplotlib.pyplot.scatter(range(settings.S), obs_lst, c='c')
             matplotlib.pyplot.savefig("%s/projections_alltheta_pxl_%d_vs_t_%d_modes.png"
@@ -571,9 +572,9 @@ if flag == 1:
 
     joblib.dump(CCs, "%s/CCs_to_benchmark.jbl" % (results_path))
 
-    matplotlib.pyplot.scatter(range(0, len(CCs)), CCs)
+    matplotlib.pyplot.scatter(list(range(0, len(CCs))), CCs)
     matplotlib.pyplot.axhline(y=1.0)
-    matplotlib.pyplot.xticks(range(0, len(CCs), 1))
+    matplotlib.pyplot.xticks(list(range(0, len(CCs), 1)))
     matplotlib.pyplot.savefig("%s/CCs_to_benchmark.png" % (results_path))
     matplotlib.pyplot.close()
  

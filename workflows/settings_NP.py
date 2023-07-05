@@ -21,7 +21,7 @@ sigma_sq = 4.0
 
 l = 23  # PNAS
 # l = 27 # SADM
-toproject = range(l)
+toproject = list(range(l))
 
 datatype = numpy.float64  # PNAS
 # datatype = numpy.float32

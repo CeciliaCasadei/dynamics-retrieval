@@ -6,7 +6,7 @@ import settings
 
 
 def f():
-    print "\n****** RUNNING calculate_D_N_v_sparse ******"
+    print("\n****** RUNNING calculate_D_N_v_sparse ******")
     q = settings.q  # Concatenation n.
     results_path = settings.results_path
     b = settings.b  # N. of nearest neighbors
@@ -35,7 +35,7 @@ def f():
     # Measure for each sample i distances to all neighbors j
     for i in range(1, s + 1):
         if i % 100 == 1:
-            print "%d / %d" % (i, s)
+            print("%d / %d" % (i, s))
         X_i = X[:, i]
         d_i = numpy.zeros((s), dtype=numpy.float64)
         for j in range(1, s + 1):
@@ -54,7 +54,7 @@ def f():
         D[i - 1, :] = d_i_sorted[0:b]
         N[i - 1, :] = sort_idxs[0:b]
 
-    print "Saving"
+    print("Saving")
 
     f = open("%s/D_standard.pkl" % (results_path), "wb")
     pickle.dump(D, f)

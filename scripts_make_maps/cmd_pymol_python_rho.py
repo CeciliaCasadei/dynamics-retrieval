@@ -57,11 +57,11 @@ def myfunc_step(myArguments):
             myArguments, "h", ["nModes=", "chainID=", "sig="]
         )
     except getopt.GetoptError:
-        print "Usage: ..."
+        print("Usage: ...")
         sys.exit(2)
     for option, value in optionPairs:
         if option == "-h":
-            print "Usage: ..."
+            print("Usage: ...")
             sys.exit()
         elif option == "--nModes":
             nmodes = int(value)
@@ -159,11 +159,11 @@ def myfunc_bin(myArguments):
     try:
         optionPairs, leftOver = getopt.getopt(myArguments, "h", ["chainID=", "sig="])
     except getopt.GetoptError:
-        print "Usage: ..."
+        print("Usage: ...")
         sys.exit(2)
     for option, value in optionPairs:
         if option == "-h":
-            print "Usage: ..."
+            print("Usage: ...")
             sys.exit()
         elif option == "--chainID":
             chainID = str(value)

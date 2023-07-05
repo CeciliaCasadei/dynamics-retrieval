@@ -6,7 +6,7 @@ import numpy
 
 
 def reconstruct(settings):
-    print "\n****** RUNNING reconstruct ******"
+    print("\n****** RUNNING reconstruct ******")
     results_path = settings.results_path
 
     U = joblib.load("%s/U_norm_rightEV.jbl" % results_path)
@@ -16,14 +16,14 @@ def reconstruct(settings):
     l = VT_final.shape[0]
 
     for i in range(l):
-        print i
+        print(i)
         X_r = S[i] * numpy.outer(U[:, i], VT_final[i, :])
         joblib.dump(X_r, "%s/X_reconstructed_%d.jbl" % (results_path, i))
-        print X_r.shape
+        print(X_r.shape)
 
 
 def unwrap(settings):
-    print "\n****** RUNNING unwrap ******"
+    print("\n****** RUNNING unwrap ******")
     results_path = settings.results_path
     l = settings.l
     q = settings.q
@@ -31,14 +31,14 @@ def unwrap(settings):
 
     for mode in range(l):
 
-        print "Mode: ", mode
+        print("Mode: ", mode)
         X_r = joblib.load("%s/X_reconstructed_%d.jbl" % (results_path, mode))
 
         n = X_r.shape[0]
         s = X_r.shape[1]
 
         if float(n) % q != 0:
-            print "Problem!"
+            print("Problem!")
         m = n / q
 
         movie_mode = numpy.zeros((m, s - q))
@@ -53,7 +53,7 @@ def unwrap(settings):
 
 
 def unwrap_extended_bwd_fwd(settings):
-    print "\n****** RUNNING unwrap ******"
+    print("\n****** RUNNING unwrap ******")
     results_path = settings.results_path
     l = settings.l
     q = settings.q
@@ -61,7 +61,7 @@ def unwrap_extended_bwd_fwd(settings):
 
     for mode in range(l):
 
-        print "Mode: ", mode
+        print("Mode: ", mode)
         X_r = joblib.load("%s/X_reconstructed_%d.jbl" % (results_path, mode))
 
         n = X_r.shape[0]
@@ -70,7 +70,7 @@ def unwrap_extended_bwd_fwd(settings):
         S = s + q
 
         if float(n) % q != 0:
-            print "Problem!"
+            print("Problem!")
         m = n / q
 
         # middle + forward
@@ -109,7 +109,7 @@ def unwrap_extended_bwd_fwd(settings):
 
 
 def reconstruct_unwrap_loop(settings):
-    print "\n****** RUNNING reconstruct_unwrap_loop ******"
+    print("\n****** RUNNING reconstruct_unwrap_loop ******")
     results_path = settings.results_path
     q = settings.q
     ncopies = settings.ncopies
@@ -126,7 +126,7 @@ def reconstruct_unwrap_loop(settings):
     VT_final = VT_final.T
 
     for k in range(nmodes):
-        print "Mode: ", k
+        print("Mode: ", k)
         x_r = numpy.zeros((m, s - q))
         for j in range(s - q):
             for i in range(ncopies):
@@ -136,11 +136,11 @@ def reconstruct_unwrap_loop(settings):
                 x_r[:, j] = x_r[:, j] + U[i1:i2, k] * S[k] * VT_final[j + i, k]
             x_r[:, j] = x_r[:, j] / ncopies
         joblib.dump(x_r, "%s/movie_mode_%d_optimised.jbl" % (results_path, k))
-        print x_r.shape
+        print(x_r.shape)
 
 
 def reconstruct_unwrap_loop_extended_bwd_fwd(settings):
-    print "\n****** RUNNING reconstruct_unwrap_loop ******"
+    print("\n****** RUNNING reconstruct_unwrap_loop ******")
     results_path = settings.results_path
     q = settings.q
     ncopies = settings.ncopies
@@ -157,7 +157,7 @@ def reconstruct_unwrap_loop_extended_bwd_fwd(settings):
     VT_final = VT_final.T
 
     for k in range(nmodes):
-        print "Mode: ", k
+        print("Mode: ", k)
 
         # middle + forward
         x_r = numpy.zeros((m, s - ncopies + 1))
@@ -171,7 +171,7 @@ def reconstruct_unwrap_loop_extended_bwd_fwd(settings):
         joblib.dump(
             x_r, "%s/movie_mode_%d_optimised_extended_fwd.jbl" % (results_path, k)
         )
-        print x_r.shape
+        print(x_r.shape)
 
         # backward
         x_r_bkw = numpy.zeros((m, q - ncopies))
@@ -196,7 +196,7 @@ def reconstruct_unwrap_loop_extended_bwd_fwd(settings):
 
 
 def reconstruct_unwrap_loop_chunck_bwd(settings):
-    print "\n****** RUNNING reconstruct_unwrap_loop_chunck_bwd ******"
+    print("\n****** RUNNING reconstruct_unwrap_loop_chunck_bwd ******")
     results_path = settings.results_path
     q = settings.q
     ncopies = settings.ncopies
@@ -212,7 +212,7 @@ def reconstruct_unwrap_loop_chunck_bwd(settings):
     VT_final = VT_final.T
 
     for k in range(nmodes):
-        print "Mode: ", k
+        print("Mode: ", k)
 
         # backward
         x_r_bkw = numpy.zeros((m, q - ncopies), dtype=datatype)
@@ -225,7 +225,7 @@ def reconstruct_unwrap_loop_chunck_bwd(settings):
             x_r_bkw[:, j] = x_r_bkw[:, j] / ncopies
 
         x_r_bkw = numpy.flip(x_r_bkw, axis=1)
-        print x_r_bkw.shape
+        print(x_r_bkw.shape)
 
         joblib.dump(
             x_r_bkw, "%s/movie_mode_%d_optimised_chunk_bwd.jbl" % (results_path, k)

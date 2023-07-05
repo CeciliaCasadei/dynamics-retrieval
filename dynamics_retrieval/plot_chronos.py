@@ -7,6 +7,7 @@ import numpy
 
 
 def f(xs, ys, fn):
+    "Save scatterplot of xs vs yx to file fn"
     matplotlib.pyplot.figure(figsize=(30, 10))
     matplotlib.pyplot.plot(xs, ys, c="b", markeredgewidth=0)
     ax = matplotlib.pyplot.gca()
@@ -26,17 +27,17 @@ def plot(settings):
     nmodes = VT_final.shape[0]
     s = VT_final.shape[1]
 
-    print "nmodes: ", nmodes
-    print "s: ", s
+    print("nmodes: ", nmodes)
+    print("s: ", s)
 
     out_folder = "%s/chronos" % (results_path)
     if not os.path.exists(out_folder):
         os.mkdir(out_folder)
 
     for i in range(0, min(20, nmodes)):
-        print i
+        print(i)
         chrono = VT_final[i, :]
-        f(range(s), chrono, "%s/chrono_%d.png" % (out_folder, i))
+        f(list(range(s)), chrono, "%s/chrono_%d.png" % (out_folder, i))
 
 
 def plot_ts(settings):
@@ -48,27 +49,27 @@ def plot_ts(settings):
     nmodes = VT_final.shape[0]
     s = VT_final.shape[1]
 
-    print "nmodes: ", nmodes
-    print "s: ", s
+    print("nmodes: ", nmodes)
+    print("s: ", s)
 
     out_folder = "%s/chronos" % (results_path)
     if not os.path.exists(out_folder):
         os.mkdir(out_folder)
 
     for i in range(0, min(20, nmodes)):
-        print i
+        print(i)
         chrono = VT_final[i, :]
 
         f(ts, chrono, "%s/chrono_ts_%d.png" % (out_folder, i))
         f(ts, -chrono, "%s/chrono_ts_%d_minussign.png" % (out_folder, i))
         f(
-            ts[0 : int(float(2*settings.S - settings.q + 1)/2)],# settings.S - settings.q - 1],
-            chrono[0 : int(float(2*settings.S - settings.q + 1)/2)], #settings.S - settings.q - 1],
+            ts[0 : (2*settings.S - settings.q + 1)//2],# settings.S - settings.q - 1],
+            chrono[0 : (2*settings.S - settings.q + 1)//2], #settings.S - settings.q - 1],
             "%s/chrono_ts_%d_firsthalf.png" % (out_folder, i),
         )
         f(
-            ts[0 : int(float(2*settings.S - settings.q + 1)/2)],
-            -chrono[0 : int(float(2*settings.S - settings.q + 1)/2)],
+            ts[0 : (2*settings.S - settings.q + 1)//2],
+            -chrono[0 : (2*settings.S - settings.q + 1)//2],
             "%s/chrono_ts_%d_firsthalf_minussign.png" % (out_folder, i),
         )
 

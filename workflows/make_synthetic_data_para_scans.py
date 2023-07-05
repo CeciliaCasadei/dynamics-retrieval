@@ -104,9 +104,9 @@ if flag == 1:
 
         settings = __import__(modulename)
 
-        print settings.q
-        print settings.f_max
-        print settings.results_path
+        print(settings.q)
+        print(settings.f_max)
+        print(settings.results_path)
 
         dynamics_retrieval.make_lp_filter.main(settings)
 
@@ -120,9 +120,9 @@ if flag == 1:
 
         settings = __import__(modulename)
 
-        print settings.q
-        print settings.f_max
-        print settings.results_path
+        print(settings.q)
+        print(settings.f_max)
+        print(settings.results_path)
 
         end_worker = settings.n_workers_A - 1
         os.system(
@@ -142,9 +142,9 @@ if flag == 1:
 
         settings = __import__(modulename)
 
-        print settings.q
-        print settings.f_max
-        print settings.results_path
+        print(settings.q)
+        print(settings.f_max)
+        print(settings.results_path)
 
         dynamics_retrieval.util_merge_A.main(settings)
 
@@ -152,7 +152,7 @@ flag = 0
 if flag == 1:
     import dynamics_retrieval.SVD
 
-    print "\n****** RUNNING SVD ******"
+    print("\n****** RUNNING SVD ******")
     for q in qs:
         modulename = "settings_q_%d" % q
         # for f_max in f_max_s:
@@ -160,21 +160,21 @@ if flag == 1:
 
         settings = __import__(modulename)
 
-        print settings.q
-        print settings.f_max
+        print(settings.q)
+        print(settings.f_max)
 
         results_path = settings.results_path
         datatype = settings.datatype
 
         A = joblib.load("%s/A_parallel.jbl" % results_path)
-        print "Loaded"
+        print("Loaded")
         U, S, VH = dynamics_retrieval.SVD.SVD_f_manual(A)
         U, S, VH = dynamics_retrieval.SVD.sorting(U, S, VH)
 
-        print "Done"
-        print "U: ", U.shape
-        print "S: ", S.shape
-        print "VH: ", VH.shape
+        print("Done")
+        print("U: ", U.shape)
+        print("S: ", S.shape)
+        print("VH: ", VH.shape)
 
         joblib.dump(U, "%s/U.jbl" % results_path)
         joblib.dump(S, "%s/S.jbl" % results_path)
@@ -184,7 +184,7 @@ if flag == 1:
         Phi = evecs[:, 0 : 2 * settings.f_max_considered + 1]
 
         VT_final = dynamics_retrieval.SVD.project_chronos(VH, Phi)
-        print "VT_final: ", VT_final.shape
+        print("VT_final: ", VT_final.shape)
         joblib.dump(VT_final, "%s/VT_final.jbl" % results_path)
 
 flag = 0
@@ -199,8 +199,8 @@ if flag == 1:
 
         settings = __import__(modulename)
 
-        print settings.q
-        print settings.f_max
+        print(settings.q)
+        print(settings.f_max)
 
         dynamics_retrieval.plot_SVs.main(settings)
         dynamics_retrieval.plot_chronos.main(settings)
@@ -215,8 +215,8 @@ if flag == 1:
 
         settings = __import__(modulename)
 
-        print settings.q
-        print settings.f_max
+        print(settings.q)
+        print(settings.f_max)
 
         end_worker = settings.n_workers_reconstruction - 1
         os.system(
@@ -236,8 +236,8 @@ if flag == 1:
 
         settings = __import__(modulename)
 
-        print settings.q
-        print settings.f_max
+        print(settings.q)
+        print(settings.f_max)
 
         for mode in settings.modes_to_reconstruct:
             dynamics_retrieval.util_merge_x_r.f(settings, mode)
@@ -255,8 +255,8 @@ if flag == 1:
 
         settings = __import__(modulename)
 
-        print settings.q
-        print settings.f_max
+        print(settings.q)
+        print(settings.f_max)
 
         rpath = settings.results_path
         q = settings.q
@@ -272,7 +272,7 @@ if flag == 1:
 
         x_r_tot = 0
         for mode in settings.modes_to_reconstruct:
-            print mode
+            print(mode)
             x_r = joblib.load("%s/movie_mode_%d_parallel.jbl" % (rpath, mode))
 
             x_r_large = numpy.zeros((m, S))
@@ -310,12 +310,12 @@ if flag == 1:
 
         settings = __import__(modulename)
 
-        print settings.q
-        print settings.f_max
+        print(settings.q)
+        print(settings.f_max)
 
         CCs = joblib.load("%s/reconstruction_CC_vs_nmodes.jbl" % settings.results_path)
-        matplotlib.pyplot.scatter(range(1, len(CCs) + 1), CCs, c="b")
-        matplotlib.pyplot.xticks(range(1, len(CCs) + 1, 2))
+        matplotlib.pyplot.scatter(list(range(1, len(CCs) + 1)), CCs, c="b")
+        matplotlib.pyplot.xticks(list(range(1, len(CCs) + 1, 2)))
         matplotlib.pyplot.savefig(
             "%s/reconstruction_CC_vs_nmodes.png" % (settings.results_path)
         )
@@ -332,13 +332,13 @@ if flag == 1:
 
         settings = __import__(modulename)
 
-        print settings.q
-        print settings.f_max
+        print(settings.q)
+        print(settings.f_max)
 
         local_linearity_lst = []
         x_r_tot = 0
         for mode in settings.modes_to_reconstruct:
-            print "mode: ", mode
+            print("mode: ", mode)
             x_r = joblib.load(
                 "%s/movie_mode_%d_parallel.jbl" % (settings.results_path, mode)
             )
@@ -360,12 +360,12 @@ if flag == 1:
 
         settings = __import__(modulename)
 
-        print settings.q
-        print settings.f_max
+        print(settings.q)
+        print(settings.f_max)
 
         lls = joblib.load("%s/local_linearity_vs_nmodes.jbl" % settings.results_path)
-        matplotlib.pyplot.scatter(range(1, len(lls) + 1), numpy.log(lls), c="b")
-        matplotlib.pyplot.xticks(range(1, len(lls) + 1, 2))
+        matplotlib.pyplot.scatter(list(range(1, len(lls) + 1)), numpy.log(lls), c="b")
+        matplotlib.pyplot.xticks(list(range(1, len(lls) + 1, 2)))
         matplotlib.pyplot.savefig(
             "%s/local_linearity_vs_nmodes.png" % (settings.results_path)
         )

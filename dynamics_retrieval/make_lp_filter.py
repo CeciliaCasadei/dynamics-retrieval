@@ -84,7 +84,7 @@ def plot_f(settings, M, label, ts):
 
 
 def plot(settings, M, label):
-    ts = range(M.shape[0])
+    ts = list(range(M.shape[0]))
     plot_f(settings, M, label, ts)
 
 
@@ -98,7 +98,7 @@ def get_F(settings):
     q = settings.q
     s = S - q
 
-    t = numpy.asarray(range(s))
+    t = numpy.asarray(list(range(s)))
     T = 1 * (s)
     omega = 2 * numpy.pi / T
 
@@ -136,16 +136,16 @@ def get_F_sv_t_range(settings):
     ts_svs = numpy.asarray(ts_svs)
     joblib.dump(ts_svs, "%s/ts_svs.jbl" % settings.results_path)
 
-    print "ts_meas:", ts_meas.shape
-    print "start: ", ts_meas[0]
-    print "end: ", ts_meas[-1]
-    print "ts_svs:", ts_svs.shape
-    print "start: ", ts_svs[0]
-    print "end: ", ts_svs[-1]
+    print("ts_meas:", ts_meas.shape)
+    print("start: ", ts_meas[0])
+    print("end: ", ts_meas[-1])
+    print("ts_svs:", ts_svs.shape)
+    print("start: ", ts_svs[0])
+    print("end: ", ts_svs[-1])
 
     T = ts_svs[-1] - ts_svs[0]
     omega = 2 * numpy.pi / T
-    print "T:", T
+    print("T:", T)
 
     # Make filter matrix F
     f_max = settings.f_max
@@ -186,17 +186,17 @@ def on(settings, Z):
 
 def on_modified(settings, Z):
     Z[:, 0] = normalise(Z[:, 0])
-    print "Normalisation: %0.2f" % numpy.inner(Z[:, 0], Z[:, 0])
+    print("Normalisation: %0.2f" % numpy.inner(Z[:, 0], Z[:, 0]))
 
     for start in range(1, Z.shape[1]):
-        print "start =", start
+        print("start =", start)
 
         for j in range(start, Z.shape[1]):
             Z[:, j] = Z[:, j] - numpy.inner(Z[:, j], Z[:, start - 1]) * Z[:, start - 1]
         Z[:, start] = normalise(Z[:, start])
-        print "Normalisation: %0.2f" % numpy.inner(Z[:, start], Z[:, start])
+        print("Normalisation: %0.2f" % numpy.inner(Z[:, start], Z[:, start]))
         for j in range(0, start):
-            print "Orthogonality: %0.2f" % numpy.inner(Z[:, start], Z[:, j])
+            print("Orthogonality: %0.2f" % numpy.inner(Z[:, start], Z[:, j]))
 
     plot_t_sv_range(settings, Z, "_o_n_modified")
     return Z
@@ -221,7 +221,7 @@ def main(settings):
     Q, R = on_qr(settings, F)
 
     d = check_on(Q)
-    print numpy.amax(abs(d))
+    print(numpy.amax(abs(d)))
 
     joblib.dump(Q, "%s/F_on_qr.jbl" % results_path)
 
@@ -230,5 +230,5 @@ def check(settings):
     results_path = settings.results_path
     Q = joblib.load("%s/F_on_qr.jbl" % results_path)
     d = check_on(Q)
-    print numpy.amax(abs(d))
+    print(numpy.amax(abs(d)))
     plot(settings, Q, "_qr_check")

@@ -25,20 +25,20 @@ if flag == 1:
 
     fig = plt.figure()
     plt.rcParams["grid.color"] = "white"
-    ax = fig.gca(projection="3d")
+    ax = fig.add_subplot(projection="3d")
 
     ax.scatter(x[0, :], x[1, :], x[2, :], c=t, edgecolors="none")
 
-    ax.w_xaxis.line.set_color("b")
-    ax.w_yaxis.line.set_color("b")
-    ax.w_zaxis.line.set_color("b")
+    ax.xaxis.line.set_color("b")
+    ax.yaxis.line.set_color("b")
+    ax.zaxis.line.set_color("b")
     ax.xaxis.set_ticklabels([])
     ax.yaxis.set_ticklabels([])
     ax.zaxis.set_ticklabels([])
 
-    ax.w_xaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
-    ax.w_yaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
-    ax.w_zaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+    ax.xaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+    ax.yaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+    ax.zaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
 
     for line in ax.xaxis.get_ticklines():
         line.set_visible(False)
@@ -95,23 +95,22 @@ if flag == 1:
     mask[2, :] = sparsities
     x[2, :] = x_2
 
-    x = joblib.load("%s/x.jbl" % settings.results_path)
     fig = plt.figure()
     plt.rcParams["grid.color"] = "white"
-    ax = fig.gca(projection="3d")
+    ax = fig.add_subplot(projection="3d")
 
     ax.scatter(x[0, :], x[1, :], x[2, :], c=t, edgecolors="none")
 
-    ax.w_xaxis.line.set_color("b")
-    ax.w_yaxis.line.set_color("b")
-    ax.w_zaxis.line.set_color("b")
+    ax.xaxis.line.set_color("b")
+    ax.yaxis.line.set_color("b")
+    ax.zaxis.line.set_color("b")
     ax.xaxis.set_ticklabels([])
     ax.yaxis.set_ticklabels([])
     ax.zaxis.set_ticklabels([])
 
-    ax.w_xaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
-    ax.w_yaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
-    ax.w_zaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+    ax.xaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+    ax.yaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+    ax.zaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
 
     for line in ax.xaxis.get_ticklines():
         line.set_visible(False)
@@ -122,8 +121,8 @@ if flag == 1:
 
     plt.savefig("%s/input_data.pdf" % settings.results_path, dpi=96 * 4)
 
-    # joblib.dump(x, '%s/x.jbl'%settings.results_path)
-    # joblib.dump(mask, '%s/mask.jbl'%settings.results_path)
+    joblib.dump(x, '%s/x.jbl'%settings.results_path)
+    joblib.dump(mask, '%s/mask.jbl'%settings.results_path)
 
 #############################
 ###     Plain SVD of x    ###
@@ -137,10 +136,10 @@ if flag == 1:
     U, S, VH = dynamics_retrieval.SVD.SVD_f(x)
     U, S, VH = dynamics_retrieval.SVD.sorting(U, S, VH)
 
-    print "Done"
-    print "U: ", U.shape
-    print "S: ", S.shape
-    print "VH: ", VH.shape
+    print("Done")
+    print("U: ", U.shape)
+    print("S: ", S.shape)
+    print("VH: ", VH.shape)
 
     joblib.dump(U, "%s/U.jbl" % results_path)
     joblib.dump(S, "%s/S.jbl" % results_path)
@@ -164,7 +163,7 @@ if flag == 1:
     U = joblib.load("%s/U.jbl" % results_path)
     S = joblib.load("%s/S.jbl" % results_path)
     VH = joblib.load("%s/VT_final.jbl" % results_path)
-    print U.shape, S.shape, VH.shape
+    print(U.shape, S.shape, VH.shape)
     x_r_tot = 0
     for mode in modes:
         u = U[:, mode]
@@ -174,7 +173,7 @@ if flag == 1:
 
         fig = plt.figure()
         plt.rcParams["grid.color"] = "white"
-        ax = fig.gca(projection="3d")
+        ax = fig.add_subplot(projection="3d")
 
         ax.scatter(
             x_r[0, :],
@@ -184,16 +183,16 @@ if flag == 1:
             edgecolors="none",
         )
 
-        ax.w_xaxis.line.set_color("b")
-        ax.w_yaxis.line.set_color("b")
-        ax.w_zaxis.line.set_color("b")
+        ax.xaxis.line.set_color("b")
+        ax.yaxis.line.set_color("b")
+        ax.zaxis.line.set_color("b")
         ax.xaxis.set_ticklabels([])
         ax.yaxis.set_ticklabels([])
         ax.zaxis.set_ticklabels([])
 
-        ax.w_xaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
-        ax.w_yaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
-        ax.w_zaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+        ax.xaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+        ax.yaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+        ax.zaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
 
         for line in ax.xaxis.get_ticklines():
             line.set_visible(False)
@@ -209,7 +208,7 @@ if flag == 1:
 
         fig = plt.figure()
         plt.rcParams["grid.color"] = "white"
-        ax = fig.gca(projection="3d")
+        ax = fig.add_subplot(projection="3d")
 
         ax.scatter(
             x_r_tot[0, :],
@@ -219,16 +218,16 @@ if flag == 1:
             edgecolors="none",
         )
 
-        ax.w_xaxis.line.set_color("b")
-        ax.w_yaxis.line.set_color("b")
-        ax.w_zaxis.line.set_color("b")
+        ax.xaxis.line.set_color("b")
+        ax.yaxis.line.set_color("b")
+        ax.zaxis.line.set_color("b")
         ax.xaxis.set_ticklabels([])
         ax.yaxis.set_ticklabels([])
         ax.zaxis.set_ticklabels([])
 
-        ax.w_xaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
-        ax.w_yaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
-        ax.w_zaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+        ax.xaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+        ax.yaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+        ax.zaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
 
         for line in ax.xaxis.get_ticklines():
             line.set_visible(False)
@@ -244,7 +243,7 @@ if flag == 1:
         x_underlying = x_underlying.flatten()
 
         CC = dynamics_retrieval.correlate.Correlate(x_underlying, x_r_tot_flat)
-        print (CC)
+        print(CC)
 
         plt.title("CC: %.4f" % CC)
 
@@ -272,7 +271,7 @@ if flag == 1:
         )
         dynamics_retrieval.calculate_distances_utilities.calculate_d_sq_sparse(settings)
     else:
-        print "Undefined distance mode."
+        print("Undefined distance mode.")
 
 flag = 0
 if flag == 1:
@@ -349,7 +348,7 @@ if flag == 1:
     evecs = joblib.load("%s/evecs_sorted.jbl" % settings.results_path)
     test = numpy.matmul(evecs.T, evecs)
     diff = abs(test - numpy.eye(settings.l))
-    print numpy.amax(diff)
+    print(numpy.amax(diff))
 
 flag = 0
 if flag == 1:
@@ -412,13 +411,13 @@ if flag == 1:
         x_r = joblib.load(
             "%s/movie_mode_%d_parallel.jbl" % (settings.results_path, mode)
         )
-        print x_r[0, :].shape
-        plt.scatter(x_r[0, :], x_r[1, :], s=1, c=numpy.asarray(range(S))[q : S - q + 1])
+        print(x_r[0, :].shape)
+        plt.scatter(x_r[0, :], x_r[1, :], s=1, c=numpy.asarray(list(range(S)))[q : S - q + 1])
         plt.savefig("%s/x_r_mode_%d.png" % (results_path, mode), dpi=96 * 3)
         plt.close()
         x_r_tot += x_r
     plt.scatter(
-        x_r_tot[0, :], x_r_tot[1, :], s=1, c=numpy.asarray(range(S))[q : S - q + 1]
+        x_r_tot[0, :], x_r_tot[1, :], s=1, c=numpy.asarray(list(range(S)))[q : S - q + 1]
     )
     plt.savefig("%s/x_r_tot.png" % (settings.results_path), dpi=96 * 3)
     plt.close()
@@ -430,7 +429,7 @@ if flag == 1:
     x_underlying = x_underlying.flatten()
 
     CC = dynamics_retrieval.correlate.Correlate(x_underlying, x_r_tot)
-    print (CC)
+    print(CC)
 
 #############################
 ###           SSA         ###
@@ -450,10 +449,10 @@ if flag == 1:
     U, S, VH = dynamics_retrieval.SVD.SVD_f(x)
     U, S, VH = dynamics_retrieval.SVD.sorting(U, S, VH)
 
-    print "Done"
-    print "U: ", U.shape
-    print "S: ", S.shape
-    print "VH: ", VH.shape
+    print("Done")
+    print("U: ", U.shape)
+    print("S: ", S.shape)
+    print("VH: ", VH.shape)
 
     joblib.dump(U, "%s/U.jbl" % results_path)
     joblib.dump(S, "%s/S.jbl" % results_path)
@@ -495,7 +494,7 @@ if flag == 1:
 
         fig = plt.figure()
         plt.rcParams["grid.color"] = "white"
-        ax = fig.gca(projection="3d")
+        ax = fig.add_subplot(projection="3d")
         ax.scatter(
             x_r[0, :],
             x_r[1, :],
@@ -504,16 +503,16 @@ if flag == 1:
             edgecolors="none",
         )
 
-        ax.w_xaxis.line.set_color("b")
-        ax.w_yaxis.line.set_color("b")
-        ax.w_zaxis.line.set_color("b")
+        ax.xaxis.line.set_color("b")
+        ax.yaxis.line.set_color("b")
+        ax.zaxis.line.set_color("b")
         ax.xaxis.set_ticklabels([])
         ax.yaxis.set_ticklabels([])
         ax.zaxis.set_ticklabels([])
 
-        ax.w_xaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
-        ax.w_yaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
-        ax.w_zaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+        ax.xaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+        ax.yaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+        ax.zaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
 
         for line in ax.xaxis.get_ticklines():
             line.set_visible(False)
@@ -529,7 +528,7 @@ if flag == 1:
 
         fig = plt.figure()
         plt.rcParams["grid.color"] = "white"
-        ax = fig.gca(projection="3d")
+        ax = fig.add_subplot(projection="3d")
         ax.scatter(
             x_r_tot[0, :],
             x_r_tot[1, :],
@@ -538,16 +537,16 @@ if flag == 1:
             edgecolors="none",
         )
 
-        ax.w_xaxis.line.set_color("b")
-        ax.w_yaxis.line.set_color("b")
-        ax.w_zaxis.line.set_color("b")
+        ax.xaxis.line.set_color("b")
+        ax.yaxis.line.set_color("b")
+        ax.zaxis.line.set_color("b")
         ax.xaxis.set_ticklabels([])
         ax.yaxis.set_ticklabels([])
         ax.zaxis.set_ticklabels([])
 
-        ax.w_xaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
-        ax.w_yaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
-        ax.w_zaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+        ax.xaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+        ax.yaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
+        ax.zaxis.set_pane_color((0.1, 0.0, 1.0, 0.08))
 
         for line in ax.xaxis.get_ticklines():
             line.set_visible(False)
@@ -563,7 +562,7 @@ if flag == 1:
         x_underlying = x_underlying.flatten()
 
         CC = dynamics_retrieval.correlate.Correlate(x_underlying, x_r_tot_flat)
-        print (CC)
+        print(CC)
 
         plt.title("CC: %.4f" % CC)
 

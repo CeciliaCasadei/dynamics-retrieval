@@ -11,7 +11,7 @@ import matplotlib.pyplot
 
 def main(settings):
 
-    print "****** RUNNING plot_P_evecs ******"
+    print("****** RUNNING plot_P_evecs ******")
     results_path = settings.results_path
     l = settings.l
 
@@ -24,16 +24,16 @@ def main(settings):
 
     s = evecs_sorted.shape[0]
     for i in range(l):
-        print i
+        print(i)
         phi = evecs_sorted[:, i]
         matplotlib.pyplot.figure(figsize=(30, 10))
         ax = matplotlib.pyplot.gca()
         ax.tick_params(axis="x", labelsize=25)
         ax.tick_params(axis="y", labelsize=25)
-        matplotlib.pyplot.plot(range(s), phi, "o-", markersize=2)
+        matplotlib.pyplot.plot(list(range(s)), phi, "o-", markersize=2)
         matplotlib.pyplot.savefig("%s/evec_%d.png" % (figure_path, i), dpi=2 * 96)
         matplotlib.pyplot.close()
 
-    matplotlib.pyplot.scatter(range(l), evals_sorted[0:l])
+    matplotlib.pyplot.scatter(list(range(l)), evals_sorted[0:l])
     matplotlib.pyplot.savefig("%s/eigenvalues.png" % (figure_path))
     matplotlib.pyplot.close()

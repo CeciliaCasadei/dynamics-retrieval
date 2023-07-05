@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 
-import calculate_distances_utilities
+from . import calculate_distances_utilities
 
 if __name__ == "__main__":
 

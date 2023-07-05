@@ -11,5 +11,5 @@ l = 0
 
 
 q = numpy.sqrt((float(h) / a) ** 2 + (float(k) / b) ** 2 + (float(l) / c) ** 2)
-print q
-print 1 / q
+print(q)
+print(1 / q)

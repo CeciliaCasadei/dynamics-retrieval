@@ -15,7 +15,7 @@ def make_Ui_subf(settings, i, U_temp):
     results_path = settings.results_path
     f_max = settings.f_max
     A_i = joblib.load("%s/A_%d.jbl" % (results_path, i))[:, 0 : 2 * f_max + 1]
-    print "A_i:", A_i.shape
+    print("A_i:", A_i.shape)
     U_i = numpy.matmul(A_i, U_temp)
     # joblib.dump(U_i[:,0:20], '%s/U_%d.jbl'%(results_path, i))
     for j in range(0, 1):  # 2*f_max+1):
@@ -46,13 +46,13 @@ def make_uj(settings, n_chuncks):
         for i in range(0, n_chuncks):
             start = i * step
             end = min([(i + 1) * step, m * q])
-            print start, end
+            print(start, end)
             u_j_chunck_i = joblib.load("%s/u_%d_chunck_%d.jbl" % (results_path, j, i))
             u_j[
                 start:end,
             ] = u_j_chunck_i
 
-        print "Saving."
+        print("Saving.")
         joblib.dump(u_j, "%s/u_%d.jbl" % (results_path, j))
 
 
@@ -70,5 +70,5 @@ def make_U(settings, n_chuncks):
         U_i = joblib.load("%s/U_%d.jbl" % (results_path, i))
         U[start:end, :] = U_i
 
-    print "Saving."
+    print("Saving.")
     joblib.dump(U, "%s/U.jbl" % results_path)

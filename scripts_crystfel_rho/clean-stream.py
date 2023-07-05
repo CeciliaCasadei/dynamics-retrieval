@@ -23,7 +23,7 @@
 # along with CrystFEL.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from __future__ import division
+
 
 import re
 import sys
@@ -83,8 +83,8 @@ while line != "":
 
     line = infile_1.readline()
 
-print(
+print((
     "%d suited of %d patterns have been extracted and saved as %s"
     % (num_suited, n_patt, sys.argv[2])
-)
+))
 Nfile.write("%d" % num_suited)

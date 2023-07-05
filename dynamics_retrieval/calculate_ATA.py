@@ -12,32 +12,32 @@ def f(loop_idx, settings):
     f_max = settings.f_max
     n_vectors = 2 * f_max + 1
     ATA = numpy.zeros((n_vectors, n_vectors))
-    print ATA.shape, ATA.dtype
+    print(ATA.shape, ATA.dtype)
     start = time.time()
     for i in range(loop_idx, loop_idx + 1):  # (n_vectors):
-        print i
+        print(i)
         ai = joblib.load("%s/aj/a_%d.jbl" % (results_path, i))
 
         if numpy.isnan(ai).any():
-            print ("ai contain NaN values")
+            print("ai contain NaN values")
             N = numpy.count_nonzero(numpy.isnan(ai))
-            print "N nans: ", N, "out of ", ai.shape
+            print("N nans: ", N, "out of ", ai.shape)
         else:
-            print ("ai does not contain NaN values")
+            print("ai does not contain NaN values")
 
         for j in range(i, n_vectors):
             aj = joblib.load("%s/aj/a_%d.jbl" % (results_path, j))
 
             if numpy.isnan(aj).any():
-                print ("aj contain NaN values")
+                print("aj contain NaN values")
             else:
-                print ("aj does not contain NaN values")
+                print("aj does not contain NaN values")
 
             ATA_ij = numpy.inner(ai, aj)
-            print ATA_ij
+            print(ATA_ij)
             ATA[i, j] = ATA_ij
             ATA[j, i] = ATA_ij
-    print "Time:", time.time() - start
+    print("Time:", time.time() - start)
     joblib.dump(ATA, "%s/ATA/chunck_%d.jbl" % (results_path, loop_idx))
 
 
@@ -47,7 +47,7 @@ def main(args=None):
     parser.add_argument("settings", help="settings file")
     args = parser.parse_args(args)
 
-    print "Worker ID: ", args.worker_ID
+    print("Worker ID: ", args.worker_ID)
 
     # Dynamic import based on the command line argument
     settings = importlib.import_module(args.settings)

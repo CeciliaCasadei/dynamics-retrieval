@@ -8,7 +8,7 @@ def get_run_ns():
     run_ns = []
 
     for list_original in lists_original:
-        print list_original
+        print(list_original)
         list_original_open = open(list_original, "r")
         for event in list_original_open:
             run_n = int(event.split("/")[9][1:5])
@@ -35,7 +35,7 @@ def make_run_list(out_folder, run):
 
 def make_run_lists(out_folder, run_ns_unique):
     for run in run_ns_unique:
-        print run
+        print(run)
         make_run_list(out_folder, run)
 
 
@@ -56,7 +56,7 @@ def make_short_lists(out_folder, out_folder_short):
     out_folder_lst = out_folder_lst.split("\n")[:-1]
     for k in out_folder_lst:
         k_fn = k.split("/")[-1]
-        print k_fn
+        print(k_fn)
         fn_out_short = "%s/%s_1000_events.txt" % (out_folder_short, k_fn[:-4])
         os.system("touch %s" % fn_out_short)
         os.system("head -n 1000 %s > %s" % (k, fn_out_short))
@@ -64,7 +64,7 @@ def make_short_lists(out_folder, out_folder_short):
 
 if __name__ == "__main__":
     run_ns = get_run_ns()
-    print "Total n. of events: ", len(run_ns)
+    print("Total n. of events: ", len(run_ns))
     run_ns_unique = set(run_ns)
 
     out_folder = "./lists_new"
@@ -73,7 +73,7 @@ if __name__ == "__main__":
 
     make_run_lists(out_folder, run_ns_unique)
     n_tot = check(out_folder)
-    print "Total n. of events: ", n_tot
+    print("Total n. of events: ", n_tot)
 
     out_folder_short = "./lists_new_short"
     if not os.path.exists(out_folder_short):

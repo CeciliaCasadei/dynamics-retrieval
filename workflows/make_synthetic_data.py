@@ -17,7 +17,7 @@ def make_x(settings):
     x = numpy.zeros((m, S))
     mask = numpy.zeros((m, S))
 
-    ts = numpy.asarray(range(S), dtype=numpy.double)
+    ts = numpy.asarray(list(range(S)), dtype=numpy.double)
     T = S - q
     omega = 2 * numpy.pi / T
 
@@ -104,13 +104,13 @@ if flag == 1:
         )
         dynamics_retrieval.calculate_distances_utilities.calculate_d_sq_sparse(settings)
     else:
-        print "Undefined distance mode."
+        print("Undefined distance mode.")
 
 flag = 0
 if flag == 1:
     d_sq = joblib.load("%s/d_sq.jbl" % (settings.results_path))
-    print numpy.amax(d_sq), numpy.amin(d_sq)
-    print numpy.amax(numpy.diag(d_sq)), numpy.amin(numpy.diag(d_sq))
+    print(numpy.amax(d_sq), numpy.amin(d_sq))
+    print(numpy.amax(numpy.diag(d_sq)), numpy.amin(numpy.diag(d_sq)))
 
 flag = 0
 if flag == 1:
@@ -186,7 +186,7 @@ if flag == 1:
     evecs = joblib.load("%s/evecs_sorted.jbl" % settings.results_path)
     test = numpy.matmul(evecs.T, evecs)
     diff = abs(test - numpy.eye(settings.l))
-    print numpy.amax(diff)
+    print(numpy.amax(diff))
 
 flag = 0
 if flag == 1:
@@ -257,7 +257,7 @@ if flag == 1:
     CCs = []
     x_r_tot = 0
     for mode in settings.modes_to_reconstruct:
-        print mode
+        print(mode)
 
         x_r = joblib.load("%s/movie_mode_%d_parallel.jbl" % (results_path, mode))
         dynamics_retrieval.plot_syn_data.f(
@@ -290,10 +290,10 @@ if flag == 1:
     U, S, VH = dynamics_retrieval.SVD.SVD_f(x)
     U, S, VH = dynamics_retrieval.SVD.sorting(U, S, VH)
 
-    print "Done"
-    print "U: ", U.shape
-    print "S: ", S.shape
-    print "VH: ", VH.shape
+    print("Done")
+    print("U: ", U.shape)
+    print("S: ", S.shape)
+    print("VH: ", VH.shape)
 
     joblib.dump(U, "%s/U.jbl" % settings.results_path)
     joblib.dump(S, "%s/S.jbl" % settings.results_path)
@@ -324,7 +324,7 @@ if flag == 1:
 
     CCs = []
     x_r_tot = 0
-    modes = range(20)
+    modes = list(range(20))
     for mode in modes:
 
         u = U[:, mode]
@@ -377,20 +377,20 @@ flag = 0
 if flag == 1:
     import dynamics_retrieval.SVD
 
-    print "\n****** RUNNING SVD ******"
+    print("\n****** RUNNING SVD ******")
 
     results_path = settings.results_path
     datatype = settings.datatype
 
     A = joblib.load("%s/A_parallel.jbl" % results_path)
-    print "Loaded"
+    print("Loaded")
     U, S, VH = dynamics_retrieval.SVD.SVD_f_manual(A)
     U, S, VH = dynamics_retrieval.SVD.sorting(U, S, VH)
 
-    print "Done"
-    print "U: ", U.shape
-    print "S: ", S.shape
-    print "VH: ", VH.shape
+    print("Done")
+    print("U: ", U.shape)
+    print("S: ", S.shape)
+    print("VH: ", VH.shape)
 
     joblib.dump(U, "%s/U.jbl" % results_path)
     joblib.dump(S, "%s/S.jbl" % results_path)
@@ -400,7 +400,7 @@ if flag == 1:
     Phi = evecs[:, 0 : 2 * settings.f_max_considered + 1]
 
     VT_final = dynamics_retrieval.SVD.project_chronos(VH, Phi)
-    print "VT_final: ", VT_final.shape
+    print("VT_final: ", VT_final.shape)
     joblib.dump(VT_final, "%s/VT_final.jbl" % results_path)
 
 flag = 0
@@ -471,10 +471,10 @@ if flag == 1:
 flag = 0
 if flag == 1:
     x = joblib.load("%s/x.jbl" % settings.results_path)
-    print "x: ", x.shape
+    print("x: ", x.shape)
     xTx = numpy.matmul(x.T, x)
     joblib.dump(xTx, "%s/xTx.jbl" % settings.results_path)
-    print "xTx: ", xTx.shape
+    print("xTx: ", xTx.shape)
 
 # Calc XTX
 flag = 0
@@ -482,12 +482,12 @@ if flag == 1:
     s = settings.S - settings.q
     XTX = numpy.zeros((s, s))
     xTx = joblib.load("%s/xTx.jbl" % settings.results_path)
-    print "xTx: ", xTx.shape, "XTX: ", XTX.shape
+    print("xTx: ", xTx.shape, "XTX: ", XTX.shape)
     start = time.time()
     for i in range(1, settings.q + 1):  # Time ~q seconds
-        print i
+        print(i)
         XTX += xTx[i : i + s, i : i + s]
-    print "Time: ", time.time() - start
+    print("Time: ", time.time() - start)
     joblib.dump(XTX, "%s/XTX.jbl" % settings.results_path)
 
 # SVD XTX
@@ -495,11 +495,11 @@ flag = 0
 if flag == 1:
     XTX = joblib.load("%s/XTX.jbl" % settings.results_path)
     evals_XTX, evecs_XTX = numpy.linalg.eigh(XTX)
-    print "Done"
+    print("Done")
     evals_XTX[numpy.argwhere(evals_XTX < 0)] = 0
     SVs = numpy.sqrt(evals_XTX)
     VT = evecs_XTX.T
-    print "Sorting"
+    print("Sorting")
     sort_idxs = numpy.argsort(SVs)[::-1]
     SVs_sorted = SVs[sort_idxs]
     VT_sorted = VT[sort_idxs, :]
@@ -511,7 +511,7 @@ if flag == 1:
     SVs = joblib.load("%s/S.jbl" % settings.results_path)
     VT = joblib.load("%s/VT_final.jbl" % settings.results_path)
     U_temp = numpy.matmul(VT.T, numpy.diag(1.0 / SVs))
-    print "VS-1: ", U_temp.shape
+    print("VS-1: ", U_temp.shape)
     U_temp = U_temp[:, 0:20]
     x = joblib.load("%s/x.jbl" % settings.results_path)
     m = x.shape[0]
@@ -522,7 +522,7 @@ if flag == 1:
     for j in range(0, q):
         U[j * m : (j + 1) * m, :] = numpy.matmul(x[:, q - j : q + s - j], U_temp)
     # U = numpy.matmul(A, U_temp)
-    print "Time: ", time.time() - start
+    print("Time: ", time.time() - start)
     joblib.dump(U, "%s/U.jbl" % settings.results_path)
 
 flag = 0
@@ -561,14 +561,14 @@ if flag == 1:
 
     benchmark = joblib.load("../../synthetic_data_4/test5/x.jbl")
     benchmark = benchmark[:, q : q + (S - q - ncopies + 1)]
-    print benchmark.shape
+    print(benchmark.shape)
     benchmark = benchmark.flatten()
 
     CCs = []
 
     x_r_tot = 0
     for mode in settings.modes_to_reconstruct:
-        print "Mode:", mode
+        print("Mode:", mode)
         x_r = joblib.load("%s/movie_mode_%d_parallel.jbl" % (results_path, mode))
         dynamics_retrieval.plot_syn_data.f(
             x_r, "%s/x_r_mode_%d.png" % (results_path, mode)
@@ -589,8 +589,8 @@ if flag == 1:
 flag = 0
 if flag == 1:
     CCs = joblib.load("%s/reconstruction_CC_vs_nmodes.jbl" % settings.results_path)
-    matplotlib.pyplot.scatter(range(1, len(CCs) + 1), CCs, c="b")
-    matplotlib.pyplot.xticks(range(1, len(CCs) + 1, 2))
+    matplotlib.pyplot.scatter(list(range(1, len(CCs) + 1)), CCs, c="b")
+    matplotlib.pyplot.xticks(list(range(1, len(CCs) + 1, 2)))
     matplotlib.pyplot.savefig(
         "%s/reconstruction_CC_vs_nmodes.png" % (settings.results_path)
     )
@@ -603,7 +603,7 @@ if flag == 1:
     local_linearity_lst = []
     x_r_tot = 0
     for mode in settings.modes_to_reconstruct:
-        print "mode: ", mode
+        print("mode: ", mode)
         x_r = joblib.load(
             "%s/movie_mode_%d_parallel.jbl" % (settings.results_path, mode)
         )
@@ -619,8 +619,8 @@ flag = 0
 if flag == 1:
 
     lls = joblib.load("%s/local_linearity_vs_nmodes.jbl" % settings.results_path)
-    matplotlib.pyplot.scatter(range(1, len(lls) + 1), numpy.log(lls), c="b")
-    matplotlib.pyplot.xticks(range(1, len(lls) + 1, 2))
+    matplotlib.pyplot.scatter(list(range(1, len(lls) + 1)), numpy.log(lls), c="b")
+    matplotlib.pyplot.xticks(list(range(1, len(lls) + 1, 2)))
     matplotlib.pyplot.savefig(
         "%s/local_linearity_vs_nmodes.png" % (settings.results_path)
     )

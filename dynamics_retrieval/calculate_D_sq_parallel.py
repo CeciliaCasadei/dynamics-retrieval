@@ -9,45 +9,45 @@ import numpy
 
 def f(loop_idx, settings):
 
-    print "PARALLEL JOB loop_idx: ", loop_idx
+    print("PARALLEL JOB loop_idx: ", loop_idx)
 
     q = settings.q
     datatype = settings.datatype
     results_path = settings.results_path
-    print "q: ", q
+    print("q: ", q)
 
     step = settings.paral_step
 
     d_sq = joblib.load("%s/d_sq.jbl" % results_path)
-    print "d_sq: ", d_sq.shape, d_sq.dtype
+    print("d_sq: ", d_sq.shape, d_sq.dtype)
 
     S = d_sq.shape[0]
     s = S - q
 
-    print S, " samples"
+    print(S, " samples")
 
-    print "Calculate D_sq, index: ", loop_idx
+    print("Calculate D_sq, index: ", loop_idx)
 
     q_start = loop_idx * step
     q_end = q_start + step
     if q_end > q:
         q_end = q
-    print "q_start: ", q_start, "q_end: ", q_end
+    print("q_start: ", q_start, "q_end: ", q_end)
 
     D_sq = numpy.zeros((s + 1, s + 1), dtype=datatype)  # will need to be s,s
     starttime = time.time()
 
     for i in range(q_start, q_end):
         if i % 100 == 0:
-            print i, "/", q
+            print(i, "/", q)
         D_sq += d_sq[i : i + s + 1, i : i + s + 1]
 
-    print "Time: ", time.time() - starttime
+    print("Time: ", time.time() - starttime)
 
-    print "D_sq: ", D_sq.shape
+    print("D_sq: ", D_sq.shape)
     joblib.dump(D_sq, "%s/D_sq_loop_idx_%d.jbl" % (results_path, loop_idx))
 
-    print "Time: ", time.time() - starttime
+    print("Time: ", time.time() - starttime)
 
 
 def main(args=None):
@@ -56,13 +56,13 @@ def main(args=None):
     parser.add_argument("settings", help="settings file")
     args = parser.parse_args(args)
 
-    print "Worker ID: ", args.worker_ID
+    print("Worker ID: ", args.worker_ID)
 
     # Dynamic import based on the command line argument
     settings = importlib.import_module(args.settings)
 
     # print("Label: %s"%settings.label)
-    print ("Concatenation n: %d" % settings.q)
+    print(("Concatenation n: %d" % settings.q))
 
     f(int(args.worker_ID), settings)
 

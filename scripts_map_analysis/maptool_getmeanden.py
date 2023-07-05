@@ -12,14 +12,14 @@ def get_meanden_simple():
 
     fn = "%s/results/mapd0.mat" % (here)
 
-    print "Loading"
+    print("Loading")
 
     f = h5py.File(fn, "r")
     mapd0 = numpy.asarray(f["/mapd0"], dtype=numpy.float32)
-    print "mapd0 :", mapd0.shape, mapd0.dtype
+    print("mapd0 :", mapd0.shape, mapd0.dtype)
 
     for sigmacutoff in sigmacutoffs:
-        print "Sigma cutoff: ", sigmacutoff
+        print("Sigma cutoff: ", sigmacutoff)
         meanposden = numpy.mean(numpy.where(mapd0 < sigmacutoff, 0, mapd0), axis=0)
         meannegden = numpy.mean(numpy.where(mapd0 > -sigmacutoff, 0, mapd0), axis=0)
         joblib.dump(
@@ -28,8 +28,8 @@ def get_meanden_simple():
         joblib.dump(
             meannegden, "%s/results/meannegden_sigcutoff_%.1f.jbl" % (here, sigmacutoff)
         )
-        print "meanposden: ", meanposden.shape, meanposden.dtype
-        print "meannegden: ", meannegden.shape, meannegden.dtype
+        print("meanposden: ", meanposden.shape, meanposden.dtype)
+        print("meannegden: ", meannegden.shape, meannegden.dtype)
 
 
 def get_meanden(mode):
@@ -43,14 +43,14 @@ def get_meanden(mode):
     here = "."
     fn = "%s/results_m_0_%d%s/mapd0%s.mat" % (here, mode, label, l)
 
-    print "Loading"
+    print("Loading")
 
     f = h5py.File(fn, "r")
     mapd0 = numpy.asarray(f["/mapd0"], dtype=numpy.float32)
-    print "mapd0 :", mapd0.shape, mapd0.dtype
+    print("mapd0 :", mapd0.shape, mapd0.dtype)
 
     for sigmacutoff in sigmacutoffs:
-        print "Sigma cutoff: ", sigmacutoff
+        print("Sigma cutoff: ", sigmacutoff)
         meanposden = numpy.mean(numpy.where(mapd0 < sigmacutoff, 0, mapd0), axis=0)
         meannegden = numpy.mean(numpy.where(mapd0 > -sigmacutoff, 0, mapd0), axis=0)
         joblib.dump(
@@ -63,8 +63,8 @@ def get_meanden(mode):
             "%s/results_m_0_%d%s/meannegden_m_0_%d%s_radius_%.1f_dist_%.1f_sigcutoff_%.1f.jbl"
             % (here, mode, label, mode, l, radius, distance, sigmacutoff),
         )
-        print "meanposden: ", meanposden.shape, meanposden.dtype
-        print "meannegden: ", meannegden.shape, meannegden.dtype
+        print("meanposden: ", meanposden.shape, meanposden.dtype)
+        print("meannegden: ", meannegden.shape, meannegden.dtype)
 
 
 def merge():
@@ -101,10 +101,10 @@ def merge():
         n_ts_1 = meanposden_1.shape[1]
         n_ts_2 = meanposden_2.shape[1]
 
-        print meanposden_1.shape, meanposden_2.shape, meannegden_1.shape, meannegden_2.shape
+        print(meanposden_1.shape, meanposden_2.shape, meannegden_1.shape, meannegden_2.shape)
         meanposden = numpy.zeros((n_atoms, n_ts_1 + n_ts_2))
         meannegden = numpy.zeros((n_atoms, n_ts_1 + n_ts_2))
-        print meanposden.shape, meannegden.shape
+        print(meanposden.shape, meannegden.shape)
         meanposden[:, 0:n_ts_1] = meanposden_1
         meanposden[:, n_ts_1 : n_ts_1 + n_ts_2] = meanposden_2
         meannegden[:, 0:n_ts_1] = meannegden_1

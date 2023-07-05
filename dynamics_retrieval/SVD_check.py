@@ -14,7 +14,7 @@ def calculate_A_n(U, S, VH, n):
         temp = numpy.outer(U[:, i], VH[i, :])
         temp = S[i] * temp
         A_n = A_n + temp
-    print n + 1, "terms"
+    print(n + 1, "terms")
     return A_n
 
 
@@ -30,18 +30,18 @@ f = open("%s/VH.pkl" % results_path, "rb")
 VH = pickle.load(f)
 f.close()
 
-print "U: ", U.shape
-print "S: ", S.shape
-print "VH:", VH.shape
+print("U: ", U.shape)
+print("S: ", S.shape)
+print("VH:", VH.shape)
 
 f = open("%s/A.pkl" % results_path, "rb")
 A = pickle.load(f)
 f.close()
 
-print "A: ", A.shape
+print("A: ", A.shape)
 l = A.shape[1]
 
 for n in range(l):
     A_n = calculate_A_n(U, S, VH, n)
     diff = A - A_n
-    print numpy.average(abs(diff))
+    print(numpy.average(abs(diff)))

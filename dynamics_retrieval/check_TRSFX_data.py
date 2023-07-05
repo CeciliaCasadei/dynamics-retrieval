@@ -18,7 +18,7 @@ ks = joblib.load("%s/miller_k_light.jbl" % path)
 ls = joblib.load("%s/miller_l_light.jbl" % path)
 
 T_range = ts[-1] - ts[0]
-print "T range [fs]:", T_range
+print("T range [fs]:", T_range)
 
 # Approx. max noise period
 period_max = T_range / n_obs
@@ -49,7 +49,7 @@ matplotlib.pyplot.gca().set_ylabel("log(n. of observations)")
 matplotlib.pyplot.savefig("%s/n_obs_log_vs_res.png" % path, dpi=4 * 96)
 matplotlib.pyplot.close()
 
-print numpy.amin(d)
+print(numpy.amin(d))
 matplotlib.pyplot.figure(figsize=(20, 10))
 matplotlib.pyplot.hist(n_obs, bins=70, color="b")
 matplotlib.pyplot.gca().set_xlabel("n. of observations")
@@ -68,9 +68,9 @@ matplotlib.pyplot.close()
 idx = numpy.argmax(n_obs)
 
 M = joblib.load("%s/M_sel_sparse_light.jbl" % path)
-print "M: ", M.shape
+print("M: ", M.shape)
 T = joblib.load("%s/T_bst_sparse_light.jbl" % path)
-print "T: ", T.shape
+print("T: ", T.shape)
 
 bragg_i = T[idx, :]
 idxs = bragg_i.nonzero()

@@ -35,24 +35,24 @@ def f(run_n):
 
     for stream_file in stream_list:
         try:
-            print stream_file
+            print(stream_file)
 
             img_lines = os.popen('grep "Image filename" %s' % stream_file).read()
             img_lines = img_lines.split("\n")[:-1]
             n_tot = len(img_lines)
-            print n_tot
+            print(n_tot)
 
             uc_lines = os.popen('grep "Cell" %s' % stream_file).read()
             uc_lines = uc_lines.split("\n")[:-1]
             n_idxd = len(uc_lines)
-            print n_idxd
+            print(n_idxd)
 
             idx_rate = float(n_idxd) / n_tot
-            print idx_rate
+            print(idx_rate)
             idx_rate_list.append(idx_rate)
 
             det_dist = float("0.0" + stream_file.split(".")[-3][-5:])
-            print det_dist
+            print(det_dist)
             ds.append(det_dist)
 
             a_s = []
@@ -90,11 +90,11 @@ def f(run_n):
             std_cmb = numpy.sqrt(a_std ** 2 + b_std ** 2 + c_std ** 2)
             std_cmb_list.append(std_cmb)
 
-            print "a: %.3f +- %.3f A" % (10 * a_avg, 10 * a_std)
-            print "b: %.3f +- %.3f A" % (10 * b_avg, 10 * b_std)
-            print "c: %.3f +- %.3f A" % (10 * c_avg, 10 * c_std)
+            print("a: %.3f +- %.3f A" % (10 * a_avg, 10 * a_std))
+            print("b: %.3f +- %.3f A" % (10 * b_avg, 10 * b_std))
+            print("c: %.3f +- %.3f A" % (10 * c_avg, 10 * c_std))
         except:
-            print "Exception"
+            print("Exception")
 
     p0 = [0.082974, 0.0, 1.0, 1.0]
     popt, pcov = scipy.optimize.curve_fit(quadratic, ds, std_cmb_list, p0)
@@ -149,11 +149,11 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
     run_n_str = str("%0.4d" % args.run_n)
-    print run_n_str
+    print(run_n_str)
     out_dir = "run_%s" % run_n_str
     if os.path.exists(out_dir):
         d_optimised = f(run_n_str)
-        print "Optimal distance: ", d_optimised
+        print("Optimal distance: ", d_optimised)
 
         glob_path = "/das/work/p17/p17491/Cecilia_Casadei/NLSA/data_bR_2/indexing"
         idx_dir = "%s/indexing" % glob_path

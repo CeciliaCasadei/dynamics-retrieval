@@ -9,7 +9,7 @@ import numpy
 
 def f(loop_idx, settings):
 
-    print "loop_idx: ", loop_idx
+    print("loop_idx: ", loop_idx)
 
     q = settings.q
     datatype = settings.datatype
@@ -23,11 +23,11 @@ def f(loop_idx, settings):
     # print 'mu (s, ): ', mu.shape
 
     evecs = joblib.load("%s/evecs_sorted.jbl" % (results_path))
-    print "evecs (s, s): ", evecs.shape
+    print("evecs (s, s): ", evecs.shape)
     Phi = numpy.zeros((evecs.shape[0], nmodes), dtype=datatype)
     for j in range(nmodes):
         ev_toproject = toproject[j]
-        print "Evec: ", ev_toproject
+        print("Evec: ", ev_toproject)
         Phi[:, j] = evecs[:, ev_toproject]
 
     #    f = open('%s/T_anomaly.pkl'%results_path,'rb')
@@ -42,41 +42,41 @@ def f(loop_idx, settings):
     try:
         T_sparse = joblib.load(data_file)
         x = T_sparse[:, :].todense()
-        print "x (sparse -> dense): ", x.shape, x.dtype
+        print("x (sparse -> dense): ", x.shape, x.dtype)
         x = numpy.asarray(x, dtype=datatype)
-        print "x (m, S): ", x.shape, x.dtype
+        print("x (m, S): ", x.shape, x.dtype)
     except:
         x = joblib.load(data_file)
-        print "x (dense): ", x.shape, x.dtype
+        print("x (dense): ", x.shape, x.dtype)
 
     m = x.shape[0]
     S = x.shape[1]
     s = S - q + 1
     n = m * q
 
-    print "Calculate A, index: ", loop_idx
+    print("Calculate A, index: ", loop_idx)
 
     q_start = loop_idx * step
     q_end = q_start + step
     if q_end > q:
         q_end = q
-    print "q_start: ", q_start, "q_end: ", q_end
+    print("q_start: ", q_start, "q_end: ", q_end)
 
     A = numpy.zeros((n, nmodes), dtype=datatype)
 
     starttime = time.time()
     for i in range(q_start, q_end):
         if i % 100 == 0:
-            print i
+            print(i)
         A[i * m : (i + 1) * m, :] = numpy.matmul(
             x[:, q - 1 - i : q - 1 - i + s], Phi
         )  # mu_Phi)
 
-    print "Time: ", time.time() - starttime
+    print("Time: ", time.time() - starttime)
 
-    print "A: ", A.shape
+    print("A: ", A.shape)
     joblib.dump(A, "%s/A_chunck_idx_%d.jbl" % (results_path, loop_idx))
-    print "Time: ", time.time() - starttime
+    print("Time: ", time.time() - starttime)
 
 
 def main(args=None):
@@ -85,7 +85,7 @@ def main(args=None):
     parser.add_argument("settings", help="settings file")
     args = parser.parse_args(args)
 
-    print "Worker ID: ", args.worker_ID
+    print("Worker ID: ", args.worker_ID)
 
     # Dynamic import based on the command line argument
     settings = importlib.import_module(args.settings)

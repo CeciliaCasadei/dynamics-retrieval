@@ -17,7 +17,7 @@ def get_F_sv_t_range(ts):
     s = ts.shape[0]
     T = ts[-1] - ts[0]
     omega = 2 * numpy.pi / T
-    print "T:", T
+    print("T:", T)
 
     # Make filter matrix F
     f_max = 100
@@ -42,7 +42,7 @@ def on_qr(Z):
     return q_ortho, r
 
 
-ts = numpy.asarray(range(0, 1000), dtype=numpy.float64)
+ts = numpy.asarray(list(range(0, 1000)), dtype=numpy.float64)
 funcs = get_F_sv_t_range(ts)
 funcs_on, r = on_qr(funcs)
 
@@ -58,7 +58,7 @@ x_dyn = 2 * numpy.sin(11 * omega * ts) + 1 * numpy.cos(56 * omega * ts)
 
 N_observed = 50
 N_unobserved = 1000 - N_observed
-idxs = random.sample(range(0, 1000), N_unobserved)
+idxs = random.sample(list(range(0, 1000)), N_unobserved)
 idxs = sorted(idxs)
 x_dyn[idxs] = 0
 
@@ -70,9 +70,9 @@ for i in range(funcs_on.shape[1]):
     res = (x * func_on).sum()
     res_lst.append(res)
 
-matplotlib.pyplot.plot(range(funcs_on.shape[1]), res_lst)
+matplotlib.pyplot.plot(list(range(funcs_on.shape[1])), res_lst)
 
-print res_lst[0], res_lst[22], res_lst[111]
+print(res_lst[0], res_lst[22], res_lst[111])
 # res = numpy.inner(x, funcs_on)
 
 # res = a_3 * x_1

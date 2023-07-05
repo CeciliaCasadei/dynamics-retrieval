@@ -42,26 +42,26 @@ def main():
     out[:, 0] = miller_h.flatten()
     out[:, 1] = miller_k.flatten()
     out[:, 2] = miller_l.flatten()
-    print "out: ", out.shape
+    print("out: ", out.shape)
 
     T = joblib.load("%s/converted_data_light/T_sparse_LTD_light.jbl" % (data_path))
     M = joblib.load("%s/converted_data_light/M_sparse_light.jbl" % (data_path))
     ts = joblib.load("%s/converted_data_light/t_light.jbl" % (data_path))
-    print "T: ", T.shape
-    print "M: ", M.shape,
-    print "ts: ", ts.shape
+    print("T: ", T.shape)
+    print("M: ", M.shape, end=' ')
+    print("ts: ", ts.shape)
 
     N = 20000
 
     T_early = T[:, 0:N]
     M_early = M[:, 0:N]
-    print "Early times", ts[0, 0], ts[N, 0]
-    print T_early.shape
+    print("Early times", ts[0, 0], ts[N, 0])
+    print(T_early.shape)
 
     T_late = T[:, T.shape[1] - N :]
     M_late = M[:, M.shape[1] - N :]
-    print "Late times", ts[T.shape[1] - N, 0], ts[-1, 0]
-    print T_late.shape
+    print("Late times", ts[T.shape[1] - N, 0], ts[-1, 0])
+    print(T_late.shape)
 
     # LIGHT - early
     I_early, sigI_early = f(T_early, M_early)
@@ -126,14 +126,14 @@ def merge_all():
     out[:, 0] = miller_h.flatten()
     out[:, 1] = miller_k.flatten()
     out[:, 2] = miller_l.flatten()
-    print "out: ", out.shape
+    print("out: ", out.shape)
 
     T = joblib.load("%s/converted_data_light/T_sparse_light.jbl" % (data_path))
     M = joblib.load("%s/converted_data_light/M_sparse_light.jbl" % (data_path))
     ts = joblib.load("%s/converted_data_light/t_light.jbl" % (data_path))
-    print "T: ", T.shape
-    print "M: ", M.shape,
-    print "ts: ", ts.shape
+    print("T: ", T.shape)
+    print("M: ", M.shape, end=' ')
+    print("ts: ", ts.shape)
 
     I, sigI = f(T, M)
 
@@ -162,14 +162,14 @@ def main_sliding_window():
     out[:, 0] = miller_h.flatten()
     out[:, 1] = miller_k.flatten()
     out[:, 2] = miller_l.flatten()
-    print "out: ", out.shape
+    print("out: ", out.shape)
 
     T = joblib.load("%s/converted_data_light/T_sparse_LTD_light.jbl" % (data_path))
     M = joblib.load("%s/converted_data_light/M_sparse_light.jbl" % (data_path))
     ts = joblib.load("%s/converted_data_light/t_light.jbl" % (data_path))
-    print "T: ", T.shape
-    print "M: ", M.shape,
-    print "ts: ", ts.shape
+    print("T: ", T.shape)
+    print("M: ", M.shape, end=' ')
+    print("ts: ", ts.shape)
 
     stepsize = 20000
     binsize = 2*stepsize
@@ -182,7 +182,7 @@ def main_sliding_window():
         t_start = ts[start]
         t_end = ts[end]
         
-        print start, end, t_start, t_end
+        print(start, end, t_start, t_end)
 
 
         T_bin = T[:, start:end]
@@ -194,5 +194,5 @@ def main_sliding_window():
         out[:, 4] = sigI_bin.flatten()
 
         f_out = "%s/I_bin_%d_%d_avg_%0.1ffs_%0.1ffs.txt" % (fpath, start, end, t_start, t_end)
-        print f_out
+        print(f_out)
         numpy.savetxt(f_out, out, fmt="%6d%6d%6d%17.2f%17.2f")

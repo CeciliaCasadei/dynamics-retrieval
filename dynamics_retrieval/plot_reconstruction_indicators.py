@@ -61,7 +61,7 @@ if flag == 1:
         matplotlib.pyplot.xlim(left=0, right=Nmodes)
         matplotlib.pyplot.axhline(y=1, xmin=0, xmax=1, c="k", linewidth=1)
         matplotlib.pyplot.plot(
-            range(1, Nmodes),
+            list(range(1, Nmodes)),
             CCs_SVD,
             "o-",
             c="b",
@@ -70,7 +70,7 @@ if flag == 1:
             label="SVD",
         )
         matplotlib.pyplot.plot(
-            range(1, Nmodes),
+            list(range(1, Nmodes)),
             CCs_SSA,
             "o-",
             color="indigo",
@@ -79,7 +79,7 @@ if flag == 1:
             label="SSA",
         )  #' (q=%d)'%q)
         matplotlib.pyplot.plot(
-            range(1, Nmodes),
+            list(range(1, Nmodes)),
             CCs_fourier,
             "o-",
             c="c",
@@ -88,7 +88,7 @@ if flag == 1:
             label="LPSA",
         )  #' (q=%d, j$_{\mathrm{max}}$=100)'%q)
         matplotlib.pyplot.plot(
-            range(1, Nmodes),
+            list(range(1, Nmodes)),
             CCs_nlsa_e,
             "o-",
             c="m",
@@ -98,7 +98,7 @@ if flag == 1:
         )  #' (q=%d, b=%d, l=50)'%(q, b))
         matplotlib.pyplot.legend(frameon=False, loc="lower right", fontsize=18)
         matplotlib.pyplot.gca().tick_params(axis="both", labelsize=18)
-        matplotlib.pyplot.xticks(range(1, Nmodes, 2))
+        matplotlib.pyplot.xticks(list(range(1, Nmodes, 2)))
         matplotlib.pyplot.xlabel("number of modes", fontsize=18)
         matplotlib.pyplot.ylabel("correlation coefficient", fontsize=18)
         matplotlib.pyplot.savefig(
@@ -134,7 +134,7 @@ if flag == 1:
         matplotlib.pyplot.xlim(left=0, right=Nmodes)
         matplotlib.pyplot.axhline(y=1, xmin=0, xmax=1, c="k", linewidth=1)
         matplotlib.pyplot.plot(
-            range(1, Nmodes),
+            list(range(1, Nmodes)),
             CCs_enlsa,
             "o-",
             c="b",
@@ -143,7 +143,7 @@ if flag == 1:
             label="E-NLSA",
         )
         matplotlib.pyplot.plot(
-            range(1, Nmodes),
+            list(range(1, Nmodes)),
             CCs_tnlsa,
             "o-",
             c="m",
@@ -155,7 +155,7 @@ if flag == 1:
         matplotlib.pyplot.xlabel("number of modes", fontsize=24)
         matplotlib.pyplot.ylabel("correlation coefficient", fontsize=24)
         matplotlib.pyplot.gca().tick_params(axis="both", labelsize=22)
-        matplotlib.pyplot.xticks(range(1, Nmodes, 2))
+        matplotlib.pyplot.xticks(list(range(1, Nmodes, 2)))
         matplotlib.pyplot.tight_layout()
         matplotlib.pyplot.savefig(
             "%s/reconstruction_ENLSA_TNLSA_%s_CC_vs_nmodes_q_%d_b_%d_l_50_minlegend.pdf"
@@ -187,7 +187,7 @@ if flag == 1:
         colors = matplotlib.pylab.cm.Blues(numpy.linspace(0.15, 1, n_curves))
 
         matplotlib.pyplot.figure(figsize=(10, 10))
-        matplotlib.pyplot.xticks(range(1, n_m + 1, 2))
+        matplotlib.pyplot.xticks(list(range(1, n_m + 1, 2)))
         matplotlib.pyplot.axhline(y=1, xmin=0, xmax=1, c="k", linewidth=1)
         matplotlib.pyplot.xlim(left=0, right=n_m + 1)
         matplotlib.pyplot.ylim(bottom=0.64, top=1.02)
@@ -198,7 +198,7 @@ if flag == 1:
             folder = "%s/f_max_%d_q_%d" % (test_f, f_max, q)
             CCs = joblib.load("%s/reconstruction_CC_vs_nmodes.jbl" % folder)
             matplotlib.pyplot.plot(
-                range(1, len(CCs) + 1), CCs, "-o", c=colors[i], label="$q$=%d" % q
+                list(range(1, len(CCs) + 1)), CCs, "-o", c=colors[i], label="$q$=%d" % q
             )
 
         matplotlib.pyplot.legend(frameon=False, loc="lower right", fontsize=28)
@@ -227,7 +227,7 @@ if flag == 1:
         colors = matplotlib.pylab.cm.Blues(numpy.linspace(0.15, 1, n_curves))
 
         matplotlib.pyplot.figure(figsize=(10, 10))
-        matplotlib.pyplot.xticks(range(1, n_m + 1, 2))
+        matplotlib.pyplot.xticks(list(range(1, n_m + 1, 2)))
         matplotlib.pyplot.axhline(y=1, xmin=0, xmax=1, c="k", linewidth=1)
         matplotlib.pyplot.xlim(left=0, right=n_m + 1)
         matplotlib.pyplot.ylim(bottom=0.60, top=1.02)
@@ -238,7 +238,7 @@ if flag == 1:
             folder = "%s/f_max_%d_q_%d" % (test_f, f_max, q)
             CCs = joblib.load("%s/reconstruction_CC_vs_nmodes.jbl" % folder)
             matplotlib.pyplot.plot(
-                range(1, len(CCs) + 1),
+                list(range(1, len(CCs) + 1)),
                 CCs,
                 "-o",
                 c=colors[i],
@@ -271,7 +271,7 @@ if flag == 1:
         colors = matplotlib.pylab.cm.Blues(numpy.linspace(0.15, 1, n_curves))
 
         matplotlib.pyplot.figure(figsize=(10, 10))
-        matplotlib.pyplot.xticks(range(1, n_m + 1, 2))
+        matplotlib.pyplot.xticks(list(range(1, n_m + 1, 2)))
         matplotlib.pyplot.xlim(left=0, right=n_m + 1)
         matplotlib.pyplot.xlabel("number of modes", fontsize=26)
         matplotlib.pyplot.ylabel("log$_{10}(L)$", labelpad=0, fontsize=26)
@@ -280,7 +280,7 @@ if flag == 1:
             folder = "%s/f_max_%d_q_%d" % (test_f, f_max, q)
             lls = joblib.load("%s/local_linearity_vs_nmodes.jbl" % folder)
             matplotlib.pyplot.plot(
-                range(1, len(lls) + 1),
+                list(range(1, len(lls) + 1)),
                 numpy.log10(lls),
                 "-o",
                 c=colors[i],
@@ -313,7 +313,7 @@ if flag == 1:
         colors = matplotlib.pylab.cm.Blues(numpy.linspace(0.15, 1, n_curves))
 
         matplotlib.pyplot.figure(figsize=(10, 10))
-        matplotlib.pyplot.xticks(range(1, n_m + 1, 2))
+        matplotlib.pyplot.xticks(list(range(1, n_m + 1, 2)))
         matplotlib.pyplot.xlim(left=0, right=n_m + 1)
         matplotlib.pyplot.xlabel("number of modes", fontsize=26)
         matplotlib.pyplot.ylabel("log$_{10}(L)$", labelpad=0, fontsize=26)
@@ -322,7 +322,7 @@ if flag == 1:
             folder = "%s/f_max_%d_q_%d" % (test_f, f_max, q)
             lls = joblib.load("%s/local_linearity_vs_nmodes.jbl" % folder)
             matplotlib.pyplot.plot(
-                range(1, len(lls) + 1),
+                list(range(1, len(lls) + 1)),
                 numpy.log10(lls),
                 "-o",
                 c=colors[i],
@@ -356,7 +356,7 @@ if flag == 1:
         colors = matplotlib.pylab.cm.Blues(numpy.linspace(0.15, 1, n_curves))
 
         matplotlib.pyplot.figure(figsize=(10, 10))
-        matplotlib.pyplot.xticks(range(1, n_m + 1, 2))
+        matplotlib.pyplot.xticks(list(range(1, n_m + 1, 2)))
         matplotlib.pyplot.xlim(left=0, right=n_m + 1)
         matplotlib.pyplot.xlabel("mode", fontsize=26)
         matplotlib.pyplot.ylabel("log$_{10}(\sigma/\sigma_1)$", labelpad=0, fontsize=26)
@@ -365,7 +365,7 @@ if flag == 1:
             folder = "%s/f_max_%d_q_%d" % (test_f, f_max, q)
             S = joblib.load("%s/S.jbl" % folder)
             matplotlib.pyplot.plot(
-                range(1, n_m + 1),
+                list(range(1, n_m + 1)),
                 numpy.log10(S / S[0])[0:n_m],
                 "-o",
                 c=colors[i],
@@ -397,7 +397,7 @@ if flag == 1:
         colors = matplotlib.pylab.cm.Blues(numpy.linspace(0.15, 1, n_curves))
 
         matplotlib.pyplot.figure(figsize=(10, 10))
-        matplotlib.pyplot.xticks(range(1, n_m + 1, 2))
+        matplotlib.pyplot.xticks(list(range(1, n_m + 1, 2)))
         matplotlib.pyplot.xlim(left=0, right=n_m + 1)
         matplotlib.pyplot.xlabel("mode", fontsize=26)
         matplotlib.pyplot.ylabel("log$_{10}(\sigma/\sigma_1)$", labelpad=0, fontsize=26)
@@ -410,7 +410,7 @@ if flag == 1:
             else:
                 n_m = 20
             matplotlib.pyplot.plot(
-                range(1, n_m + 1),
+                list(range(1, n_m + 1)),
                 numpy.log10(S / S[0])[0:n_m],
                 "-o",
                 c=colors[i],
@@ -455,7 +455,7 @@ if flag == 1:
         colors = matplotlib.pylab.cm.Blues(numpy.linspace(0.15, 1, n_curves))
 
         matplotlib.pyplot.figure(figsize=(10, 10))
-        matplotlib.pyplot.xticks(range(1, n_m + 1, 2))
+        matplotlib.pyplot.xticks(list(range(1, n_m + 1, 2)))
         matplotlib.pyplot.xlim(left=0, right=n_m + 1)
         matplotlib.pyplot.xlabel("number of modes", fontsize=24)
         matplotlib.pyplot.ylabel("log$_{10}(L)$", fontsize=24)
@@ -464,7 +464,7 @@ if flag == 1:
             folder = "%s/f_max_%d_q_%d" % (test_f, f_max, q)
             Ls = joblib.load("%s/p_%d_local_linearity_vs_nmodes.jbl" % (folder, p))
             matplotlib.pyplot.plot(
-                range(1, len(Ls) + 1),
+                list(range(1, len(Ls) + 1)),
                 numpy.log10(Ls),
                 "-o",
                 c=colors[i],
@@ -505,7 +505,7 @@ if flag == 1:
         colors = matplotlib.pylab.cm.Blues(numpy.linspace(0.15, 1, n_curves))
 
         matplotlib.pyplot.figure(figsize=(10, 10))
-        matplotlib.pyplot.xticks(range(1, n_m + 1, 2))
+        matplotlib.pyplot.xticks(list(range(1, n_m + 1, 2)))
         matplotlib.pyplot.xlim(left=0, right=n_m + 1)
         matplotlib.pyplot.xlabel("mode", fontsize=24)
         matplotlib.pyplot.ylabel("log$_{10}(\sigma/\sigma_1)$", fontsize=24)
@@ -514,7 +514,7 @@ if flag == 1:
             folder = "%s/f_max_%d_q_%d" % (test_f, f_max, q)
             S = joblib.load("%s/S.jbl" % (folder))
             matplotlib.pyplot.plot(
-                range(1, n_m + 1),
+                list(range(1, n_m + 1)),
                 numpy.log10(S / S[0])[0:n_m],
                 "-o",
                 c=colors[i],
@@ -571,7 +571,7 @@ if flag == 1:
         colors = matplotlib.pylab.cm.Blues(numpy.linspace(0.15, 1, n_curves))
 
         matplotlib.pyplot.figure(figsize=(10, 10))
-        matplotlib.pyplot.xticks(range(1, n_m + 1, 2))
+        matplotlib.pyplot.xticks(list(range(1, n_m + 1, 2)))
         matplotlib.pyplot.xlim(left=0, right=n_m + 1)
         matplotlib.pyplot.xlabel("number of modes", fontsize=36)  # 24
         matplotlib.pyplot.ylabel("log$_{10}(L)$", fontsize=36)  # 24
@@ -583,7 +583,7 @@ if flag == 1:
                 % (folder, p, p)
             )
             matplotlib.pyplot.plot(
-                range(1, len(lls) + 1),
+                list(range(1, len(lls) + 1)),
                 numpy.log10(lls),
                 "-o",
                 c=colors[i],
@@ -642,7 +642,7 @@ if flag == 1:
         colors = matplotlib.pylab.cm.Blues(numpy.linspace(0.15, 1, n_curves))
 
         matplotlib.pyplot.figure(figsize=(10, 10))
-        matplotlib.pyplot.xticks(range(1, n_m + 1, 2))
+        matplotlib.pyplot.xticks(list(range(1, n_m + 1, 2)))
         matplotlib.pyplot.xlim(left=0, right=n_m + 1)
         matplotlib.pyplot.xlabel("mode", fontsize=36)
         matplotlib.pyplot.ylabel("$\log_{10}(\sigma_i/\sigma_1)$", fontsize=36)
@@ -654,9 +654,9 @@ if flag == 1:
                 n_m = S.shape[0]
             else:
                 n_m = 20
-            print f_max, n_m
+            print(f_max, n_m)
             matplotlib.pyplot.plot(
-                range(1, n_m + 1),
+                list(range(1, n_m + 1)),
                 numpy.log10(S / S[0])[0:n_m],
                 "-o",
                 c=colors[i],
@@ -712,7 +712,7 @@ if flag == 1:
 
         colors = matplotlib.pylab.cm.Blues(numpy.linspace(0.15, 1, n_curves))
         matplotlib.pyplot.figure(figsize=(10, 10))
-        matplotlib.pyplot.xticks(range(1, n_m + 1, 2))
+        matplotlib.pyplot.xticks(list(range(1, n_m + 1, 2)))
 
         matplotlib.pyplot.axhline(y=1, xmin=0, xmax=1, c="k", linewidth=1)
         matplotlib.pyplot.xlim(left=0, right=n_m + 1)
@@ -727,7 +727,7 @@ if flag == 1:
 
             # print CCs[9]
             matplotlib.pyplot.plot(
-                range(1, len(CCs) + 1),
+                list(range(1, len(CCs) + 1)),
                 CCs,
                 "-o",
                 c=colors[i],
@@ -775,7 +775,7 @@ if flag == 1:
     n_curves = len(ps)
     colors = matplotlib.pylab.cm.Blues(numpy.linspace(0.15, 1, n_curves))
     matplotlib.pyplot.figure(figsize=(10, 10))
-    matplotlib.pyplot.xticks(range(1, n_m + 1, 2))
+    matplotlib.pyplot.xticks(list(range(1, n_m + 1, 2)))
 
     matplotlib.pyplot.axhline(y=1, xmin=0, xmax=1, c="k", linewidth=1)
     matplotlib.pyplot.xlim(left=0, right=n_m + 1)
@@ -790,9 +790,9 @@ if flag == 1:
         folder = "%s/reconstruction_p_%d" % (results_path, p)
         CCs = joblib.load("%s/CCs_to_benchmark.jbl" % (folder))
 
-        print CCs[9]
+        print(CCs[9])
         matplotlib.pyplot.plot(
-            range(1, n_m + 1), CCs, "-o", c=colors[i], label="$p$=%d" % p
+            list(range(1, n_m + 1)), CCs, "-o", c=colors[i], label="$p$=%d" % p
         )
 
     matplotlib.pyplot.ylim(0.6, top=1.02)
@@ -834,7 +834,7 @@ if flag == 1:
     n_curves = len(ps)
     colors = matplotlib.pylab.cm.Blues(numpy.linspace(0.15, 1, n_curves))
     matplotlib.pyplot.figure(figsize=(10, 10))
-    matplotlib.pyplot.xticks(range(1, n_m + 1, 2))
+    matplotlib.pyplot.xticks(list(range(1, n_m + 1, 2)))
     matplotlib.pyplot.xlim(left=0, right=n_m + 1)
     matplotlib.pyplot.xlabel("number of modes", fontsize=20)
     matplotlib.pyplot.ylabel("log$_{10}(L)$", fontsize=20)
@@ -845,7 +845,7 @@ if flag == 1:
         Ls = joblib.load("%s/local_linearity_vs_nmodes.jbl" % (folder))
 
         matplotlib.pyplot.plot(
-            range(1, n_m + 1), numpy.log10(Ls), "-o", c=colors[i], label="$p$=%d" % p
+            list(range(1, n_m + 1)), numpy.log10(Ls), "-o", c=colors[i], label="$p$=%d" % p
         )
 
     matplotlib.pyplot.legend(frameon=False, loc="lower right", fontsize=20)
@@ -886,7 +886,7 @@ if flag == 1:
     n_curves = len(ps)
     colors = matplotlib.pylab.cm.Blues(numpy.linspace(0.15, 1, n_curves))
     matplotlib.pyplot.figure(figsize=(10, 10))
-    matplotlib.pyplot.xticks(range(1, n_m + 1, 2))
+    matplotlib.pyplot.xticks(list(range(1, n_m + 1, 2)))
     matplotlib.pyplot.xlim(left=0, right=n_m + 1)
     matplotlib.pyplot.xlabel("mode", fontsize=20)
     matplotlib.pyplot.ylabel("log$_{10}(\sigma/\sigma_1)$", fontsize=20)
@@ -895,7 +895,7 @@ if flag == 1:
         folder = "%s/reconstruction_p_%d/x_r_SVD" % (results_path, p)
         S = joblib.load("%s/S.jbl" % folder)
         matplotlib.pyplot.plot(
-            range(1, n_m + 1),
+            list(range(1, n_m + 1)),
             numpy.log10(S / S[0])[0:n_m],
             "-o",
             c=colors[i],
@@ -941,7 +941,7 @@ if flag == 1:
     n_curves = len(ps)
     colors = matplotlib.pylab.cm.Blues(numpy.linspace(0.15, 1, n_curves))
     matplotlib.pyplot.figure(figsize=(10, 10))
-    matplotlib.pyplot.xticks(range(1, n_m + 1, 2))
+    matplotlib.pyplot.xticks(list(range(1, n_m + 1, 2)))
 
     matplotlib.pyplot.axhline(y=1, xmin=0, xmax=1, c="k", linewidth=1)
     matplotlib.pyplot.xlim(left=0, right=n_m + 1)
@@ -956,7 +956,7 @@ if flag == 1:
         CCs = joblib.load("%s/reconstruction_CC_vs_nmodes.jbl" % (folder))
 
         matplotlib.pyplot.plot(
-            range(1, n_m + 1), CCs, "-o", c=colors[i], label="$p$=%d" % p
+            list(range(1, n_m + 1)), CCs, "-o", c=colors[i], label="$p$=%d" % p
         )
 
     # matplotlib.pyplot.ylim(min(CCs)-0.01, top=1.02)
@@ -993,7 +993,7 @@ if flag == 1:
     n_curves = len(qs)
     colors = matplotlib.pylab.cm.Blues(numpy.linspace(0.15, 1, n_curves))
     matplotlib.pyplot.figure(figsize=(10, 10))
-    matplotlib.pyplot.xticks(range(1, n_m + 1, 2))
+    matplotlib.pyplot.xticks(list(range(1, n_m + 1, 2)))
 
     matplotlib.pyplot.axhline(y=1, xmin=0, xmax=1, c="k", linewidth=1)
     matplotlib.pyplot.xlim(left=0, right=n_m + 1)
@@ -1020,7 +1020,7 @@ if flag == 1:
                 % (results_path, l, p)
             )
         matplotlib.pyplot.plot(
-            range(1, n_m + 1), CCs, "-o", c=colors[i], label="$q$=%d" % q
+            list(range(1, n_m + 1)), CCs, "-o", c=colors[i], label="$q$=%d" % q
         )
 
     matplotlib.pyplot.ylim(top=1.02)
@@ -1055,7 +1055,7 @@ if flag == 1:
     n_curves = len(qs)
     colors = matplotlib.pylab.cm.Blues(numpy.linspace(0.15, 1, n_curves))
     matplotlib.pyplot.figure(figsize=(10, 10))
-    matplotlib.pyplot.xticks(range(1, n_m + 1, 2))
+    matplotlib.pyplot.xticks(list(range(1, n_m + 1, 2)))
     matplotlib.pyplot.xlim(left=0, right=n_m + 1)
     matplotlib.pyplot.xlabel("mode", fontsize=20)
     matplotlib.pyplot.ylabel("log$_{10}(\sigma/\sigma_1)$", fontsize=20)
@@ -1072,7 +1072,7 @@ if flag == 1:
 
         S = joblib.load("%s/S.jbl" % results_path)
         matplotlib.pyplot.plot(
-            range(1, n_m + 1),
+            list(range(1, n_m + 1)),
             numpy.log10(S / S[0])[0:n_m],
             "-o",
             c=colors[i],
@@ -1111,7 +1111,7 @@ if flag == 1:
     n_curves = len(bs)
     colors = matplotlib.pylab.cm.Blues(numpy.linspace(0.15, 1, n_curves))
     matplotlib.pyplot.figure(figsize=(10, 10))
-    matplotlib.pyplot.xticks(range(1, n_m + 1, 2))
+    matplotlib.pyplot.xticks(list(range(1, n_m + 1, 2)))
 
     matplotlib.pyplot.axhline(y=1, xmin=0, xmax=1, c="k", linewidth=1)
     matplotlib.pyplot.xlim(left=0, right=n_m + 1)
@@ -1138,7 +1138,7 @@ if flag == 1:
                 % (results_path, l, p)
             )
         matplotlib.pyplot.plot(
-            range(1, n_m + 1), CCs, "-o", c=colors[i], label="$b$=%d" % b
+            list(range(1, n_m + 1)), CCs, "-o", c=colors[i], label="$b$=%d" % b
         )
 
     # matplotlib.pyplot.ylim(min(CCs)-0.01, top=1.02)
@@ -1176,7 +1176,7 @@ if flag == 1:
     n_curves = len(log10eps_lst)
     colors = matplotlib.pylab.cm.Blues(numpy.linspace(0.15, 1, n_curves))
     matplotlib.pyplot.figure(figsize=(10, 10))
-    matplotlib.pyplot.xticks(range(1, n_m + 1, 2))
+    matplotlib.pyplot.xticks(list(range(1, n_m + 1, 2)))
 
     matplotlib.pyplot.axhline(y=1, xmin=0, xmax=1, c="k", linewidth=1)
     matplotlib.pyplot.xlim(left=0, right=n_m + 1)
@@ -1204,7 +1204,7 @@ if flag == 1:
             )
 
         matplotlib.pyplot.plot(
-            range(1, n_m + 1),
+            list(range(1, n_m + 1)),
             CCs,
             "-o",
             c=colors[i],
@@ -1245,7 +1245,7 @@ if flag == 1:
     n_curves = len(ls)
     colors = matplotlib.pylab.cm.Blues(numpy.linspace(0.15, 1, n_curves))
     matplotlib.pyplot.figure(figsize=(10, 10))
-    matplotlib.pyplot.xticks(range(1, n_m + 1, 2))
+    matplotlib.pyplot.xticks(list(range(1, n_m + 1, 2)))
 
     matplotlib.pyplot.axhline(y=1, xmin=0, xmax=1, c="k", linewidth=1)
     matplotlib.pyplot.xlim(left=0, right=n_m + 1)
@@ -1268,7 +1268,7 @@ if flag == 1:
 
         CCs = joblib.load("%s/reconstruction_CC_vs_nmodes.jbl" % (folder))
         matplotlib.pyplot.plot(
-            range(1, len(CCs) + 1), CCs, "-o", c=colors[i], label="l=%d" % l
+            list(range(1, len(CCs) + 1)), CCs, "-o", c=colors[i], label="l=%d" % l
         )
 
     # matplotlib.pyplot.ylim(min(CCs)-0.01, top=1.02)
@@ -1303,7 +1303,7 @@ if flag == 1:
     colors = matplotlib.pylab.cm.Blues(numpy.linspace(0.15, 1, n_curves))
 
     matplotlib.pyplot.figure(figsize=(10, 10))
-    matplotlib.pyplot.xticks(range(1, n_m + 1, 2))
+    matplotlib.pyplot.xticks(list(range(1, n_m + 1, 2)))
     matplotlib.pyplot.xlim(left=0, right=n_m + 1)
     matplotlib.pyplot.xlabel("number of modes", fontsize=24)
     matplotlib.pyplot.ylabel("log$_{10}(L)$", fontsize=24)
@@ -1312,7 +1312,7 @@ if flag == 1:
         folder = "%s/f_max_%d_q_%d/reconstruction_p_%d" % (root_f, f_max, q, p)
         Ls = joblib.load("%s/p_%d_local_linearity_vs_nmodes.jbl" % (folder, p))
         matplotlib.pyplot.plot(
-            range(1, len(Ls) + 1),
+            list(range(1, len(Ls) + 1)),
             numpy.log10(Ls),
             "-o",
             c=colors[i],
@@ -1342,7 +1342,7 @@ if flag == 1:
     colors = matplotlib.pylab.cm.Blues(numpy.linspace(0.15, 1, n_curves))
 
     matplotlib.pyplot.figure(figsize=(10, 10))
-    matplotlib.pyplot.xticks(range(1, n_m + 1, 2))
+    matplotlib.pyplot.xticks(list(range(1, n_m + 1, 2)))
     matplotlib.pyplot.xlim(left=0, right=n_m + 1)
     matplotlib.pyplot.xlabel("mode", fontsize=24)
     matplotlib.pyplot.ylabel("log$_{10}(\sigma/\sigma_1)$", fontsize=24)
@@ -1351,7 +1351,7 @@ if flag == 1:
         folder = "%s/f_max_%d_q_%d" % (root_f, f_max, q)
         S = joblib.load("%s/S.jbl" % (folder))
         matplotlib.pyplot.plot(
-            range(1, n_m + 1),
+            list(range(1, n_m + 1)),
             numpy.log10(S / S[0])[0:n_m],
             "-o",
             c=colors[i],
@@ -1381,7 +1381,7 @@ if flag == 1:
     colors = matplotlib.pylab.cm.Blues(numpy.linspace(0.15, 1, n_curves))
 
     matplotlib.pyplot.figure(figsize=(10, 10))
-    matplotlib.pyplot.xticks(range(1, n_m + 1, 2))
+    matplotlib.pyplot.xticks(list(range(1, n_m + 1, 2)))
     matplotlib.pyplot.xlim(left=0, right=n_m + 1)
     matplotlib.pyplot.xlabel("number of modes", fontsize=24)
     matplotlib.pyplot.ylabel("log$_{10}(L)$", fontsize=24)
@@ -1390,7 +1390,7 @@ if flag == 1:
         folder = "%s/f_max_%d_q_%d/reconstruction_p_%d" % (root_f, f_max, q, p)
         Ls = joblib.load("%s/p_%d_local_linearity_vs_nmodes.jbl" % (folder, p))
         matplotlib.pyplot.plot(
-            range(1, len(Ls) + 1),
+            list(range(1, len(Ls) + 1)),
             numpy.log10(Ls),
             "-o",
             c=colors[i],
@@ -1422,7 +1422,7 @@ if flag == 1:
     colors = matplotlib.pylab.cm.Blues(numpy.linspace(0.15, 1, n_curves))
 
     matplotlib.pyplot.figure(figsize=(10, 10))
-    matplotlib.pyplot.xticks(range(1, n_m + 1, 2))
+    matplotlib.pyplot.xticks(list(range(1, n_m + 1, 2)))
     matplotlib.pyplot.xlim(left=0, right=n_m + 1)
     matplotlib.pyplot.xlabel("mode", fontsize=24)
     matplotlib.pyplot.ylabel("log$_{10}(\sigma/\sigma_1)$", fontsize=24)
@@ -1432,7 +1432,7 @@ if flag == 1:
         S = joblib.load("%s/S.jbl" % (folder))
         n_m = min(20, 2 * f_max + 1)
         matplotlib.pyplot.plot(
-            range(1, n_m + 1),
+            list(range(1, n_m + 1)),
             numpy.log10(S / S[0])[0:n_m],
             "-o",
             c=colors[i],
