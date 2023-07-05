@@ -140,14 +140,6 @@ flag = 0
 if flag == 1:
     import settings_synthetic_data_jitter as settings
 
-    import dynamics_retrieval.boost
-
-    dynamics_retrieval.boost.main_syn_data(settings)
-
-flag = 0
-if flag == 1:
-    import settings_synthetic_data_jitter as settings
-
     import dynamics_retrieval.calculate_dI
 
     dynamics_retrieval.calculate_dI.main(settings)
