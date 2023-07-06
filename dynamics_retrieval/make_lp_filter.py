@@ -40,7 +40,7 @@ def plot_f(settings, M, label, ts):
         ax.plot(ts, M[:, 0], color="m")
         ax.tick_params(axis="both", labelsize=26)
         for j in range(5, 21, 5):
-            ax = fig.add_subplot(5, 1, j / 5 + 1)
+            ax = fig.add_subplot(5, 1, int(j / 5) + 1)
             ax.plot(ts, M[:, 2 * j - 1], color="m")
             ax.plot(ts, M[:, 2 * j], color="b")
             ax.tick_params(axis="both", labelsize=34)
@@ -64,7 +64,7 @@ def plot_f(settings, M, label, ts):
         ax.plot(ts, M[:, 0], color="m")
         ax.tick_params(axis="both", labelsize=26)
         for j in range(10, 51, 10):
-            ax = fig.add_subplot(6, 1, j / 10 + 1)
+            ax = fig.add_subplot(6, 1, int(j / 10) + 1)
             ax.plot(ts, M[:, 2 * j - 1], color="m")
             ax.plot(ts, M[:, 2 * j], color="b")
             ax.tick_params(axis="both", labelsize=34)
