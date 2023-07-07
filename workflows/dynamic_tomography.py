@@ -32,10 +32,10 @@ def plot_real_space_tomogram():
         matplotlib.pyplot.close()
         
 def get_syn_projections():
-    path_name = '/das/work/p17/p17491/Cecilia_Casadei/NLSA/data_tomography_4/projections_real_space'
+    path_name = '/das/work/p17/p17491/Cecilia_Casadei/NLSA/data_tomography_5/projections_real_space'
     
     n_proj_pxls = 200
-    n_ts = 1600
+    n_ts = 3200
     n_projections = 180
     
     pxl_n = 10150
@@ -67,11 +67,11 @@ def get_syn_projections():
     matplotlib.pyplot.close()
 
 def merge_projections():
-    path_name = '/das/work/p17/p17491/Cecilia_Casadei/NLSA/data_tomography_4/projections_real_space'
+    path_name = '/das/work/p17/p17491/Cecilia_Casadei/NLSA/data_tomography_5/projections_real_space'
     n_proj_pxls = 200
     n_projections = 180
     m = n_proj_pxls * n_projections
-    S = 1600
+    S = 3200
     x = numpy.zeros(shape=(m,S))
     
     for t in range(S):
@@ -113,19 +113,19 @@ def make_sparse_data():
                 %(path_name, sparsity_level))
 
 def make_sparse_data_systematic():
-    path_name = '/das/work/p17/p17491/Cecilia_Casadei/NLSA/data_tomography_4/projections_real_space'
+    path_name = '/das/work/p17/p17491/Cecilia_Casadei/NLSA/data_tomography_5/projections_real_space'
     bm = joblib.load("%s/benchmark.jbl"%(path_name))  
         
     n_proj_pxls = 200
     n_projections = 180
     m = n_proj_pxls * n_projections
-    S = 1600
+    S = 3200
     
     x_input = numpy.zeros(shape=(m,S))
     mask = numpy.zeros(shape=(m,S))
     
     n_sweeps = 4
-    len_sweep = n_projections/n_sweeps #45
+    len_sweep = int(n_projections/n_sweeps) #45
     
     for sweep in range(n_sweeps): #0, 1, 2, 3
         ts_base = numpy.asarray(range(sweep*len_sweep, (sweep+1)*len_sweep))
@@ -155,10 +155,10 @@ def make_sparse_data_systematic():
     
     test_sum = mask.sum(axis=1) 
 
-    idxs = numpy.argwhere(test_sum==8)  
-    print(idxs.shape[0]/n_proj_pxls, 'projections have 8 observations.')
-    idxs = numpy.argwhere(test_sum==9)  
-    print(idxs.shape[0]/n_proj_pxls, 'projections have 9 observations.')
+    idxs = numpy.argwhere(test_sum==int(S/n_projections))  
+    print(idxs.shape[0]/n_proj_pxls, 'projections have', int(S/n_projections), 'observations.')
+    idxs = numpy.argwhere(test_sum==1+int(S/n_projections))  
+    print(idxs.shape[0]/n_proj_pxls, 'projections have', 1+int(S/n_projections), 'observations.')
 
         
     joblib.dump(x_input, 
@@ -182,7 +182,7 @@ flag = 0
 if flag == 1:
     make_sparse_data_systematic()
 
-flag = 0
+flag = 1
 if flag == 1:
     import settings_dynamic_tomography as settings
 
@@ -267,7 +267,7 @@ if flag == 1:
         )
         
         
-f_max_s = [8]#[2, 4, 6, 10, 30, 70, 100, 120, 150]#50
+f_max_s = [15, 20, 25]#[2, 4, 6, 10, 30, 50, 70, 100, 120, 150]
 
 flag = 0
 if flag == 1:
@@ -309,10 +309,10 @@ flag = 0
 if flag == 1:
     import dynamics_retrieval.make_lp_filter
 
-    # for f_max in f_max_s:
-    #     modulename = 'settings_f_max_%d'%f_max
-    for q in qs:
-        modulename = "settings_q_%d" % q
+    for f_max in f_max_s:
+        modulename = 'settings_f_max_%d'%f_max
+    # for q in qs:
+    #     modulename = "settings_q_%d" % q
         settings = __import__(modulename)
         print("q: ", settings.q)
         print("jmax: ", settings.f_max)
@@ -326,10 +326,10 @@ if flag == 1:
 
 flag = 0
 if flag == 1:
-    # for f_max in f_max_s:
-    #     modulename = 'settings_f_max_%d'%f_max
-    for q in qs:
-        modulename = "settings_q_%d" % q
+    for f_max in f_max_s[-1:]:
+        modulename = 'settings_f_max_%d'%f_max
+    # for q in qs:
+    #     modulename = "settings_q_%d" % q
         settings = __import__(modulename)
         print("q: ", settings.q)
         print("jmax: ", settings.f_max)
@@ -343,10 +343,10 @@ flag = 0
 if flag == 1:
     import dynamics_retrieval.merge_aj
 
-    # for f_max in f_max_s:
-    #     modulename = "settings_f_max_%d" % f_max
-    for q in qs:
-        modulename = "settings_q_%d" % q
+    for f_max in f_max_s[-1:]:
+        modulename = "settings_f_max_%d" % f_max
+    # for q in qs:
+    #     modulename = "settings_q_%d" % q
         settings = __import__(modulename)
         print("q: ", settings.q)
         print("jmax: ", settings.f_max)
@@ -354,10 +354,10 @@ if flag == 1:
         
 flag = 0
 if flag == 1:
-    # for f_max in f_max_s:
-    #     modulename = 'settings_f_max_%d'%f_max
-    for q in qs:
-        modulename = "settings_q_%d" % q
+    for f_max in f_max_s[-1:]:
+        modulename = 'settings_f_max_%d'%f_max
+    # for q in qs:
+    #     modulename = "settings_q_%d" % q
         settings = __import__(modulename)
         print("q: ", settings.q)
         print("jmax: ", settings.f_max)
@@ -372,10 +372,10 @@ flag = 0
 if flag == 1:
     import dynamics_retrieval.calculate_ATA_merge
 
-    # for f_max in f_max_s:
-    #     modulename = 'settings_f_max_%d'%f_max
-    for q in qs:
-        modulename = "settings_q_%d" % q
+    for f_max in f_max_s[-1:]:
+        modulename = 'settings_f_max_%d'%f_max
+    # for q in qs:
+    #     modulename = "settings_q_%d" % q
         settings = __import__(modulename)
         print("q: ", settings.q)
         print("jmax: ", settings.f_max)
@@ -385,10 +385,10 @@ flag = 0
 if flag == 1:
     import dynamics_retrieval.SVD
 
-    # for f_max in f_max_s:
-    #     modulename = 'settings_f_max_%d'%f_max
-    for q in qs:
-        modulename = "settings_q_%d" % q
+    for f_max in f_max_s:
+        modulename = 'settings_f_max_%d'%f_max
+    # for q in qs:
+    #     modulename = "settings_q_%d" % q
         settings = __import__(modulename)
         print("q: ", settings.q)
         print("jmax: ", settings.f_max)
@@ -401,10 +401,10 @@ if flag == 1:
     import dynamics_retrieval.plot_chronos
     import dynamics_retrieval.plot_SVs
 
-    # for f_max in f_max_s:
-    #     modulename = 'settings_f_max_%d'%f_max
-    for q in qs:
-        modulename = "settings_q_%d" % q
+    for f_max in f_max_s:
+        modulename = 'settings_f_max_%d'%f_max
+    # for q in qs:
+    #     modulename = "settings_q_%d" % q
         settings = __import__(modulename)
         print("q: ", settings.q)
         print("jmax: ", settings.f_max)
@@ -426,7 +426,7 @@ if flag == 1:
         dynamics_retrieval.SVD.get_topos(settings)
 
         
-flag = 1
+flag = 0
 if flag == 1:
     import dynamics_retrieval.reconstruct_p
 
@@ -488,7 +488,7 @@ if flag == 1:
     #f_max = 8
     #modulename = "settings_f_max_%d" % f_max
     
-    q = 151
+    q = 251
     modulename = 'settings_q_%d'%q
 
     settings = __import__(modulename)
@@ -518,7 +518,7 @@ if flag == 1:
     benchmark_flat = bm.flatten()
 
     CCs = []
-    nmodes = 20
+    nmodes = min(1+2*settings.f_max, 20)
     x_r_tot = avgs_matrix[:,start_idx:end_idx]
     
     
