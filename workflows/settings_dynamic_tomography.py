@@ -4,13 +4,13 @@ import math
 import numpy
 
 test_n = 1
-root_f = "../../data_tomography_4/test%d" % test_n
+root_f = "../../data_tomography_5/test%d" % test_n
 
 datatype = numpy.float64
 
 # BUILD MODEL DATA
 m = 36000
-S = 1600
+S = 3200
 
 results_path = root_f
 # results_path = '%s/binning'%root_f
@@ -20,7 +20,7 @@ results_path = root_f
 
 # PARAS SCANS
 results_path = "%s" % root_f
-f_max_q_scan = 8
+f_max_q_scan = 16
 q_f_max_scan = 81
 
 # SELECTED VALUES

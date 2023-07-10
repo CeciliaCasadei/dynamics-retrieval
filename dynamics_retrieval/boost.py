@@ -37,9 +37,9 @@ def main(settings):
 
     print("T_bst: is sparse: ", sparse.issparse(T_bst), T_bst.dtype, T_bst.shape)
 
-    print(T[100, 250:350])
-    print(n_obs[100, 0])
-    print(T_bst[100, 250:350])
+    # print(T[100, 250:350])
+    # print(n_obs[100, 0])
+    # print(T_bst[100, 250:350])
 
     T_bst_sparse = sparse.csr_matrix(T_bst)
     joblib.dump(T_bst_sparse, "%s/dT_bst.jbl" % (folder))

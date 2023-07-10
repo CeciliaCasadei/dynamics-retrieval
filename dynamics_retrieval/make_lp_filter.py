@@ -100,7 +100,7 @@ def get_F(settings):
     """
     S = settings.S
     q = settings.q
-    s = S - q
+    s = S - q # Old convention from Giannakis. Now: s = S-q+1
 
     t = numpy.asarray(list(range(s)))
     T = 1 * (s)

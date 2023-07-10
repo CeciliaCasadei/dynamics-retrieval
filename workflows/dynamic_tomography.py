@@ -182,7 +182,7 @@ flag = 0
 if flag == 1:
     make_sparse_data_systematic()
 
-flag = 1
+flag = 0
 if flag == 1:
     import settings_dynamic_tomography as settings
 
@@ -267,7 +267,7 @@ if flag == 1:
         )
         
         
-f_max_s = [15, 20, 25]#[2, 4, 6, 10, 30, 50, 70, 100, 120, 150]
+f_max_s = [8]
 
 flag = 0
 if flag == 1:
@@ -416,10 +416,10 @@ flag = 0
 if flag == 1:
     import dynamics_retrieval.SVD
 
-    # for f_max in f_max_s:
-    #     modulename = 'settings_f_max_%d'%f_max
-    for q in qs:
-        modulename = "settings_q_%d" % q
+    for f_max in f_max_s:
+        modulename = 'settings_f_max_%d'%f_max
+    # for q in qs:
+    #     modulename = "settings_q_%d" % q
         settings = __import__(modulename)
         print("q: ", settings.q)
         print("jmax: ", settings.f_max)
@@ -430,10 +430,10 @@ flag = 0
 if flag == 1:
     import dynamics_retrieval.reconstruct_p
 
-    for q in qs:
-        modulename = 'settings_q_%d'%q
-    # for f_max in f_max_s:
-    #     modulename = "settings_f_max_%d" % f_max
+    # for q in qs:
+    #     modulename = 'settings_q_%d'%q
+    for f_max in f_max_s:
+        modulename = "settings_f_max_%d" % f_max
         settings = __import__(modulename)
         print("jmax: ", settings.f_max)
         print("q: ", settings.q)
@@ -441,7 +441,7 @@ if flag == 1:
         dynamics_retrieval.reconstruct_p.f(settings)
         dynamics_retrieval.reconstruct_p.f_ts(settings)      
         
-flag = 0
+flag = 1
 if flag == 1:
     import dynamics_retrieval.plot_syn_data
     import dynamics_retrieval.correlate
@@ -485,11 +485,11 @@ if flag == 1:
     print("avgs: ", avgs_matrix.shape, avgs_matrix.dtype)
     print('element 150: ', avgs_matrix[150,0])
     
-    #f_max = 8
-    #modulename = "settings_f_max_%d" % f_max
+    f_max = 8
+    modulename = "settings_f_max_%d" % f_max
     
-    q = 251
-    modulename = 'settings_q_%d'%q
+    # q = 251
+    # modulename = 'settings_q_%d'%q
 
     settings = __import__(modulename)
 
